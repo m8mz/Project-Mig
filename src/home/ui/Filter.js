@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import Switch from 'material-ui/Switch'
-import C from '../constants'
-import { filter } from '../store/reducers'
 
 const styles = {
 	switchPosition: {
@@ -12,26 +10,15 @@ const styles = {
 	}
 }
 
-class SwitchLabels extends Component {
-
-  handleChange = name => event => {
-	  this.setState({ [name]: event.target.checked });
-  }
-
-  render() {
-    const { classes } = this.props
-
-	 const action = {
-		 type: C.FILTER_FALSE
-	 }
+export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false, onFilterToggle }) => {
 
     return (
  			  <FormGroup className={classes.switchPosition} row>
  				 <FormControlLabel
  					control={
  					  <Switch
- 						 checked={this.props.filterState.infoReceived}
-						 onChange={handleChange('')}
+ 						 checked={infoReceived}
+						 onChange={() => onFilterToggle(infoReceived)}
  						 value="infoReceived"
 						 color="primary"
  					  />
@@ -41,10 +28,8 @@ class SwitchLabels extends Component {
  				 <FormControlLabel
  					control={
  					  <Switch
- 						 checked={this.props.filterState.inProgress}
-						 onChange={() => {
-							 console.log('In Progress state change called')
-						 }}
+ 						 checked={inProgress}
+						 onChange={() => onFilterToggle(inProgress)}
  						 value="inProgress"
  					  />
  					}
@@ -53,10 +38,8 @@ class SwitchLabels extends Component {
 				 <FormControlLabel
  					control={
  					  <Switch
- 						 checked={this.props.filterState.waitingForCustomer}
-						 onChange={() => {
-							 console.log('Waiting for Customer state change called')
-						 }}
+ 						 checked={waitingForCustomer}
+						 onChange={() => onFilterToggle(waitingForCustomer)}
  						 value="waitingForCustomer"
  					  />
  					}
@@ -65,10 +48,8 @@ class SwitchLabels extends Component {
 				 <FormControlLabel
  					control={
  					  <Switch
- 						 checked={this.props.filterState.agentReview}
-						 onChange={() => {
-							 console.log('Agent Review state change called')
-						 }}
+ 						 checked={agentReview}
+						 onChange={() => onFilterToggle(agentReview)}
  						 value="agentReview"
  					  />
  					}
@@ -77,10 +58,8 @@ class SwitchLabels extends Component {
 				 <FormControlLabel
  					control={
  					  <Switch
- 						 checked={this.props.filterState.customerReview}
-						 onChange={() => {
-							 console.log('Customer Review state change called')
-						 }}
+ 						 checked={customerReview}
+						 onChange={() => onFilterToggle(customerReview)}
  						 value="customerReview"
  					  />
  					}
@@ -88,7 +67,6 @@ class SwitchLabels extends Component {
  				 />
  			  </FormGroup>
     )
-  }
 }
 
 SwitchLabels.propTypes = {

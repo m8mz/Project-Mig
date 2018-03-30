@@ -7546,7 +7546,10 @@
          "start":0
       }
    ],
-	"rowsPerPage": 15,
+	"tableState": {
+		"rowsPerPage": 15,
+		"page": 0
+	},
 	"filter": {
 		"infoReceived": true,
 		"inProgress": false,

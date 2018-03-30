@@ -15,7 +15,7 @@ import FirstPageIcon from 'material-ui-icons/FirstPage'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import LastPageIcon from 'material-ui-icons/LastPage'
-import HomeFilter from './Filter'
+import HomeFilter from '../containers/Filter' // Filter that controls which projects will be displayed depending on status
 
 const actionsStyles = theme => ({
   root: {
@@ -111,15 +111,9 @@ const styles = theme => ({
 })
 
 class CustomPaginationActionsTable extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      data: this.props.appState.service_list,
-      page: 0,
-      rowsPerPage: 15,
-    }
-
+  state = {
+	  page: 0,
+	  rowsPerPage: 15
   }
 
   handleChangePage = (event, page) => {
@@ -131,8 +125,8 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
-    const { data, rowsPerPage, page } = this.state
+    const { classes, data } = this.props
+	 const { rowsPerPage, page } = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 	 const changeName = (name) => {
 		 switch(name) {
@@ -159,9 +153,15 @@ class CustomPaginationActionsTable extends React.Component {
 		 }
 	 }
 
+	 const filterProjects = (projects) => {
+		 // filter projects here
+	 }
+
     return (
       <Paper className={classes.root}>
-		  <HomeFilter filterState={this.props.appState.filter} />
+
+		  <HomeFilter /> {/* Filter for Status */}
+
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
 				 <TableHead>
