@@ -1,16 +1,31 @@
-import C from '../constants'
 import appReducer from './reducers'
 import { createStore, applyMiddleware } from 'redux'
-import initialState from '../initialState.json'
+import thunk from 'redux-thunk'
 
 const consoleMessages = store => next => action => {
 
 	let result
 
-	console.groupCollapsed(`dispatching action => ${action.type}`)
-	console.log('State Before', store.getState())
+	console.groupCollapsed(`dipatching action => ${action.type}`)
+	console.log('page', store.getState().page)
+
 	result = next(action)
-	console.log('State After', store.getState())
+
+	let { projectList, rowsPerPage, page, infoReceived, inProgress, waitingForCustomer, agentReview, customerReview } = store.getState()
+
+	console.log(`
+
+		projectList: ${projectList.length}
+		RowsPerPage: ${rowsPerPage}
+		Page: ${page}
+		infoReceived: ${infoReceived}
+		inProgress: ${inProgress}
+		waitingForCustomer: ${waitingForCustomer}
+		agentReview: ${agentReview}
+		customerReview: ${customerReview}
+
+		`)
+
 	console.groupEnd()
 
 	return result
@@ -18,5 +33,5 @@ const consoleMessages = store => next => action => {
 }
 
 export default (initialState={}) => {
-	return applyMiddleware(consoleMessages)(createStore)(appReducer, initialState)
+	return applyMiddleware(thunk, consoleMessages)(createStore)(appReducer, initialState)
 }

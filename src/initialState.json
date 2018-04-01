@@ -1,5 +1,5 @@
 {
-   "service_list":[
+	"projectList":[
       {
          "provider":"bluehost",
          "priority":0,
@@ -7546,19 +7546,20 @@
          "start":0
       }
    ],
-	"tableState": {
-		"rowsPerPage": 15,
-		"page": 0
+	"rowsPerPage": 15,
+	"page": 0,
+	"infoReceived": true,
+	"inProgress": false,
+	"waitingForCustomer": false,
+	"agentReview": false,
+	"customerReview": false,
+	"projectInfo": {},
+	"tasks": {
+		"emailTasks": [],
+		"siteTasks": []
 	},
-	"filter": {
-		"infoReceived": true,
-		"inProgress": false,
-		"waitingForCustomer": false,
-		"agentReview": false,
-		"customerReview": false
-	},
-	"user": [
-		{"name": "Marcus"},
-		{"themeStyle": "light"}
-	]
+	"notes": [],
+	"infoAPI": false,
+	"tasksAPI": false,
+	"notesAPI": false
 }

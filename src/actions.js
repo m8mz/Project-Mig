@@ -1,7 +1,112 @@
 import C from './constants'
+import axios from 'axios'
 
-export const toggleFilter = () => {
-	return {
-		type: C.FILTER_TOGGLE
-	}
+function toggleFilter(boolean) {
+	return !boolean
+}
+
+export const changePage = (page=0) => ({
+	type: C.CHANGE_PAGE,
+	payload: page
+})
+
+export const changeRowsPerPage = (rows=15) => ({
+	type: C.CHANGE_ROWS_PER_PAGE,
+	payload: rows
+})
+
+export const infoReceived = (toggleState) => ({
+	type: C.INFO_RECEIVED,
+	payload: toggleFilter(toggleState)
+})
+
+export const inProgress = (toggleState) => ({
+	type: C.IN_PROGRESS,
+	payload: toggleFilter(toggleState)
+})
+
+export const waitingForCustomer = (toggleState) => ({
+	type: C.WAITING_FOR_CUSTOMER,
+	payload: toggleFilter(toggleState)
+})
+
+export const agentReview = (toggleState) => ({
+	type: C.AGENT_REVIEW,
+	payload: toggleFilter(toggleState)
+})
+
+export const customerReview = (toggleState) => ({
+	type: C.CUSTOMER_REVIEW,
+	payload: toggleFilter(toggleState)
+})
+
+export const projectAPI = proservID => (dispatch, getState) => {
+
+	dispatch({
+		type: C.API_INFO
+	})
+	dispatch({
+		type: C.API_TASKS
+	})
+	dispatch({
+		type: C.API_NOTES
+	})
+
+	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_tinfo&proserv_id=${proservID}`)
+			.then(res => {
+				const info = res.data.tinfo
+				dispatch({
+					type: C.PROJECT_INFO,
+					payload: info
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.API_INFO_OFF
+				})
+
+			})
+
+	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=general&action=get_proserv_notes&proserv_id=${proservID}`)
+			.then(res => {
+				const notes = res.data.history
+				dispatch({
+					type: C.PROJECT_NOTES,
+					payload: notes
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.API_NOTES_OFF
+				})
+
+			})
+	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_task_list&proserv_id=${proservID}`)
+			.then(res => {
+				const tasks = res.data
+				dispatch({
+					type: C.EMAIL_TASKS,
+					payload: tasks.email_tasks
+				})
+				dispatch({
+					type: C.SITE_TASKS,
+					payload: tasks.site_tasks
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.API_TASKS_OFF
+				})
+
+			})
+
 }

@@ -10,12 +10,12 @@ import MenuIcon from 'material-ui-icons/Menu'
 const styles = theme => ({
   list: {
     width: 150,
-	 textAlign: "center",
+	  textAlign: "center",
   },
   menuIcon: {
-	  minWidth: 40,
+	  minWidth: 50,
 	  marginLeft: -12,
-     marginRight: 20,
+    marginRight: -5,
   },
   button: {
     margin: theme.spacing.unit,

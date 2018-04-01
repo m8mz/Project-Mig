@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
@@ -6,19 +6,21 @@ import Switch from 'material-ui/Switch'
 
 const styles = {
 	switchPosition: {
-		margin: "0 20% 0 20%"
+		margin: "0 20% 0 20%",
+		display: "block",
+		textAlign: "center"
 	}
 }
 
-export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false, onFilterToggle }) => {
+export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false, onInfoReceived=f=>f, onInProgress=f=>f, onWaitingForCustomer=f=>f, onAgentReview=f=>f, onCustomerReview=f=>f, }) => {
 
     return (
- 			  <FormGroup className={classes.switchPosition} row>
+ 			  <FormGroup className={classes.switchPosition} >
  				 <FormControlLabel
  					control={
  					  <Switch
  						 checked={infoReceived}
-						 onChange={() => onFilterToggle(infoReceived)}
+						 onChange={() => onInfoReceived(infoReceived)}
  						 value="infoReceived"
 						 color="primary"
  					  />
@@ -29,7 +31,7 @@ export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, wai
  					control={
  					  <Switch
  						 checked={inProgress}
-						 onChange={() => onFilterToggle(inProgress)}
+						 onChange={() => onInProgress(inProgress)}
  						 value="inProgress"
  					  />
  					}
@@ -39,7 +41,7 @@ export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, wai
  					control={
  					  <Switch
  						 checked={waitingForCustomer}
-						 onChange={() => onFilterToggle(waitingForCustomer)}
+						 onChange={() => onWaitingForCustomer(waitingForCustomer)}
  						 value="waitingForCustomer"
  					  />
  					}
@@ -49,7 +51,7 @@ export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, wai
  					control={
  					  <Switch
  						 checked={agentReview}
-						 onChange={() => onFilterToggle(agentReview)}
+						 onChange={() => onAgentReview(agentReview)}
  						 value="agentReview"
  					  />
  					}
@@ -59,7 +61,7 @@ export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, wai
  					control={
  					  <Switch
  						 checked={customerReview}
-						 onChange={() => onFilterToggle(customerReview)}
+						 onChange={() => onCustomerReview(customerReview)}
  						 value="customerReview"
  					  />
  					}

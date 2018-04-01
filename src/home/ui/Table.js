@@ -10,6 +10,7 @@ import Table, {
   TableHead,
 } from 'material-ui/Table'
 import Paper from 'material-ui/Paper'
+import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import FirstPageIcon from 'material-ui-icons/FirstPage'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
@@ -100,7 +101,7 @@ const styles = theme => ({
   root: {
     width: '80%',
     marginLeft: "10%",
-	 marginTop: 10,
+	  marginTop: 10,
   },
   table: {
     minWidth: 500,
@@ -110,26 +111,10 @@ const styles = theme => ({
   },
 })
 
-class CustomPaginationActionsTable extends React.Component {
-  state = {
-	  page: 0,
-	  rowsPerPage: 15
-  }
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  }
-
-  render() {
-    const { classes, data } = this.props
-	 const { rowsPerPage, page } = this.state
+const CustomPaginationActionsTable = ({ classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false }) => {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-	 const changeName = (name) => {
-		 switch(name) {
+	  const changeName = (name) => {
+		  switch(name) {
 			 case "edmuniz":
 			 	return "Edward Muniz"
 			 case "shunt":
@@ -151,11 +136,7 @@ class CustomPaginationActionsTable extends React.Component {
 			 default:
 			 	return "Take"
 		 }
-	 }
-
-	 const filterProjects = (projects) => {
-		 // filter projects here
-	 }
+	  }
 
     return (
       <Paper className={classes.root}>
@@ -179,13 +160,21 @@ class CustomPaginationActionsTable extends React.Component {
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, key) => {
                 return (
                   <TableRow key={key}>
-						  <TableCell numeric>{n.proserv_id}</TableCell>
-                    <TableCell>{n.domain}</TableCell>
+						  			<TableCell numeric>{n.proserv_id}</TableCell>
+                    <TableCell style={{maxWidth:375,minWidth:345}}>
+											<Button href={"/cgi/admin/proservice/project/"+n.proserv_id} className={classes.button}>
+							        	{n.domain}
+							        </Button>
+										</TableCell>
                     <TableCell numeric>{n.domain_total}</TableCell>
                     <TableCell numeric>{n.email_total}</TableCell>
-						  <TableCell>{n.added.replace(/(\d{2}:?){3}/, '')}</TableCell>
-						  <TableCell>{n.status}</TableCell>
-						  <TableCell>{changeName(n.assigned_to)}</TableCell>
+						  			<TableCell>{n.added.replace(/(\d{2}:?){3}/, '')}</TableCell>
+						  			<TableCell>{n.status}</TableCell>
+						  			<TableCell>{(changeName(n.assigned_to) !== 'Take') ?
+																	<b>{changeName(n.assigned_to)}</b> :
+																	<Button disabled>{changeName(n.assigned_to)}</Button>}
+																	{/* onClick={}} add the function to assign ticket */}
+										</TableCell>
                   </TableRow>
                 )
               })}
@@ -202,10 +191,10 @@ class CustomPaginationActionsTable extends React.Component {
                   count={data.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                  onChangePage={(event, page) => onChangePage(page)}
+                  onChangeRowsPerPage={(event) => onChangeRowsPerPage(event.target.value)}
                   Actions={TablePaginationActionsWrapped}
-						rowsPerPageOptions={[5,10,15]}
+									rowsPerPageOptions={[5,10,15]}
                 />
               </TableRow>
             </TableFooter>
@@ -213,7 +202,6 @@ class CustomPaginationActionsTable extends React.Component {
         </div>
       </Paper>
     )
-  }
 }
 
 CustomPaginationActionsTable.propTypes = {
