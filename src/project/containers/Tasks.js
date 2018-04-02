@@ -4,9 +4,9 @@ import { projectTasksAPI } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => {
-
 	return {
-		"tasks": state.tasks
+		"emailTasks": state.emailTasks,
+		"siteTasks": state.siteTasks
 	}
 }
 

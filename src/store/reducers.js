@@ -170,10 +170,8 @@ export default combineReducers({
 	agentReview,
 	customerReview,
 	projectInfo,
-	tasks: combineReducers({
-		emailTasks,
-		siteTasks
-	}),
+	emailTasks,
+	siteTasks,
 	notes,
 	infoAPI,
 	tasksAPI,

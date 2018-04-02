@@ -48,7 +48,7 @@ export const projectInfoAPI = proservID => (dispatch, getState) => {
 
 	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_tinfo&proserv_id=${proservID}`)
 			.then(res => {
-				const info = res.data.tinfo
+				let info = res.data.tinfo
 				dispatch({
 					type: C.PROJECT_INFO,
 					payload: info
@@ -72,14 +72,15 @@ export const projectTasksAPI = proservID => (dispatch, getState) => {
 	})
 	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_task_list&proserv_id=${proservID}`)
 			.then(res => {
-				const tasks = res.data
+				let emails = res.data.email_tasks
+				let sites = res.data.site_tasks
 				dispatch({
 					type: C.EMAIL_TASKS,
-					payload: tasks.email_tasks
+					payload: emails
 				})
 				dispatch({
 					type: C.SITE_TASKS,
-					payload: tasks.site_tasks
+					payload: sites
 				})
 			})
 			.catch(error => {
@@ -99,7 +100,7 @@ export const projectNotesAPI = proservID => (dispatch, getState) => {
 	})
 	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=general&action=get_proserv_notes&proserv_id=${proservID}`)
 			.then(res => {
-				const notes = res.data.history
+				let notes = res.data.history
 				dispatch({
 					type: C.PROJECT_NOTES,
 					payload: notes

@@ -13,7 +13,7 @@ import Button from 'material-ui/Button'
 const styles = theme => ({
   root: {
     width: '100%',
-		overflowX: "-webkit-paged-x",
+		overflowX: "auto",
 	 	maxWidth: 525,
     backgroundColor: theme.palette.background.paper,
 	 	verticalAlign: "top",
@@ -27,13 +27,18 @@ const styles = theme => ({
 		verticalAlign: "top"
   },
 	listItemText: {
-		overflow: "-webkit-paged-x",
+		overflow: "auto",
+		fontSize: "11!important"
+	},
+	listMax: {
+		maxWidth: 170,
+		paddingRight: 5
 	}
 })
 
 class NestedList extends React.Component {
   state = {
-		open: true,
+		emailPage: 1,
 		tasks: {
 			site_tasks: [
 				{"task_name": "newteasfasdfasdfkk.com"},
@@ -64,13 +69,8 @@ class NestedList extends React.Component {
 				{"task_name": "anthony@gmail.com"},
 				{"task_name": "secret@gmail.com"},
 			]
-		},
-		emailPage: 1
+		}
 	}
-
-  handleClick = () => {
-    this.setState({ open: !this.state.open })
-  }
 
   componentWillMount() {
 	  const splitPath = (path) => {
@@ -95,10 +95,22 @@ class NestedList extends React.Component {
 	}
 
   render() {
-    const { classes, tasks={} } = this.props
-	  console.log(tasks)
+     const { classes, emailTasks=[], siteTasks=[] } = this.props
 
-		const num = (this.state.emailPage === 2) ? 10 : 0
+	  const emailColumnsOne = (email, key) => {
+		  if (this.state.emailPage === 1) {
+			  return key < 5
+		  } else if (this.state.emailPage === 2) {
+			  return key > 9 && key < 15
+		  }
+	  }
+	  const emailColumnsTwo = (email, key) => {
+		  if (this.state.emailPage === 1) {
+			  return key > 4 && key < 10
+		  } else if (this.state.emailPage === 2) {
+			  return key > 14 && key < 20
+		  }
+	  }
 
     return (
       <div className={classes.root}>
@@ -111,16 +123,25 @@ class NestedList extends React.Component {
 					className={classes.listDisplay}
         >
 				<div className={classes.demo}>
-					{this.state.tasks.site_tasks.map((task, i) =>
-						<List style={{maxWidth: 125}} dense={true} key={i}>
-								<ListItem>
+					{(siteTasks.length !== 0) ?
+						siteTasks.map((task, i) =>
+						<List className={classes.listMax} dense={true} key={i}>
+								<ListItem disableGutters>
 									<ListItemText
 										className={classes.listItemText}
-										secondary={task.task_name}
+										secondary={task.task_name.replace("www.", "")}
+									/>
+								</ListItem>
+						</List>) :
+						<List className={classes.listMax} dense={true}>
+								<ListItem disableGutters>
+									<ListItemText
+										className={classes.listItemText}
+										secondary="--None Submitted--"
 									/>
 								</ListItem>
 						</List>
-					)}
+					}
 					</div>
         </List>
 				<List
@@ -129,16 +150,25 @@ class NestedList extends React.Component {
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
-					{[...Array(5)].map((_, i) =>
-						<List style={{maxWidth: 195}} dense={true} key={i}>
-								<ListItem>
+					{(emailTasks.length !== 0) ?
+						emailTasks.filter(emailColumnsOne).map((task, i) =>
+							<List className={classes.listMax} dense={true} key={i}>
+									<ListItem disableGutters>
+										<ListItemText
+											className={classes.listItemText}
+											secondary={task.task_name.toLowerCase()}
+										/>
+									</ListItem>
+							</List>) :
+						<List className={classes.listMax} dense={true}>
+								<ListItem disableGutters>
 									<ListItemText
 										className={classes.listItemText}
-										secondary={this.state.tasks.email_tasks[i+num].task_name}
+										secondary="--None Submitted--"
 									/>
 								</ListItem>
 						</List>
-					)}
+					}
 					</div>
 				</List>
 				<List
@@ -147,28 +177,37 @@ class NestedList extends React.Component {
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
-					{[...Array(5)].map((_, i) =>
-						<List style={{maxWidth: 195}} dense={true} key={i}>
-								<ListItem>
+					{(emailTasks.length > 5) ?
+						emailTasks.filter(emailColumnsTwo).map((task, i) =>
+							<List className={classes.listMax} dense={true} key={i}>
+									<ListItem disableGutters>
+										<ListItemText
+											className={classes.listItemText}
+											secondary={task.task_name.toLowerCase()}
+										/>
+									</ListItem>
+							</List>) :
+						<List className={classes.listMax} dense={true}>
+								<ListItem disableGutters>
 									<ListItemText
 										className={classes.listItemText}
-										secondary={this.state.tasks.email_tasks[i+5+num].task_name}
+										secondary="&nbsp;"
 									/>
 								</ListItem>
 						</List>
-					)}
-					</div>
-					<div style={{position: "relative",right: "40%"}}>
-						<Button size="small" variant="flat" aria-label="1-10" disabled={(this.state.emailPage === 1) ? true : false}
-							onClick={this.leftClick}>
-							<NavigateBefore style={{opacity: 0.5}}/>
-						</Button>
-						<Button size="small" variant="flat" aria-label="11-20" disabled={(this.state.emailPage === 2) ? true : false}
-							onClick={this.rightClick}>
-							<NavigateNext style={{opacity: 0.5}}/>
-						</Button>
+					}
 					</div>
 				</List>
+				<div style={{textAlign:"center"}}>
+					<Button size="small" variant="flat" aria-label="1-10" disabled={(this.state.emailPage === 1) ? true : false}
+						onClick={this.leftClick}>
+						<NavigateBefore style={{opacity: 0.5}}/>
+					</Button>
+					<Button size="small" variant="flat" aria-label="11-20" disabled={(this.state.emailPage === 2) ? true : (emailTasks.length > 10) ? false : true}
+						onClick={this.rightClick}>
+						<NavigateNext style={{opacity: 0.5}}/>
+					</Button>
+				</div>
       </div>
     )
   }

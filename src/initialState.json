@@ -9,10 +9,8 @@
 	"agentReview": false,
 	"customerReview": false,
 	"projectInfo": {},
-	"tasks": {
-		"emailTasks": [],
-		"siteTasks": []
-	},
+	"emailTasks": [],
+	"siteTasks": [],
 	"notes": [],
 	"infoAPI": false,
 	"tasksAPI": false,
