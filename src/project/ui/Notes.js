@@ -179,7 +179,7 @@ class CustomPaginationActionsTable extends React.Component {
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   Actions={TablePaginationActionsWrapped}
-						rowsPerPageOptions={[5]}
+									rowsPerPageOptions={[5]}
                 />
               </TableRow>
             </TableFooter>

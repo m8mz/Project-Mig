@@ -56,10 +56,10 @@ function CustomizedInputs(props) {
   return (
     <div className={classes.container}>
       <TextField
-        defaultValue="Hello..."
-		  multiline={true}
-		  rows={10}
-		  fullWidth={true}
+        placeholder="Hello..."
+		  	multiline={true}
+		  	rows={10}
+		  	fullWidth={true}
         label="Send Email"
         id="bootstrap-input"
         InputProps={{
@@ -76,7 +76,7 @@ function CustomizedInputs(props) {
       />
 		<Button mini className={classes.button} variant="fab" color="primary" aria-label="Send Email">
 		<SendIcon style={{fontSize: 20}}/>
-  	 	</Button>
+  	</Button>
     </div>
   )
 }

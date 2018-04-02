@@ -6,25 +6,67 @@ import List, {
   ListItemText,
 } from 'material-ui/List';
 import Typography from 'material-ui/Typography'
+import NavigateBefore from 'material-ui-icons/NavigateBefore'
+import NavigateNext from 'material-ui-icons/NavigateNext'
+import Button from 'material-ui/Button'
 
 const styles = theme => ({
   root: {
     width: '100%',
-	 maxWidth: 525,
+		overflowX: "-webkit-paged-x",
+	 	maxWidth: 525,
     backgroundColor: theme.palette.background.paper,
-	 verticalAlign: "top",
-	 overflowY: "auto"
+	 	verticalAlign: "top",
+	 	overflowY: "hidden",
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
   },
   listDisplay: {
-	 display: "inline-block",
-  }
+	 	display: "inline-block",
+		verticalAlign: "top"
+  },
+	listItemText: {
+		overflow: "-webkit-paged-x",
+	}
 })
 
 class NestedList extends React.Component {
-  state = { open: true }
+  state = {
+		open: true,
+		tasks: {
+			site_tasks: [
+				{"task_name": "newteasfasdfasdfkk.com"},
+				{"task_name": "google.com"},
+				{"task_name": "bluehost.com"},
+				{"task_name": "ipage.com"},
+				{"task_name": "hostgator.com"},
+			],
+			email_tasks: [
+				{"task_name": "admin@gmail.com"},
+				{"task_name": "marasdfasdfssacus@gmail.com"},
+				{"task_name": "test@gmail.com"},
+				{"task_name": "new@gmail.com"},
+				{"task_name": "agent@gmail.com"},
+				{"task_name": "support@gmail.com"},
+				{"task_name": "bluehost@gmail.com"},
+				{"task_name": "hostmonster@gmail.com"},
+				{"task_name": "shit@gmail.com"},
+				{"task_name": "news@gmail.com"},
+				{"task_name": "toys@gmail.com"},
+				{"task_name": "code@gmail.com"},
+				{"task_name": "reply@gmail.com"},
+				{"task_name": "web@gmail.com"},
+				{"task_name": "sky@gmail.com"},
+				{"task_name": "cpanel@gmail.com"},
+				{"task_name": "mariah@gmail.com"},
+				{"task_name": "tanae@gmail.com"},
+				{"task_name": "anthony@gmail.com"},
+				{"task_name": "secret@gmail.com"},
+			]
+		},
+		emailPage: 1
+	}
 
   handleClick = () => {
     this.setState({ open: !this.state.open })
@@ -40,9 +82,23 @@ class NestedList extends React.Component {
 	  this.props.onComponentWillMount(proservID)
   }
 
+	leftClick = () => {
+		this.setState({
+			emailPage: 1
+		})
+	}
+
+	rightClick = () => {
+		this.setState({
+			emailPage: 2
+		})
+	}
+
   render() {
     const { classes, tasks={} } = this.props
-	 console.log(tasks)
+	  console.log(tasks)
+
+		const num = (this.state.emailPage === 2) ? 10 : 0
 
     return (
       <div className={classes.root}>
@@ -55,50 +111,17 @@ class NestedList extends React.Component {
 					className={classes.listDisplay}
         >
 				<div className={classes.demo}>
-						<List dense={true}>
+					{this.state.tasks.site_tasks.map((task, i) =>
+						<List style={{maxWidth: 125}} dense={true} key={i}>
 								<ListItem>
 									<ListItemText
-										secondary="domain.com"
+										className={classes.listItemText}
+										secondary={task.task_name}
 									/>
 								</ListItem>
 						</List>
+					)}
 					</div>
-					<div className={classes.demo}>
-              <List dense={true}>
-                  <ListItem>
-                    <ListItemText
-                      secondary="bluehost.com"
-                    />
-                  </ListItem>
-              </List>
-            </div>
-					<div className={classes.demo}>
-              <List dense={true}>
-                  <ListItem>
-                    <ListItemText
-                      secondary="endurance.com"
-                    />
-                  </ListItem>
-              </List>
-            </div>
-					<div className={classes.demo}>
-              <List dense={true}>
-                  <ListItem>
-                    <ListItemText
-                      secondary="ipage.com"
-                    />
-                  </ListItem>
-              </List>
-            </div>
-					<div className={classes.demo}>
-              <List dense={true}>
-                  <ListItem>
-                    <ListItemText
-                      secondary="hostgator.com"
-                    />
-                  </ListItem>
-              </List>
-            </div>
         </List>
 				<List
 					component="nav"
@@ -106,101 +129,45 @@ class NestedList extends React.Component {
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
-						<List dense={true}>
+					{[...Array(5)].map((_, i) =>
+						<List style={{maxWidth: 195}} dense={true} key={i}>
 								<ListItem>
 									<ListItemText
-										secondary="admin@gmail.com"
+										className={classes.listItemText}
+										secondary={this.state.tasks.email_tasks[i+num].task_name}
 									/>
 								</ListItem>
 						</List>
+					)}
 					</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="marcus@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="edward@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="lucas@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="tyler@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
 				</List>
 				<List
 					component="nav"
-					subheader={<span style={{opacity:0.0}}>more</span>}
+					subheader="&nbsp;"
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
-						<List dense={true}>
+					{[...Array(5)].map((_, i) =>
+						<List style={{maxWidth: 195}} dense={true} key={i}>
 								<ListItem>
 									<ListItemText
-										secondary="admin@gmail.com"
+										className={classes.listItemText}
+										secondary={this.state.tasks.email_tasks[i+5+num].task_name}
 									/>
 								</ListItem>
 						</List>
+					)}
 					</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="marcus@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="edward@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="lucas@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
-					<div className={classes.demo}>
-							<List dense={true}>
-									<ListItem>
-										<ListItemText
-											secondary="tyler@gmail.com"
-										/>
-									</ListItem>
-							</List>
-						</div>
+					<div style={{position: "relative",right: "40%"}}>
+						<Button size="small" variant="flat" aria-label="1-10" disabled={(this.state.emailPage === 1) ? true : false}
+							onClick={this.leftClick}>
+							<NavigateBefore style={{opacity: 0.5}}/>
+						</Button>
+						<Button size="small" variant="flat" aria-label="11-20" disabled={(this.state.emailPage === 2) ? true : false}
+							onClick={this.rightClick}>
+							<NavigateNext style={{opacity: 0.5}}/>
+						</Button>
+					</div>
 				</List>
       </div>
     )

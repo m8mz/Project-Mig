@@ -66,7 +66,7 @@ class NestedList extends React.Component {
         </List>
 				<List
 					component="nav"
-					subheader={<span style={{opacity:0.0}}>more</span>}
+					subheader="&nbsp;"
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
