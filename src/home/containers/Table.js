@@ -1,5 +1,5 @@
 import Table from '../ui/Table'
-import { changePage, changeRowsPerPage } from '../../actions'
+import { changePage, changeRowsPerPage, projectListAPI } from '../../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
@@ -61,6 +61,11 @@ const mapDispatchToProps = dispatch => {
 		onChangeRowsPerPage(value) {
 			dispatch(
 				changeRowsPerPage(value)
+			)
+		},
+		onComponentWillMount() {
+			dispatch(
+				projectListAPI()
 			)
 		}
 	}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Table, {
@@ -101,107 +101,110 @@ const styles = theme => ({
   root: {
     width: '80%',
     marginLeft: "10%",
-	  marginTop: 10,
-  },
-  table: {
-    minWidth: 500,
+	 marginTop: 10,
   },
   tableWrapper: {
-    overflowX: 'auto',
+    overflowX: 'auto'
   },
 })
 
-const CustomPaginationActionsTable = ({ classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false }) => {
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
-	  const changeName = (name) => {
-		  switch(name) {
-			 case "edmuniz":
-			 	return "Edward Muniz"
-			 case "shunt":
-			 	return "Sarah Hunt"
-			 case "mclarkson":
-			 	return "Miekkal Clarkson"
-			 case "toyler":
-			 	return "Tyler Oyler"
-			 case "aanselmo":
-			 	return "Tony Anselmo"
-			 case "lbejarano":
-			 	return "Lucas Bejarano"
-			 case "mhancock-gaillard":
-			 	return "Marcus Hancock-Gaillard"
-			 case "rloader":
-			 	return "Riley Loader"
-			 case "aldunn":
-			 	return "Alan Dunn"
-			 default:
-			 	return "Take"
-		 }
-	  }
+class CustomPaginationActionsTable extends Component {
+	componentWillMount() {
+		this.props.onComponentWillMount()
+		console.log("Table will mount load projects from API")
+	}
+	render() {
+		const { classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f } = this.props
+		const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
+		const changeName = (name) => {
+			switch(name) {
+			  case "edmuniz":
+				 return "Edward Muniz"
+			  case "shunt":
+				 return "Sarah Hunt"
+			  case "mclarkson":
+				 return "Miekkal Clarkson"
+			  case "toyler":
+				 return "Tyler Oyler"
+			  case "aanselmo":
+				 return "Tony Anselmo"
+			  case "lbejarano":
+				 return "Lucas Bejarano"
+			  case "mhancock-gaillard":
+				 return "Marcus HG"
+			  case "rloader":
+				 return "Riley Loader"
+			  case "aldunn":
+				 return "Alan Dunn"
+			  default:
+				 return "Take"
+		  }
+		}
+		return (
+			<Paper className={classes.root}>
 
-    return (
-      <Paper className={classes.root}>
+			  <HomeFilter /> {/* Filter for Status */}
 
-		  <HomeFilter /> {/* Filter for Status */}
-
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
-				 <TableHead>
-		          <TableRow>
-		            <TableCell numeric>#</TableCell>
-		            <TableCell>Primary Domain</TableCell>
-		            <TableCell numeric>Domains</TableCell>
-		            <TableCell numeric>Emails</TableCell>
-		            <TableCell>Date</TableCell>
-		            <TableCell>Status</TableCell>
-		            <TableCell>Owner</TableCell>
-		          </TableRow>
-				 </TableHead>
-            <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, key) => {
-                return (
-                  <TableRow key={key}>
-						  			<TableCell numeric>{n.proserv_id}</TableCell>
-                    <TableCell style={{maxWidth:375,minWidth:345}}>
-											<Button href={"/cgi/admin/proservice/project/"+n.proserv_id} className={classes.button}>
-							        	{n.domain}
-							        </Button>
-										</TableCell>
-                    <TableCell numeric>{n.domain_total}</TableCell>
-                    <TableCell numeric>{n.email_total}</TableCell>
-						  			<TableCell>{n.added.replace(/(\d{2}:?){3}/, '')}</TableCell>
-						  			<TableCell>{n.status}</TableCell>
-						  			<TableCell>{(changeName(n.assigned_to) !== 'Take') ?
-																	<b>{changeName(n.assigned_to)}</b> :
-																	<Button disabled>{changeName(n.assigned_to)}</Button>}
-																	{/* onClick={}} add the function to assign ticket */}
-										</TableCell>
-                  </TableRow>
-                )
-              })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  colSpan={7}
-                  count={data.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={(event, page) => onChangePage(page)}
-                  onChangeRowsPerPage={(event) => onChangeRowsPerPage(event.target.value)}
-                  Actions={TablePaginationActionsWrapped}
-									rowsPerPageOptions={[5,10,15]}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </div>
-      </Paper>
-    )
+	        <div className={classes.tableWrapper}>
+	          <Table>
+					 <TableHead>
+			          <TableRow>
+			            <TableCell numeric>#</TableCell>
+			            <TableCell>Primary Domain</TableCell>
+			            <TableCell numeric>Domains</TableCell>
+			            <TableCell numeric>Emails</TableCell>
+			            <TableCell>Date</TableCell>
+			            <TableCell>Status</TableCell>
+			            <TableCell>Owner</TableCell>
+			          </TableRow>
+					 </TableHead>
+	            <TableBody>
+	              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, key) => {
+	                return (
+	                  <TableRow key={key}>
+							  			<TableCell numeric>{n.proserv_id}</TableCell>
+	                    <TableCell style={{maxWidth:375,minWidth:345}}>
+												<Button href={"/cgi/admin/proservice/project/"+n.proserv_id} className={classes.button}>
+								        	{n.domain}
+								        </Button>
+											</TableCell>
+	                    <TableCell numeric>{n.domain_total}</TableCell>
+	                    <TableCell numeric>{n.email_total}</TableCell>
+							  			<TableCell>{n.added.replace(/(\d{2}:?){3}/, '')}</TableCell>
+							  			<TableCell>{n.status}</TableCell>
+							  			<TableCell>{(changeName(n.assigned_to) !== 'Take') ?
+																		<b>{changeName(n.assigned_to)}</b> :
+																		<Button disabled>{changeName(n.assigned_to)}</Button>}
+																		{/* onClick={}} add the function to assign ticket */}
+											</TableCell>
+	                  </TableRow>
+	                )
+	              })}
+	              {emptyRows > 0 && (
+	                <TableRow style={{ height: 48 * emptyRows }}>
+	                  <TableCell colSpan={6} />
+	                </TableRow>
+	              )}
+	            </TableBody>
+	            <TableFooter>
+	              <TableRow>
+	                <TablePagination
+	                  colSpan={7}
+	                  count={data.length}
+	                  rowsPerPage={rowsPerPage}
+	                  page={page}
+	                  onChangePage={(event, page) => onChangePage(page)}
+	                  onChangeRowsPerPage={(event) => onChangeRowsPerPage(event.target.value)}
+	                  Actions={TablePaginationActionsWrapped}
+							rowsPerPageOptions={[5,10,13]}
+	                />
+	              </TableRow>
+	            </TableFooter>
+	          </Table>
+	        </div>
+	      </Paper>
+		)
+	}
 }
 
 CustomPaginationActionsTable.propTypes = {

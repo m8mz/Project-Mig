@@ -10,11 +10,11 @@ import Button from 'material-ui/Button'
 
 const styles = theme => ({
   root: {
-    width: '35%',
+    width: '100%',
     maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
-		display: "inline-block",
-		verticalAlign: "top"
+	 display: "inline-block",
+	 verticalAlign: "top"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,

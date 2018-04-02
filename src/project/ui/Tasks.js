@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import List, {
   ListItem,
   ListItemText,
@@ -9,32 +9,40 @@ import Typography from 'material-ui/Typography'
 
 const styles = theme => ({
   root: {
-    width: '30%',
-    maxWidth: 525,
-		maxHeight: 300,
+    width: '100%',
+	 maxWidth: 525,
     backgroundColor: theme.palette.background.paper,
-		display: "inline-block",
-		verticalAlign: "top",
-		overflowY: "auto"
+	 verticalAlign: "top",
+	 overflowY: "auto"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
   },
-	listDisplay: {
-		display: "inline-block",
-		verticalAlign: "top"
-	}
-});
+  listDisplay: {
+	 display: "inline-block",
+  }
+})
 
 class NestedList extends React.Component {
-  state = { open: true };
+  state = { open: true }
 
   handleClick = () => {
-    this.setState({ open: !this.state.open });
-  };
+    this.setState({ open: !this.state.open })
+  }
+
+  componentWillMount() {
+	  const splitPath = (path) => {
+		  let k
+		  k = path.split("/")
+		  return (k[k.length-1])
+	  }
+	  let proservID = splitPath(this.props.location.pathname)
+	  this.props.onComponentWillMount(proservID)
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes, tasks={} } = this.props
+	 console.log(tasks)
 
     return (
       <div className={classes.root}>
@@ -195,12 +203,12 @@ class NestedList extends React.Component {
 						</div>
 				</List>
       </div>
-    );
+    )
   }
 }
 
 NestedList.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(NestedList);
+export default withStyles(styles)(NestedList)

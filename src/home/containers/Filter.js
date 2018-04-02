@@ -1,5 +1,5 @@
 import Filter from '../ui/Filter'
-import { infoReceived, inProgress, waitingForCustomer, agentReview, customerReview } from '../../actions'
+import { infoReceived, inProgress, waitingForCustomer, agentReview, customerReview, projectListAPI } from '../../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
@@ -19,25 +19,40 @@ const mapDispatchToProps = dispatch => {
 			dispatch(
 				infoReceived(state)
 			)
+			dispatch(
+				projectListAPI()
+			)
 		},
 		onInProgress(state) {
 			dispatch(
 				inProgress(state)
+			)
+			dispatch(
+				projectListAPI()
 			)
 		},
 		onWaitingForCustomer(state) {
 			dispatch(
 				waitingForCustomer(state)
 			)
+			dispatch(
+				projectListAPI()
+			)
 		},
 		onAgentReview(state) {
 			dispatch(
 				agentReview(state)
 			)
+			dispatch(
+				projectListAPI()
+			)
 		},
 		onCustomerReview(state) {
 			dispatch(
 				customerReview(state)
+			)
+			dispatch(
+				projectListAPI()
 			)
 		},
 	}

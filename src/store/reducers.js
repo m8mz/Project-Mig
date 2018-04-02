@@ -2,7 +2,25 @@ import C from '../constants'
 import { combineReducers } from 'redux'
 
 export const projectList = (state=[], action) => {
-	return state
+	switch(action.type) {
+		case C.PROJECT_LIST :
+			return action.payload
+		default :
+			return state
+	}
+}
+
+export const projectAPI = (state=false, action) => {
+	switch(action.type) {
+		case C.API_PROJECTS :
+			return true
+		case C.API_PROJECTS_OFF :
+			return false
+		case C.PROJECT_LIST :
+			return false
+		default :
+			return state
+	}
 }
 
 export const rowsPerPage = (state=15, action) => {
@@ -78,10 +96,7 @@ export const projectInfo = (state={}, action) => {
 export const emailTasks = (state=[], action) => {
 	switch(action.type) {
 		case C.EMAIL_TASKS :
-			return [
-				...state,
-				action.payload
-			]
+			return action.payload
 		default :
 			return state
 	}
@@ -90,10 +105,7 @@ export const emailTasks = (state=[], action) => {
 export const siteTasks = (state=[], action) => {
 	switch(action.type) {
 		case C.SITE_TASKS :
-		return [
-			...state,
-			action.payload
-		]
+		return action.payload
 		default :
 			return state
 	}
@@ -101,11 +113,8 @@ export const siteTasks = (state=[], action) => {
 
 export const notes = (state=[], action) => {
 	switch(action.type) {
-		case C.NOTES :
-		return [
-			...state,
-			action.payload
-		]
+		case C.PROJECT_NOTES :
+		return action.payload
 		default :
 			return state
 	}
@@ -130,8 +139,6 @@ export const tasksAPI = (state=false, action) => {
 			return true
 		case C.API_TASKS_OFF :
 			return false
-		case C.EMAIL_TASKS :
-			return false
 		case C.SITE_TASKS :
 			return false
 		default :
@@ -145,6 +152,8 @@ export const notesAPI = (state=false, action) => {
 			return true
 		case C.API_NOTES_OFF :
 			return false
+		case C.PROJECT_NOTES :
+			return false
 		default :
 			return state
 	}
@@ -152,6 +161,7 @@ export const notesAPI = (state=false, action) => {
 
 export default combineReducers({
 	projectList,
+	projectAPI,
 	rowsPerPage,
 	page,
 	infoReceived,

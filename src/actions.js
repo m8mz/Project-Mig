@@ -40,16 +40,10 @@ export const customerReview = (toggleState) => ({
 	payload: toggleFilter(toggleState)
 })
 
-export const projectAPI = proservID => (dispatch, getState) => {
+export const projectInfoAPI = proservID => (dispatch, getState) => {
 
 	dispatch({
 		type: C.API_INFO
-	})
-	dispatch({
-		type: C.API_TASKS
-	})
-	dispatch({
-		type: C.API_NOTES
 	})
 
 	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_tinfo&proserv_id=${proservID}`)
@@ -70,23 +64,12 @@ export const projectAPI = proservID => (dispatch, getState) => {
 
 			})
 
-	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=general&action=get_proserv_notes&proserv_id=${proservID}`)
-			.then(res => {
-				const notes = res.data.history
-				dispatch({
-					type: C.PROJECT_NOTES,
-					payload: notes
-				})
-			})
-			.catch(error => {
+}
 
-				console.log(error)
-
-				dispatch({
-					type: C.API_NOTES_OFF
-				})
-
-			})
+export const projectTasksAPI = proservID => (dispatch, getState) => {
+	dispatch({
+		type: C.API_TASKS
+	})
 	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_task_list&proserv_id=${proservID}`)
 			.then(res => {
 				const tasks = res.data
@@ -108,5 +91,51 @@ export const projectAPI = proservID => (dispatch, getState) => {
 				})
 
 			})
+}
 
+export const projectNotesAPI = proservID => (dispatch, getState) => {
+	dispatch({
+		type: C.API_NOTES
+	})
+	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=general&action=get_proserv_notes&proserv_id=${proservID}`)
+			.then(res => {
+				const notes = res.data.history
+				dispatch({
+					type: C.PROJECT_NOTES,
+					payload: notes
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.API_NOTES_OFF
+				})
+
+			})
+}
+
+export const projectListAPI = () => (dispatch, getState) => {
+	dispatch({
+		type: C.API_PROJECTS
+	})
+
+	axios.get(`https://i.bluehost.com/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_service_list`)
+			.then(res => {
+				let list = res.data.service_list
+				dispatch({
+					type: C.PROJECT_LIST,
+					payload: list
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.API_PROJECTS_OFF
+				})
+
+			})
 }

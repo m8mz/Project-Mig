@@ -11,18 +11,11 @@ const consoleMessages = store => next => action => {
 
 	result = next(action)
 
-	let { projectList, rowsPerPage, page, infoReceived, inProgress, waitingForCustomer, agentReview, customerReview } = store.getState()
+	let grabState = store.getState()
 
 	console.log(`
 
-		projectList: ${projectList.length}
-		RowsPerPage: ${rowsPerPage}
-		Page: ${page}
-		infoReceived: ${infoReceived}
-		inProgress: ${inProgress}
-		waitingForCustomer: ${waitingForCustomer}
-		agentReview: ${agentReview}
-		customerReview: ${customerReview}
+		state: ${JSON.stringify(grabState)}
 
 		`)
 
