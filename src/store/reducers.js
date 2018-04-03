@@ -114,7 +114,12 @@ export const siteTasks = (state=[], action) => {
 export const notes = (state=[], action) => {
 	switch(action.type) {
 		case C.PROJECT_NOTES :
-		return action.payload
+			return action.payload
+		case C.ADD_NOTE :
+			return [
+				...state,
+				action.payload
+			]
 		default :
 			return state
 	}

@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom'
 const mapStateToProps = state => {
 	return {
 		"emailTasks": state.emailTasks,
-		"siteTasks": state.siteTasks
+		"siteTasks": state.siteTasks,
+		"projectInfo": state.projectInfo
 	}
 }
 

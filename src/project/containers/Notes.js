@@ -1,6 +1,6 @@
 import Notes from '../ui/Notes'
 import { connect } from 'react-redux'
-import { projectNotesAPI } from '../../actions'
+import { projectNotesAPI, addNote } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => {
@@ -16,6 +16,11 @@ const mapDispatchToProps = dispatch => {
 		onComponentWillMount(proservID) {
 			dispatch(
 				projectNotesAPI(proservID)
+			)
+		},
+		onAddNote(fullNote) {
+			dispatch(
+				addNote(fullNote)
 			)
 		}
 	}

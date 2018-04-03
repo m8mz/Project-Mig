@@ -140,3 +140,10 @@ export const projectListAPI = () => (dispatch, getState) => {
 
 			})
 }
+
+export const addNote = fullNote => (dispatch, getState) => {
+	dispatch({
+		type: C.ADD_NOTE,
+		payload: fullNote
+	})
+}

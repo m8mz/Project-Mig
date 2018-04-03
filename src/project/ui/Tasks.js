@@ -39,37 +39,6 @@ const styles = theme => ({
 class NestedList extends React.Component {
   state = {
 		emailPage: 1,
-		tasks: {
-			site_tasks: [
-				{"task_name": "newteasfasdfasdfkk.com"},
-				{"task_name": "google.com"},
-				{"task_name": "bluehost.com"},
-				{"task_name": "ipage.com"},
-				{"task_name": "hostgator.com"},
-			],
-			email_tasks: [
-				{"task_name": "admin@gmail.com"},
-				{"task_name": "marasdfasdfssacus@gmail.com"},
-				{"task_name": "test@gmail.com"},
-				{"task_name": "new@gmail.com"},
-				{"task_name": "agent@gmail.com"},
-				{"task_name": "support@gmail.com"},
-				{"task_name": "bluehost@gmail.com"},
-				{"task_name": "hostmonster@gmail.com"},
-				{"task_name": "shit@gmail.com"},
-				{"task_name": "news@gmail.com"},
-				{"task_name": "toys@gmail.com"},
-				{"task_name": "code@gmail.com"},
-				{"task_name": "reply@gmail.com"},
-				{"task_name": "web@gmail.com"},
-				{"task_name": "sky@gmail.com"},
-				{"task_name": "cpanel@gmail.com"},
-				{"task_name": "mariah@gmail.com"},
-				{"task_name": "tanae@gmail.com"},
-				{"task_name": "anthony@gmail.com"},
-				{"task_name": "secret@gmail.com"},
-			]
-		}
 	}
 
   componentWillMount() {
@@ -95,7 +64,7 @@ class NestedList extends React.Component {
 	}
 
   render() {
-     const { classes, emailTasks=[], siteTasks=[] } = this.props
+     const { classes, emailTasks=[], siteTasks=[], projectInfo } = this.props
 
 	  const emailColumnsOne = (email, key) => {
 		  if (this.state.emailPage === 1) {
@@ -115,7 +84,7 @@ class NestedList extends React.Component {
     return (
       <div className={classes.root}>
 				<Typography align="left" variant="display1" style={{marginBottom: 15}}>
-					Project Tasks:
+					Migration Project for {projectInfo.cpanel_user}
 				</Typography>
         <List
           component="nav"

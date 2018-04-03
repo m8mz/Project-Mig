@@ -5,11 +5,14 @@ import Button from 'material-ui/Button'
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit / 1.3,
   },
 })
 
 class FlatButtons extends Component {
+	state = {
+
+	}
 	componentWillMount() {
 		const splitPath = (path) => {
 			let k
@@ -39,30 +42,36 @@ class FlatButtons extends Component {
 			  <Button href={migrationPage} target="_blank" variant="raised" color="primary" className={classes.button}>
 				 Migration
 			  </Button>
-			  <Button href={cpanelPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+			  <Button href={cpanelPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 cPanel
 			  </Button>
-				  <Button href={fmPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={fmPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 File Manager
 			  </Button>
-				  <Button href={dmPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={dmPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 Domain Manager
 			  </Button>
-				  <Button href={pmaPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={pmaPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 phpMyAdmin
 			  </Button>
-				  <Button href={emailPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={emailPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 Email
 			  </Button>
-				  <Button href={dbPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={dbPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 MySQL
 			  </Button>
-				  <Button href={ftpPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={ftpPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 FTP
 			  </Button>
-				  <Button href={sdPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+				  <Button href={sdPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 Subdomain
 			  </Button>
+				<Button variant="flat" color="primary" disabled className={classes.button}>
+				 Purchased: {projectInfo.added}
+				</Button>
+				<Button variant="flat" color="primary" disabled className={classes.button}>
+				 Status: {projectInfo.proserv_status}
+				</Button>
 			</div>
 		)
 	}
