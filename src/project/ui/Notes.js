@@ -16,9 +16,8 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import LastPageIcon from 'material-ui-icons/LastPage'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
-import AddIcon from 'material-ui-icons/Add'
-import Button from 'material-ui/Button'
-import Tooltip from 'material-ui/Tooltip'
+import TextField from 'material-ui/TextField'
+import AddNote from './AddNote'
 
 const actionsStyles = theme => ({
   root: {
@@ -147,9 +146,12 @@ class CustomPaginationActionsTable extends React.Component {
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
   }
+  addNote(note) {
+	  this.props.onAddNote(note)
+  }
 
   render() {
-    const { classes, notes=[], onAddNote=f=>f } = this.props
+    const { classes, notes=[] } = this.props
 	 console.log(notes)
     const { rowsPerPage, page } = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, notes.length - page * rowsPerPage)
@@ -173,9 +175,15 @@ class CustomPaginationActionsTable extends React.Component {
 				 return "Riley Loader"
 			  case "aldunn":
 				 return "Alan Dunn"
+			 case "customer":
+				 return "Customer"
 			  default:
-				 return "Take"
+				 return "Nobody"
 		  }
+		}
+		const convertNote = (text) => {
+			let k = new DOMParser().parseFromString(text, "text/html")
+			return k.childNodes[0].textContent
 		}
 
     return (
@@ -186,10 +194,10 @@ class CustomPaginationActionsTable extends React.Component {
             <TableBody>
               {notes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                 return (
-                  <TableRow key={n.proserv_id}>
-                    <TableCell style={{width: "15%"}}>{changeName(n.user)}</TableCell>
-                    <TableCell style={{width: "75%"}}>{n.note}</TableCell>
-                    <TableCell numeric style={{width: "10%"}}>{n.time}</TableCell>
+                  <TableRow hover={true} style={{borderBottom: "none"}} key={n.proserv_id}>
+                    <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
+                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12}}} inputProps={{style:{overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} defaultValue={(n.action === "Email Sent") ? n.note : convertNote(n.note)} /></TableCell>
+                    <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
                 );
               })}
@@ -201,20 +209,16 @@ class CustomPaginationActionsTable extends React.Component {
             </TableBody>
             <TableFooter>
               <TableRow>
-							<Tooltip id="tooltip-right" title="Add Note" placement="right">
-							<Button mini variant="fab" color="primary" aria-label="add" className={classes.button} onClick={() => onAddNote({"proserv_id":38324,"visibility":1,"time":"02/13/18 6:20pm","utime":"1518571231","action":"Status Update","user":"shunt","note":"Successfully updated status to Waiting For Cust"})}>
-								<AddIcon />
-							</Button>
-							</Tooltip>
+					 <AddNote />
                 <TablePagination
                   colSpan={3}
                   count={notes.length}
-                  rowsPerPage={rowsPerPage}
+                  rowsPerPage={5}
                   page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   Actions={TablePaginationActionsWrapped}
-									rowsPerPageOptions={[5]}
+						rowsPerPageOptions={[5]}
                 />
               </TableRow>
             </TableFooter>

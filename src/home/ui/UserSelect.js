@@ -63,7 +63,7 @@ class ConfirmationDialog extends React.Component {
         aria-labelledby="confirmation-dialog-title"
         {...other}
       >
-        <DialogTitle id="confirmation-dialog-title">Phone Ringtone</DialogTitle>
+        <DialogTitle id="confirmation-dialog-title">Select Agent</DialogTitle>
         <DialogContent>
           <RadioGroup
             ref={node => {

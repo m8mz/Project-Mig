@@ -4,7 +4,6 @@ import { projectInfoAPI } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => {
-
 	return {
 		"projectInfo": state.projectInfo
 	}

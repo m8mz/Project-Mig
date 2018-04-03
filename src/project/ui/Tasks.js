@@ -31,7 +31,7 @@ const styles = theme => ({
 		fontSize: "11!important"
 	},
 	listMax: {
-		maxWidth: 170,
+		maxWidth: 165,
 		paddingRight: 5
 	}
 })
@@ -95,7 +95,7 @@ class NestedList extends React.Component {
 					{(siteTasks.length !== 0) ?
 						siteTasks.map((task, i) =>
 						<List className={classes.listMax} dense={true} key={i}>
-								<ListItem disableGutters>
+								<ListItem disableGutters dense className={classes.listItemText}>
 									<ListItemText
 										className={classes.listItemText}
 										secondary={task.task_name.replace("www.", "")}
@@ -103,7 +103,7 @@ class NestedList extends React.Component {
 								</ListItem>
 						</List>) :
 						<List className={classes.listMax} dense={true}>
-								<ListItem disableGutters>
+								<ListItem disableGutters dense>
 									<ListItemText
 										className={classes.listItemText}
 										secondary="--None Submitted--"
@@ -122,15 +122,15 @@ class NestedList extends React.Component {
 					{(emailTasks.length !== 0) ?
 						emailTasks.filter(emailColumnsOne).map((task, i) =>
 							<List className={classes.listMax} dense={true} key={i}>
-									<ListItem disableGutters>
+									<ListItem disableGutters divider dense className={classes.listItemText}>
 										<ListItemText
 											className={classes.listItemText}
 											secondary={task.task_name.toLowerCase()}
 										/>
 									</ListItem>
 							</List>) :
-						<List className={classes.listMax} dense={true}>
-								<ListItem disableGutters>
+						<List className={classes.listMax} dense>
+								<ListItem disableGutters dense>
 									<ListItemText
 										className={classes.listItemText}
 										secondary="--None Submitted--"
@@ -148,8 +148,8 @@ class NestedList extends React.Component {
 				<div className={classes.demo}>
 					{(emailTasks.length > 5) ?
 						emailTasks.filter(emailColumnsTwo).map((task, i) =>
-							<List className={classes.listMax} dense={true} key={i}>
-									<ListItem disableGutters>
+							<List className={classes.listMax} dense key={i}>
+									<ListItem disableGutters divider dense className={classes.listItemText}>
 										<ListItemText
 											className={classes.listItemText}
 											secondary={task.task_name.toLowerCase()}
@@ -157,7 +157,7 @@ class NestedList extends React.Component {
 									</ListItem>
 							</List>) :
 						<List className={classes.listMax} dense={true}>
-								<ListItem disableGutters>
+								<ListItem disableGutters dense>
 									<ListItemText
 										className={classes.listItemText}
 										secondary="&nbsp;"

@@ -8,10 +8,10 @@
 	"waitingForCustomer": false,
 	"agentReview": false,
 	"customerReview": false,
-	"projectInfo": {},
+	"projectInfo": {"firstname":"Bob","priority":0,"other_complete":0,"provider":"bluehost","added":"04/02/18 4:23 pm","lastname":"Lefebvre","proserv_status_name":"info_received","email_remaining":0,"state":"AB","email_complete":0,"cpanel_user":"birdscal","email":"birdscalgary@gmail.com","domain_tasks":1,"email_tasks":0,"cust_id":3613878,"domain":"birdscalgary.com","assigned_to":null,"transfer_age":"1.02","proserv_status":"Info Received","updated":"0","country":"CA","proserv_id":38780,"other_remaining":0,"domain_remaining":1,"refund":0,"progress":0,"cpanel_id":3812172,"domain_complete":0,"escalation":0,"other_tasks":0},
 	"emailTasks": [],
 	"siteTasks": [],
-	"notes": [],
+	"notes": [{"proserv_id":38780,"visibility":1,"time":"04/02/18 5:39 pm","utime":"1522712372","action":"Email Sent","user":"shunt","note":"Email to: birdscalgary@gmail.com<br /> <br />Subject: Website Transfer for birdscalgary.com<br /> <br />Content: Hello, <br /><br />Thank you for providing that, we appreciate you taking the time to supply what we need to move forward. We have tested the credentials you have provided for us to access your original hosting. <br /><br />List of domains to be moved: <br />birdscalgary.com <br /><br />List of emails to be moved: <br />--NONE SUBMITTED-- <br /><br />With everything correctly submitted, we have all we need to perform your migration and have added your request to our project queue based on the time of purchase. We are working through submissions as quickly as we can, but since our migrations are executed manually to ensure the smoothest transition, we may take a few business days to reach your project in our queue. <br /><br />We ask for your patience, and thank you in advance for it; our team will email you when the migration has begun, and again when it has been completed with steps for you to review and anything you may need to perform to finalize the move to your new account. In the meantime, we ask that if you have any general questions about your BlueHost account that you reach out to our Support Team as they will be available to assist you sooner than we may be able to respond to an email ticket. <br /><br />Sincerely,<br /><br />Professional Services"}],
 	"infoAPI": false,
 	"tasksAPI": false,
 	"notesAPI": false

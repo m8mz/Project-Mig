@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Stepper, { Step, StepButton } from 'material-ui/Stepper';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import Stepper, { Step, StepButton } from 'material-ui/Stepper'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 
 const styles = theme => ({
@@ -23,10 +23,10 @@ const styles = theme => ({
 	progress: {
     margin: 0,
   },
-});
+})
 
 function getSteps() {
-  return ['New', 'In Progress', 'Done'];
+  return ['New', 'In Progress', 'Done']
 }
 
 class HorizontalNonLinearStepper extends React.Component {
@@ -34,18 +34,18 @@ class HorizontalNonLinearStepper extends React.Component {
     activeStep: 0,
     completed: {},
 		refunded: false
-  };
+  }
 
   completedSteps() {
-    return Object.keys(this.state.completed).length;
+    return Object.keys(this.state.completed).length
   }
 
   totalSteps = () => {
-    return getSteps().length;
-  };
+    return getSteps().length
+  }
 
   isLastStep() {
-    return this.state.activeStep === this.totalSteps() - 1;
+    return this.state.activeStep === this.totalSteps() - 1
   }
 
   allStepsCompleted() {
@@ -55,28 +55,28 @@ class HorizontalNonLinearStepper extends React.Component {
   handleStep = step => () => {
     this.setState({
       activeStep: step,
-    });
-  };
+    })
+  }
 
   handleComplete = () => {
     const { completed } = this.state;
     completed[this.state.activeStep] = true;
     this.setState({
       completed,
-    });
-  };
+    })
+  }
 
   handleReset = () => {
     this.setState({
       activeStep: 0,
       completed: {},
-    });
-  };
+    })
+  }
 
   render() {
-    const { classes } = this.props;
-    const steps = getSteps();
-    const { activeStep } = this.state;
+    const { classes } = this.props
+    const steps = getSteps()
+    const { activeStep } = this.state
 
     return (
       <div className={classes.root}>
@@ -92,7 +92,7 @@ class HorizontalNonLinearStepper extends React.Component {
                   {label}
                 </StepButton>}
               </Step>
-            );
+            )
           })}
         </Stepper>
         <div>
@@ -121,22 +121,22 @@ class HorizontalNonLinearStepper extends React.Component {
                   onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}
                   className={classes.button}
                 >
-                  {(this.state.activeStep === 0) ? 'Info Req' : (this.state.activeStep === 1) ? 'Waiting' : 'Completed'}
+                  {(this.state.activeStep === 0) ? 'Need Info' : (this.state.activeStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
                 <Button variant="raised" color="primary" onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}>
-                  {(this.state.activeStep === 0) ? 'Info Rec' : (this.state.activeStep === 1) ? 'Review' : 'Cancelled'}
+                  {(this.state.activeStep === 0) ? 'Rec Info' : (this.state.activeStep === 1) ? 'Review' : 'Cancelled'}
                 </Button>
               </div>
             </div>
           )}
         </div>
       </div>
-    );
+    )
   }
 }
 
 HorizontalNonLinearStepper.propTypes = {
   classes: PropTypes.object,
-};
+}
 
-export default withStyles(styles)(HorizontalNonLinearStepper);
+export default withStyles(styles)(HorizontalNonLinearStepper)
