@@ -153,12 +153,11 @@ class CustomPaginationActionsTable extends React.Component {
 
   render() {
     const { classes, notes=[] } = this.props
-	 console.log(notes)
     const { rowsPerPage, page } = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, notes.length - page * rowsPerPage)
 		const changeName = (name) => {
 			switch(name) {
-			  case "edmuniz":
+			  case "emuniz":
 				 return "Edward Muniz"
 			  case "shunt":
 				 return "Sarah Hunt"
@@ -197,8 +196,8 @@ class CustomPaginationActionsTable extends React.Component {
                 return (
                   <TableRow hover={true} style={{borderBottom: "none"}} key={n.proserv_id}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
-                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12}}} inputProps={{style:{overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} defaultValue={(n.action === "Email Sent") ?
-											<Button>View Email</Button> : convertNote(n.note)} /></TableCell>
+                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12}}} inputProps={{style:{overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} defaultValue={(n.action === "Agent Note") ?
+											"View Note" : (n.action === "Sent Email") ? "View Email" : convertNote(n.note)} /></TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
                 );

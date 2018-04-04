@@ -65,6 +65,30 @@ class NestedList extends React.Component {
 
   render() {
      const { classes, emailTasks=[], siteTasks=[], projectInfo } = this.props
+	  const changeName = (name) => {
+		  switch(name) {
+			 case "edmuniz":
+				return "Edward Muniz"
+			 case "shunt":
+				return "Sarah Hunt"
+			 case "mclarkson":
+				return "Miekkal Clarkson"
+			 case "toyler":
+				return "Tyler Oyler"
+			 case "aanselmo":
+				return "Tony Anselmo"
+			 case "lbejarano":
+				return "Lucas Bejarano"
+			 case "mhancock-gaillard":
+				return "Marcus HG"
+			 case "rloader":
+				return "Riley Loader"
+			 case "aldunn":
+				return "Alan Dunn"
+			 default:
+				return "Take"
+		 }
+	  }
 
 	  const emailColumnsOne = (email, key) => {
 		  if (this.state.emailPage === 1) {
@@ -83,8 +107,11 @@ class NestedList extends React.Component {
 
     return (
       <div className={classes.root}>
-				<Typography align="left" variant="display1" style={{marginBottom: 15}}>
+				<Typography align="left" variant="display1">
 					Migration Project for {projectInfo.cpanel_user}
+				</Typography>
+				<Typography align="left" variant="button" style={{marginBottom: 15}}>
+					Owner: {changeName(projectInfo.assigned_to)}
 				</Typography>
         <List
           component="nav"
@@ -94,7 +121,7 @@ class NestedList extends React.Component {
 				<div className={classes.demo}>
 					{(siteTasks.length !== 0) ?
 						siteTasks.map((task, i) =>
-						<List className={classes.listMax} dense={true} key={i}>
+						<List className={classes.listMax} style={{minWidth: 165}} dense={true} key={i}>
 								<ListItem disableGutters dense className={classes.listItemText}>
 									<ListItemText
 										className={classes.listItemText}

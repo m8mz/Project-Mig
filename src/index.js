@@ -7,6 +7,7 @@ import storeFactory from './store'
 import { Provider } from 'react-redux'
 import initialState from './initialState.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import C from './constants'
 
 export const Home = () => {
 	return (
@@ -29,6 +30,30 @@ export const Project = () => {
 export class App extends Component {
 	render() {
 		const store = storeFactory(initialState)
+		store.dispatch({
+			type: C.CHANGE_USER,
+			payload: localStorage.getItem('user') || 'None'
+		})
+		store.dispatch({
+			type: C.INFO_RECEIVED,
+			payload: (localStorage.getItem('infoReceived') === "On") ? true : true
+		})
+		store.dispatch({
+			type: C.IN_PROGRESS,
+			payload: (localStorage.getItem('inProgress') === "On") ? true : false
+		})
+		store.dispatch({
+			type: C.WAITING_FOR_CUSTOMER,
+			payload: (localStorage.getItem('waitingForCustomer') === "On") ? true : false
+		})
+		store.dispatch({
+			type: C.AGENT_REVIEW,
+			payload: (localStorage.getItem('agentReview') === "On") ? true : false
+		})
+		store.dispatch({
+			type: C.CUSTOMER_REVIEW,
+			payload: (localStorage.getItem('customerReview') === "On") ? true : false
+		})
 		return (
 			 <Provider store={store}>
 			 {(this.props.location.pathname.match(/\/cgi\/admin\/proservice\/?$/)) ?

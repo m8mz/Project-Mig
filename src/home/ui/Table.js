@@ -114,7 +114,7 @@ class CustomPaginationActionsTable extends Component {
 		console.log("Table will mount load projects from API")
 	}
 	render() {
-		const { classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f } = this.props
+		const { classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f, onSetUser=f=>f } = this.props
 		const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 		const changeName = (name) => {
 			switch(name) {
@@ -164,7 +164,7 @@ class CustomPaginationActionsTable extends Component {
 	                  <TableRow key={key}>
 							  			<TableCell numeric>{n.proserv_id}</TableCell>
 	                    <TableCell style={{maxWidth:375,minWidth:345}}>
-												<Button href={"/cgi/admin/proservice/project/"+n.proserv_id} className={classes.button}>
+												<Button href={"/cgi/admin/proservice/project/"+n.proserv_id} onClick={() => onSetUser(n.assigned_to)} className={classes.button}>
 								        	{n.domain}
 								        </Button>
 											</TableCell>

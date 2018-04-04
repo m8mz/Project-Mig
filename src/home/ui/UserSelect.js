@@ -1,23 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
 import List, { ListItem, ListItemText } from 'material-ui/List';
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import { FormControlLabel } from 'material-ui/Form';
-import ConfirmationDialog from './ConfirmationDialog'
-
-const options = [
-  'None',
-  'Marcus',
-	'Edward',
-	'Tyler',
-	'Tony',
-	'Lucas',
-	'Miekkal',
-	'Sarah'
-];
+import UserPop from '../containers/UserPop'
 
 const styles = theme => ({
   root: {
@@ -31,10 +16,10 @@ const styles = theme => ({
   },
 });
 
-class ConfirmationDialogDemo extends React.Component {
+class UserSelect extends React.Component {
   state = {
     open: false,
-		value: this.props.user
+    value: this.props.user,
   };
 
   button = undefined;
@@ -52,19 +37,17 @@ class ConfirmationDialogDemo extends React.Component {
     return (
       <div className={classes.root}>
         <List>
-          <ListItem button divider disabled>
-            <ListItemText primary="User Selection" />
-          </ListItem>
           <ListItem
             button
             divider
             aria-haspopup="true"
-            aria-label="User Selection"
+            aria-controls="ringtone-menu"
+            aria-label="Phone ringtone"
             onClick={this.handleClickListItem}
           >
-            <ListItemText primary="Click to change" secondary={this.state.value} />
+            <ListItemText primary="User Selection" secondary={this.state.value} />
           </ListItem>
-          <ConfirmationDialog
+          <UserPop
             classes={{
               paper: classes.dialog,
             }}
@@ -78,8 +61,8 @@ class ConfirmationDialogDemo extends React.Component {
   }
 }
 
-ConfirmationDialogDemo.propTypes = {
+UserSelect.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ConfirmationDialogDemo);
+export default withStyles(styles)(UserSelect);

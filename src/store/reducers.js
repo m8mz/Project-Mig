@@ -164,7 +164,7 @@ export const notesAPI = (state=false, action) => {
 	}
 }
 
-export const userSelect = (state="", action) => {
+export const user = (state="", action) => {
 	if ( action.type === C.CHANGE_USER ) {
 		return action.payload
 	} else {
@@ -189,5 +189,5 @@ export default combineReducers({
 	infoAPI,
 	tasksAPI,
 	notesAPI,
-	userSelect
+	user
 })

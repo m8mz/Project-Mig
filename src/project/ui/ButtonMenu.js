@@ -24,7 +24,7 @@ class FlatButtons extends Component {
 		const url = '/cgi/admin/user/cpanel/' + projectInfo.domain
 		const migrationPage = '/cgi/admin/proservice/websitetransfer?provider=' + projectInfo.provider + '&id=' + projectInfo.proserv_id
 		const cpanelPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Findex.html'
-		const fmPage = '/cgi/admin//user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Ffilemanager%2Findex.html%3Fdirselect%3Dwebroot%26showhidden%3D1'
+		const fmPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Ffilemanager%2Findex.html%3Fdirselect%3Dwebroot%26showhidden%3D1'
 		const dmPage = '/cgi/admin/user/account_admin/' + projectInfo.domain + '?bounce_step=dm'
 		const pmaPage = '/cgi/admin/user/phpmyadmin_login/' + projectInfo.domain
 		const emailPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fmail%2Fpops.html'
