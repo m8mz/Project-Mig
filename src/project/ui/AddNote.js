@@ -4,17 +4,14 @@ import TextField from 'material-ui/TextField'
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog'
 import Tooltip from 'material-ui/Tooltip'
 import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
 import green from 'material-ui/colors/green';
-import RadioButtonUncheckedIcon from 'material-ui-icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from 'material-ui-icons/RadioButtonChecked';
-import Radio, { RadioGroup } from 'material-ui/Radio'
-import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form'
+import Radio from 'material-ui/Radio'
+import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
 
 const styles = theme => ({
 	button: {

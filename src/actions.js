@@ -147,3 +147,10 @@ export const addNote = fullNote => (dispatch, getState) => {
 		payload: fullNote
 	})
 }
+
+export const changeUser = User => (dispatch, getState) => {
+	dispatch({
+		type: C.CHANGE_USER,
+		payload: User
+	})
+}

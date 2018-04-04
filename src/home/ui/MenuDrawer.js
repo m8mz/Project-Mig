@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer'
 import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
-import UserSelect from './UserSelect'
+import UserSelect from '../containers/UserSelect'
 
 const styles = theme => ({
   list: {

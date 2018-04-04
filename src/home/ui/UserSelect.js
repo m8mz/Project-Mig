@@ -6,6 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 import { FormControlLabel } from 'material-ui/Form';
+import ConfirmationDialog from './ConfirmationDialog'
 
 const options = [
   'None',
@@ -17,85 +18,6 @@ const options = [
 	'Miekkal',
 	'Sarah'
 ];
-
-class ConfirmationDialog extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.state.value = this.props.value;
-  }
-
-  state = {};
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.setState({ value: nextProps.value });
-    }
-  }
-
-  radioGroup = null;
-
-  handleEntering = () => {
-    this.radioGroup.focus();
-  };
-
-  handleCancel = () => {
-    this.props.onClose(this.props.value);
-  };
-
-  handleOk = () => {
-    this.props.onClose(this.state.value);
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  render() {
-    const { value, ...other } = this.props;
-
-    return (
-      <Dialog
-        disableBackdropClick
-        disableEscapeKeyDown
-        maxWidth="xs"
-        onEntering={this.handleEntering}
-        aria-labelledby="confirmation-dialog-title"
-        {...other}
-      >
-        <DialogTitle id="confirmation-dialog-title">Select Agent</DialogTitle>
-        <DialogContent>
-          <RadioGroup
-            ref={node => {
-              this.radioGroup = node;
-            }}
-            aria-label="ringtone"
-            name="ringtone"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            {options.map(option => (
-              <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
-            ))}
-          </RadioGroup>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={this.handleOk} color="primary">
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
-
-ConfirmationDialog.propTypes = {
-  onClose: PropTypes.func,
-  value: PropTypes.string,
-};
 
 const styles = theme => ({
   root: {
@@ -112,7 +34,7 @@ const styles = theme => ({
 class ConfirmationDialogDemo extends React.Component {
   state = {
     open: false,
-    value: 'Marcus',
+		value: this.props.user
   };
 
   button = undefined;
@@ -137,8 +59,7 @@ class ConfirmationDialogDemo extends React.Component {
             button
             divider
             aria-haspopup="true"
-            aria-controls="ringtone-menu"
-            aria-label="Phone ringtone"
+            aria-label="User Selection"
             onClick={this.handleClickListItem}
           >
             <ListItemText primary="Click to change" secondary={this.state.value} />
