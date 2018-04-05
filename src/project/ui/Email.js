@@ -58,7 +58,7 @@ function CustomizedInputs(props) {
       <TextField
         placeholder="Hello..."
 		  	multiline={true}
-		  	rows={10}
+		  	rows={12}
 		  	fullWidth={true}
         label="Send Email"
         id="bootstrap-input"

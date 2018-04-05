@@ -29,11 +29,27 @@ function getSteps() {
   return ['New', 'In Progress', 'Done']
 }
 
+function findStatus(statusName) {
+	const statusObj = [
+		["new", "info_received"],
+		["in_progress", "waiting_for_cust", "customer_review", "agent_review"],
+		["completed", "cancelled"]
+	]
+	return (statusObj[0].indexOf(statusName) !== -1) ?
+		0 :
+		(statusObj[1].indexOf(statusName) !== -1) ?
+		1 :
+		(statusObj[2].indexOf(statusName) !== -1)  ?
+		2 :
+		0
+}
+
 class HorizontalNonLinearStepper extends React.Component {
+
   state = {
-    activeStep: this.props.statusStep,
+    statusStep: findStatus(this.props.status),
     completed: {},
-		refunded: false
+	 refunded: false
   }
 
   completedSteps() {
@@ -45,7 +61,7 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   isLastStep() {
-    return this.state.activeStep === this.totalSteps() - 1
+    return this.state.statusStep === this.totalSteps() - 1
   }
 
   allStepsCompleted() {
@@ -54,13 +70,13 @@ class HorizontalNonLinearStepper extends React.Component {
 
   handleStep = step => () => {
     this.setState({
-      activeStep: step,
+      statusStep: step,
     })
   }
 
   handleComplete = () => {
     const { completed } = this.state;
-    completed[this.state.activeStep] = true;
+    completed[this.state.statusStep] = true;
     this.setState({
       completed,
     })
@@ -68,18 +84,21 @@ class HorizontalNonLinearStepper extends React.Component {
 
   handleReset = () => {
     this.setState({
-      activeStep: 0,
+      statusStep: 0,
       completed: {},
     })
   }
 
-  componentWillMount() {
-
+  componentWillReceiveProps(nextProps) {
+	  this.setState({
+		  statusStep: findStatus(nextProps.status)
+	  })
   }
 
   render() {
-    const { classes, status, statusStep } = this.props
+    const { classes, status } = this.props
     const steps = getSteps()
+	 const { statusStep } = this.state
 
     return (
       <div className={classes.root}>

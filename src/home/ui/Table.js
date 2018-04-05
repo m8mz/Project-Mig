@@ -196,7 +196,7 @@ class CustomPaginationActionsTable extends Component {
 	                  onChangePage={(event, page) => onChangePage(page)}
 	                  onChangeRowsPerPage={(event) => onChangeRowsPerPage(event.target.value)}
 	                  Actions={TablePaginationActionsWrapped}
-							rowsPerPageOptions={[5,10,13]}
+							rowsPerPageOptions={[5,10,15]}
 	                />
 	              </TableRow>
 	            </TableFooter>

@@ -110,7 +110,7 @@ class NestedList extends React.Component {
 				<Typography align="left" variant="display1">
 					Migration Project for {projectInfo.cpanel_user}
 				</Typography>
-				<Typography align="left" variant="button" style={{marginBottom: 15}}>
+				<Typography align="left" variant="subheading" style={{marginBottom: 15}}>
 					Owner: {changeName(projectInfo.assigned_to)}
 				</Typography>
         <List
