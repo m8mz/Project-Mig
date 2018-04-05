@@ -117,8 +117,8 @@ export const notes = (state=[], action) => {
 			return action.payload
 		case C.ADD_NOTE :
 			return [
-				...state,
-				action.payload
+				action.payload,
+				...state
 			]
 		default :
 			return state

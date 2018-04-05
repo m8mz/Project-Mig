@@ -30,6 +30,7 @@ class FlatButtons extends Component {
 		const emailPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fmail%2Fpops.html'
 		const dbPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fsql%2Findex.html'
 		const ftpPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fftp%2Faccounts.html'
+		const sdPage = '/cgi/admin/user/account_admin/' + projectInfo.domain + '?bounce_step=subdomainedit'
 		return (
 			<div>
 			  <Button href={url} target="_blank" variant="raised" color="primary" className={classes.button}>
@@ -58,6 +59,9 @@ class FlatButtons extends Component {
 			  </Button>
 				  <Button href={ftpPage} target="_blank" variant="flat" color="primary" className={classes.button}>
 				 FTP
+			  </Button>
+			  <Button href={sdPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				 Subdomain
 			  </Button>
 				<Button size="small" variant="flat" color="primary" disabled className={classes.button}>
 				 Purchased: {projectInfo.added.replace(/(\d{1,2}:?){3} \w{2}/, '')}
