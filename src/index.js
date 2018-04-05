@@ -36,7 +36,7 @@ export class App extends Component {
 		})
 		store.dispatch({
 			type: C.INFO_RECEIVED,
-			payload: (localStorage.getItem('infoReceived') === "On") ? true : true
+			payload: (localStorage.getItem('infoReceived') === "On") ? true : (localStorage.getItem('infoReceived') === "Off") ? false : true
 		})
 		store.dispatch({
 			type: C.IN_PROGRESS,

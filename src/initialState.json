@@ -8,7 +8,7 @@
 	"waitingForCustomer": false,
 	"agentReview": false,
 	"customerReview": false,
-	"projectInfo": {"firstname":"Candy","priority":0,"other_complete":0,"provider":"bluehost","added":"02/05/18 3:11 pm","lastname":"Jones-Guerin","proserv_status_name":"customer_review","email_remaining":6,"state":"MI","email_complete":0,"cpanel_user":"bxcdjlmy","email":"candy@webworldadvantage.com","domain_tasks":2,"email_tasks":6,"cust_id":3534311,"domain":"weloveannarbor.com","assigned_to":"edmuniz","transfer_age":"57.23","proserv_status":"Customer Review","updated":"02/08/18 10:54 am","country":"US","proserv_id":38228,"other_remaining":0,"domain_remaining":2,"refund":0,"progress":0,"cpanel_id":3678588,"domain_complete":0,"escalation":0,"other_tasks":0},
+	"projectInfo": {"added": "02/05/18 3:11 pm"},
 	"emailTasks": [],
 	"siteTasks": [],
 	"infoAPI": false,

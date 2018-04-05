@@ -73,18 +73,21 @@ class HorizontalNonLinearStepper extends React.Component {
     })
   }
 
+  componentWillMount() {
+
+  }
+
   render() {
-    const { classes, status } = this.props
+    const { classes, status, statusStep } = this.props
     const steps = getSteps()
-    const { activeStep } = this.state
 
     return (
       <div className={classes.root}>
-        <Stepper nonLinear activeStep={activeStep}>
+        <Stepper nonLinear activeStep={statusStep}>
           {steps.map((label, index) => {
             return (
               <Step key={label}>
-								{(this.state.activeStep === 1 && index === 1) ? <CircularProgress size={24} className={classes.progress}/> :
+								{(statusStep === 1 && index === 1) ? <CircularProgress size={24} className={classes.progress}/> :
                 <StepButton
                   onClick={this.handleStep(index)}
                   completed={this.state.completed[index]}
@@ -108,25 +111,25 @@ class HorizontalNonLinearStepper extends React.Component {
               <div>
                 <Button
 									variant={(status === "in_progress") ? 'raised' : 'flat'}
-                  disabled={activeStep === 0}
+                  disabled={statusStep === 0}
 									onClick={() => alert("update status")}
 									color={(this.state.refunded) ? 'secondary' : 'primary'}
                   className={classes.button}
                 >
-                  {(this.state.activeStep === 0) ? '' : (this.state.activeStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
+                  {(statusStep === 0) ? '' : (statusStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
                 </Button>
                 <Button
-                  variant={(status === "new") ? 'raised' : (status === "waiting_for_customer") ? 'raised' : (status === "completed") ? 'raised' : 'flat'}
+                  variant={(status === "new") ? 'raised' : (status === "waiting_for_cust") ? 'raised' : (status === "completed") ? 'raised' : 'flat'}
                   color="primary"
-                  onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}
+                  onClick={(statusStep === 2) ? this.handleComplete : () => alert("update status")}
                   className={classes.button}
                 >
-                  {(this.state.activeStep === 0) ? 'Need Info' : (this.state.activeStep === 1) ? 'Waiting' : 'Completed'}
+                  {(statusStep === 0) ? 'Need Info' : (statusStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
                 <Button
-									variant={(status === "info_received") ? 'raised' : (status === "customer_review") ? 'raised' : (status === "cancelled") ? 'raised' : 'flat'}
-									color="primary" onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}>
-                  {(this.state.activeStep === 0) ? 'Rec Info' : (this.state.activeStep === 1) ? 'Review' : 'Cancelled'}
+									variant={(status === "info_received") ? 'raised' : (status === "customer_review" || status === "agent_review") ? 'raised' : (status === "cancelled") ? 'raised' : 'flat'}
+									color="primary" onClick={(statusStep === 2) ? this.handleComplete : () => alert("update status")}>
+                  {(statusStep === 0) ? 'Rec Info' : (statusStep === 1) ? 'Review' : 'Cancelled'}
                 </Button>
               </div>
             </div>

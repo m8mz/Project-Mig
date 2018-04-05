@@ -17,7 +17,7 @@ import LastPageIcon from 'material-ui-icons/LastPage'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
-import AddNote from './AddNote'
+import AddNote from '../containers/AddNote'
 import Button from 'material-ui/Button'
 
 const actionsStyles = theme => ({

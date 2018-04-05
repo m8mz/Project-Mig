@@ -20,7 +20,7 @@ class FlatButtons extends Component {
 		this.props.onComponentWillMount(proservID)
 	}
 	render() {
-		const { classes, projectInfo } = this.props
+		const { classes, projectInfo={} } = this.props
 		const url = '/cgi/admin/user/cpanel/' + projectInfo.domain
 		const migrationPage = '/cgi/admin/proservice/websitetransfer?provider=' + projectInfo.provider + '&id=' + projectInfo.proserv_id
 		const cpanelPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Findex.html'

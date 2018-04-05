@@ -57,15 +57,15 @@ class TemporaryDrawer extends React.Component {
     return (
       <div>
         <Button className={classes.menuIcon} onClick={this.toggleDrawer('top', true)}><MenuIcon /></Button>
-        <Drawer variant="persistent" anchor="top" open={this.state.top} onClose={this.toggleDrawer('top', false)}>
+        <Drawer variant="temporary" anchor="top" open={this.state.top} onClose={this.toggleDrawer('top', false)}>
           <div
             tabIndex={0}
             role="button"
             onClick={this.toggleDrawer('top', false)}
-						onKeyDown={this.toggleDrawer('top', false)}
+				onKeyDown={this.toggleDrawer('top', false)}
           >
             {sideList}
-						<UserSelect />
+				<UserSelect />
           </div>
         </Drawer>
       </div>

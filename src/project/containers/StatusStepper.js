@@ -2,11 +2,10 @@ import StatusStepper from '../ui/StatusStepper'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
-	const indexStatus = ["new", "info_received", "in_progress", "waiting_for_customer", "customer_review", "agent_review", "completed", "cancelled"]
 	const findStatus = (statusName) => {
 		const statusObj = [
 			["new", "info_received"],
-			["in_progress", "waiting_for_customer", "customer_review", "agent_review"],
+			["in_progress", "waiting_for_cust", "customer_review", "agent_review"],
 			["completed", "cancelled"]
 		]
 		return (statusObj[0].indexOf(statusName) !== -1) ?

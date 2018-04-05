@@ -1,31 +1,44 @@
 import AddNote from '../ui/AddNote'
+import { addNote } from '../../actions'
 import { connect } from 'react-redux'
 
 // action=add_proserv_note&lib=general&proserv_id="+mig_id+"&visibility="+t+"&note_action=Agent%20Note&note="+encodeURIComponent(q)
 
-
 const mapStateToProps = state => {
-	const indexStatus = ["new", "info_received", "in_progress", "waiting_for_customer", "customer_review", "agent_review", "completed", "cancelled"]
-	const findStatus = (statusName) => {
-		const statusObj = [
-			["new", "info_received"],
-			["in_progress", "waiting_for_customer", "customer_review", "agent_review"],
-			["completed", "cancelled"]
-		]
-		return (statusObj[0].indexOf(statusName) !== -1) ?
-			0 :
-			(statusObj[1].indexOf(statusName) !== -1) ?
-			1 :
-			(statusObj[2].indexOf(statusName) !== -1)  ?
-			2 :
-			0
-	}
+		let username
+		if (state.user === 'Marcus') {
+			username = 'mhancock-gaillard'
+		} else if (state.user === 'Edward') {
+			username = 'emuniz'
+		} else if (state.user === 'Miekkal') {
+			username = 'mclarkson'
+		} else if (state.user === 'Tyler') {
+			username = 'toyler'
+		} else if (state.user === 'Tony') {
+			username = 'aanselmo'
+		} else if (state.user === 'Lucas') {
+			username = 'lbejarano'
+		} else if (state.user === 'Sarah') {
+			username = 'shunt'
+		} else {
+			username = 'agent'
+		}
 	return {
 		"id": state.projectInfo.proserv_id,
-		"status": state.projectInfo.proserv_status_name
+		"user": username
 	}
 }
 
-const Container = connect(mapStateToProps)(AddNote)
+const mapDispatchToProps = note => (dispatch, getState) => {
+	return {
+		onAddNote(fullNote) {
+			dispatch(
+				addNote(fullNote)
+			)
+		}
+	}
+}
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(AddNote)
 
 export default Container

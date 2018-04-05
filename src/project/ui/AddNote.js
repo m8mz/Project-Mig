@@ -32,12 +32,32 @@ class FormDialog extends React.Component {
     this.setState({ open: true })
   }
 
-  handleClose = () => {
+  handleClose = (event, value) => {
+	  console.log(event)
     this.setState({ open: false })
   }
 
   handleChange = event => {
     this.setState({ selectedValue: event.target.value })
+  }
+  addNote = note => {
+	  let d = new Date()
+	  let month = d.getMonth()
+	  let day = d.getDate()
+	  let year = d.getFullYear()
+	  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+	  let time = month+'/'+day+'/'+year+' '+hourMinute
+	  let fullNote = {
+		  proserv_id: this.props.id,
+		  visibility: 1,
+		  time: time,
+		  utime: d.getTime(),
+		  action: "Agent Note",
+		  user: this.props.user,
+		  note: note
+	  }
+	  this.props.onAddNote(fullNote)
+	  this.setState({ open: false })
   }
 
   //onClick={() => this.addNote({"proserv_id":38324,"visibility":1,"time":"02/13/18 6:20pm","utime":"1518571231","action":"Status Update","user":"shunt","note":"Successfully updated status<br /> to Waiting For Cust"})}
@@ -79,7 +99,7 @@ class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={() => this.addNote("testing")} color="primary">
               Add
             </Button>
           </DialogActions>
