@@ -31,7 +31,7 @@ function getSteps() {
 
 class HorizontalNonLinearStepper extends React.Component {
   state = {
-    activeStep: 0,
+    activeStep: this.props.statusStep,
     completed: {},
 		refunded: false
   }
@@ -74,7 +74,7 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, status } = this.props
     const steps = getSteps()
     const { activeStep } = this.state
 
@@ -107,7 +107,7 @@ class HorizontalNonLinearStepper extends React.Component {
             <div>
               <div>
                 <Button
-									variant={(this.state.activeStep === 0) ? 'flat' : (this.state.activeStep === 1) ? 'raised' : 'flat'}
+									variant={(status === "in_progress") ? 'raised' : 'flat'}
                   disabled={activeStep === 0}
 									onClick={() => alert("update status")}
 									color={(this.state.refunded) ? 'secondary' : 'primary'}
@@ -116,14 +116,16 @@ class HorizontalNonLinearStepper extends React.Component {
                   {(this.state.activeStep === 0) ? '' : (this.state.activeStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
                 </Button>
                 <Button
-                  variant="raised"
+                  variant={(status === "new") ? 'raised' : (status === "waiting_for_customer") ? 'raised' : (status === "completed") ? 'raised' : 'flat'}
                   color="primary"
                   onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}
                   className={classes.button}
                 >
                   {(this.state.activeStep === 0) ? 'Need Info' : (this.state.activeStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
-                <Button variant="raised" color="primary" onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}>
+                <Button
+									variant={(status === "info_received") ? 'raised' : (status === "customer_review") ? 'raised' : (status === "cancelled") ? 'raised' : 'flat'}
+									color="primary" onClick={(this.state.activeStep === 2) ? this.handleComplete : () => alert("update status")}>
                   {(this.state.activeStep === 0) ? 'Rec Info' : (this.state.activeStep === 1) ? 'Review' : 'Cancelled'}
                 </Button>
               </div>

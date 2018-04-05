@@ -7,7 +7,7 @@ import ButtonMenu from '../containers/ButtonMenu'
 import Tasks from '../containers/Tasks'
 import Divider from 'material-ui/Divider'
 import Notes from '../containers/Notes'
-import EmailTemplates from './EmailTemplates'
+import EmailTemplates from '../containers/EmailTemplates'
 import Email from './Email'
 import Grid from 'material-ui/Grid'
 
