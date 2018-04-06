@@ -39,7 +39,7 @@ class NestedList extends React.Component {
 		let requestInfo =	`Hello,
 
 Thank you for choosing Professional Services and purchasing our website transfer service. We received your migration request but need some information to get started. We prefer you fill out our form:
-https://my.${document.location.host}/cgi/services/migration
+https://my.${document.location.host.slice(2)}/cgi/services/migration
 
 Alternatively you can reply directly with the information requested below. If you have WordPress please note that the username and password we need will not be your WordPress dashboard login credentials but rather your old hosting provider login credentials.
 
@@ -95,7 +95,7 @@ ${emails.map(email => email.task_name).join('\n')}
 
 To check the email, first change the passwords by logging into your hosting account > email > Email Manager > view details. After that you can access webmail here:
 
-https://${document.location.host}/webmail
+https://${document.location.host.slice(2)}/webmail
 
 Be aware that you may need to set passwords again later if for any reason we have to try recopying email.
 
@@ -126,12 +126,12 @@ The existing messages for the following email accounts have been copied to our s
 ${emails.map(email => email.task_name).join('\n')}
 
 To check the email, first change the passwords by logging into your hosting account > email > Email Manager > view details. After that you can access webmail here:
-https://${document.location.host}/webmail
+https://${document.location.host.slice(2)}/webmail
 
 At this point you'll have up to 14 days from today to review what has been migrated. You will need to reply to this message to let us know whether or not there are any issues so that we can address them. Once all issues have been addressed, what you'll need to do to wrap the migration up is change your nameservers to the following:
 
-ns1.${document.location.host}
-ns2.${document.location.host}
+ns1.${document.location.host.slice(2)}
+ns2.${document.location.host.slice(2)}
 
 # IMPORTANT
 We must stress that performing these DNS updates should happen immediately after confirming everything looks good. Changes made to your website between when we started your migration and when you update your DNS will not reflect on the migrated version. This means that you are liable to lose updates and will need to recreate them on your end. In these cases, unfortunately, you will not be eligible for re-migration.

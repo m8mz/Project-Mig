@@ -5,6 +5,7 @@ import Stepper, { Step, StepButton } from 'material-ui/Stepper'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
+import axios from 'axios'
 
 const styles = theme => ({
   root: {
@@ -33,7 +34,7 @@ function findStatus(statusName) {
 	const statusObj = [
 		["new", "info_received"],
 		["in_progress", "waiting_for_cust", "customer_review", "agent_review"],
-		["completed", "cancelled"]
+		["complete", "cancelled"]
 	]
 	return (statusObj[0].indexOf(statusName) !== -1) ?
 		0 :
@@ -76,13 +77,37 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   handleComplete = (status) => {
-		// TODO API CALL
-    const { completed } = this.state;
-    completed[this.state.statusStep] = true;
-    this.setState({
-      completed,
-			status: status
-    })
+	 const params = {
+		 user: this.props.user,
+		 provider: document.location.host.slice(2).replace(/\.com/, ''),
+		 service_type: 'websitetransfer',
+		 action: 'update_status',
+		 lib: 'general',
+		 new_status: status,
+		 proserv_id: this.props.id
+	 }
+	 axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&new_status=${params.new_status}&proserv_id=${params.proserv_id}`)
+	 .then((res) => {
+		 console.log(`${JSON.stringify(res)}
+				 Exit Code: ${res.data.success}
+				 Response: ${res.data.note}
+			 `)
+			 if (res.data.success === 1) {
+				 this.setState({
+					status: status
+			   })
+				const { completed } = this.state
+				completed[2] = true
+				this.setState({
+		        completed,
+		  			status: status
+		      })
+		   } else {
+			   console.log(`Error: ${res.data.note}`)
+		   }})
+			.catch((error) => {
+		console.log("something went wrong changing status.")
+   })
   }
 
   handleReset = () => {
@@ -92,19 +117,48 @@ class HorizontalNonLinearStepper extends React.Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-	  this.setState({
-		  statusStep: findStatus(nextProps.status)
-	  })
+  componentWillUpdate(nextProps) {
+	  if (nextProps.status !== this.props.status) {
+		 if (nextProps.status === "complete" || nextProps.status === "cancelled") {
+			 const { completed } = this.state
+	 		 completed[2] = true
+			 this.setState({
+  			 	completed
+  		 	 })
+		 }
+		  this.setState({
+			 status: nextProps.status,
+			 statusStep: findStatus(nextProps.status)
+		 })
+	  }
   }
 
 	setStatus = (status) => {
-		// TODO API CALL
-		this.setState({
-			status: status
-		})
-	}
-
+		const params = {
+  		 user: this.props.user,
+  		 provider: document.location.host.slice(2).replace(/\.com/, ''),
+  		 service_type: 'websitetransfer',
+  		 action: 'update_status',
+  		 lib: 'general',
+  		 new_status: status,
+  		 proserv_id: this.props.id
+  	 }
+  	 axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&new_status=${params.new_status}&proserv_id=${params.proserv_id}`).then((res) => {
+  		 console.log(`${JSON.stringify(res)}
+  				 Exit Code: ${res.data.success}
+  				 Response: ${res.data.note}
+  			 `)
+  			 if (res.data.success === 1) {
+  				 this.setState({
+  					status: status
+  				})
+  			} else {
+  				console.log(`Error: ${res.data.note}`)
+  			}
+  	 }).catch((error) => {
+  		console.log("something went wrong changing status.")
+     })
+  }
   render() {
     const { classes } = this.props
     const steps = getSteps()
@@ -118,8 +172,8 @@ class HorizontalNonLinearStepper extends React.Component {
               <Step key={label}>
 								{(statusStep === 1 && index === 1) ? <CircularProgress size={24} className={classes.progress}/> :
                 <StepButton
-                  onClick={(this.state.completed["2"] === true) ? '' : this.handleStep(index)}
-                  completed={this.state.completed[index]}
+                  onClick={(this.state.completed[2] === true) ? '' : this.handleStep(index)}
+                  completed={this.state.completed[2]}
                 >
                   {label}
                 </StepButton>}
@@ -131,7 +185,7 @@ class HorizontalNonLinearStepper extends React.Component {
           {this.allStepsCompleted() ? (
             <div>
               <Typography className={classes.instructions}>
-                Finished Project - {(status === "completed") ? 'Completed' : 'Cancelled'}
+                Finished Project - {(status === "complete") ? 'Completed' : 'Cancelled'}
               </Typography>
               <Button onClick={this.handleReset}>Reset</Button>
             </div>
@@ -157,7 +211,7 @@ class HorizontalNonLinearStepper extends React.Component {
 										'flat'}
                   color="primary"
                   onClick={(statusStep === 2) ?
-										() => this.handleComplete("completed") :
+										() => this.handleComplete("complete") :
 										(statusStep === 0) ? () => this.setStatus("new") :
 										() => this.setStatus("waiting_for_cust")
 										}

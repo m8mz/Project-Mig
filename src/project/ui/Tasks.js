@@ -9,6 +9,7 @@ import Typography from 'material-ui/Typography'
 import NavigateBefore from 'material-ui-icons/NavigateBefore'
 import NavigateNext from 'material-ui-icons/NavigateNext'
 import Button from 'material-ui/Button'
+import axios from 'axios'
 
 const styles = theme => ({
   root: {
@@ -39,6 +40,7 @@ const styles = theme => ({
 class NestedList extends React.Component {
   state = {
 		emailPage: 1,
+		assigned_to: this.props.projectInfo.assigned_to
 	}
 
   componentWillMount() {
@@ -49,6 +51,16 @@ class NestedList extends React.Component {
 	  }
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
+	  console.log(this.props.projectInfo.assigned_to)
+	  console.log("here")
+  }
+
+  componentWillReceiveProps(nextProps) {
+	  if (nextProps.projectInfo.assigned_to !== this.state.assigned_to && nextProps.projectInfo.assigned_to !== "") {
+		  this.setState({
+			  assigned_to: nextProps.projectInfo.assigned_to
+		  })
+	  }
   }
 
 	leftClick = () => {
@@ -63,32 +75,60 @@ class NestedList extends React.Component {
 		})
 	}
 
+	takeTicket = () => {
+		const params = {
+  		 user: this.props.user,
+  		 provider: document.location.host.slice(2).replace(/\.com/, ''),
+  		 service_type: 'websitetransfer',
+  		 action: 'assign_transfer',
+  		 lib: 'general',
+  		 proserv_id: this.props.projectInfo.proserv_id
+  	 	}
+		console.log(JSON.stringify(params))
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=on`).then((res) => {
+  		 console.log(`${JSON.stringify(res)}
+  				 Exit Code: ${res.data.success}
+  				 Response: ${res.data.note}
+  			 `)
+  			 if (res.data.success === 1) {
+  				 this.setState({
+  					assigned_to: params.user
+  				})
+  			} else {
+  				console.log(`Error: ${res.data.note}`)
+  			}
+		}).catch((error) => {
+  			console.log("something went wrong changing owner.")
+		})
+	}
+	changeName = (name) => {
+	   switch(name) {
+		  case "emuniz":
+			 return "Edward Muniz"
+		  case "shunt":
+			 return "Sarah Hunt"
+		  case "mclarkson":
+			 return "Miekkal Clarkson"
+		  case "toyler":
+			 return "Tyler Oyler"
+		  case "aanselmo":
+			 return "Tony Anselmo"
+		  case "lbejarano":
+			 return "Lucas Bejarano"
+		  case "mhancock-gaillard":
+			 return "Marcus HG"
+		  case "rloader":
+			 return "Riley Loader"
+		  case "aldunn":
+			 return "Alan Dunn"
+		  default:
+			 return "Take"
+	  }
+	}
+
   render() {
      const { classes, emailTasks=[], siteTasks=[], projectInfo } = this.props
-	  const changeName = (name) => {
-		  switch(name) {
-			 case "edmuniz":
-				return "Edward Muniz"
-			 case "shunt":
-				return "Sarah Hunt"
-			 case "mclarkson":
-				return "Miekkal Clarkson"
-			 case "toyler":
-				return "Tyler Oyler"
-			 case "aanselmo":
-				return "Tony Anselmo"
-			 case "lbejarano":
-				return "Lucas Bejarano"
-			 case "mhancock-gaillard":
-				return "Marcus HG"
-			 case "rloader":
-				return "Riley Loader"
-			 case "aldunn":
-				return "Alan Dunn"
-			 default:
-				return "Take"
-		 }
-	  }
+
 
 	  const emailColumnsOne = (email, key) => {
 		  if (this.state.emailPage === 1) {
@@ -111,9 +151,9 @@ class NestedList extends React.Component {
 					Migration Project for {projectInfo.cpanel_user}
 				</Typography>
 				<Typography align="left" variant="subheading" style={{marginBottom: 15}}>
-					Owner: {(changeName(projectInfo.assigned_to) !== 'Take') ?
-				 	<Button size="small">Take</Button> :
-					changeName(projectInfo.assigned_to)}
+					Owner: {(this.changeName(this.state.assigned_to) === 'Take') ?
+				 	<Button onClick={this.takeTicket} size="small">Take</Button> :
+					<Button onClick={this.takeTicket} size="small">{this.changeName(this.state.assigned_to)}</Button>}
 				</Typography>
         <List
           component="nav"

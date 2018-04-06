@@ -12,6 +12,7 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog'
+import axios from 'axios'
 
 const styles = theme => ({
   container: {
@@ -70,6 +71,41 @@ class CustomizedInputs extends React.Component {
   handleClose = () => {
     this.setState({ open: false })
   }
+  sendEmail = () => {
+	  if (document.getElementById('finalEmail').value.replace(/\s/, "") === "") {
+		  console.log("Cannot send a blank email for obvious reasons.")
+	  } else {
+		  const mail = {
+   		  user: this.props.user,
+   		  provider: document.location.host.slice(2).replace(/\.com/, ''),
+   		  action: 'send_email',
+   		  type: 'websitetransfer',
+   		  lib: 'general',
+   		  email: 'marcus.hancock-gaillard@endurance.com',
+   		  subject: `Website Transfer for ${this.props.cpanel_user}`,
+   		  content: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>")),
+   		  content_note: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>").replace(/<br>/g, "!!break!!")),
+   		  cust_id: this.props.cust_id,
+   		  proserv_id: this.props.id
+   	  }
+   	  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${mail.user}&provider=${mail.provider}&type=${mail.type}&action=${mail.action}&lib=${mail.lib}&email=${mail.email}&subject=${mail.subject}&content=${mail.content}&content_note=${mail.content_note}&cust_id=${mail.cust_id}&proserv_id=${mail.proserv_id}`)
+   	  .then((res) => {
+   		  console.log(`
+   				  Exit Code: ${res.data.success}
+   				  Response: ${res.data.note}
+   			  `)
+   		  if (res.data.success === 1) {
+   			  document.getElementById('bootstrap-input').value = ""
+   			  this.setState({ open: false })
+   		  } else {
+   			  console.log(`Error: ${res.data.note}`)
+   		  }
+   	  })
+   	 .catch((error) => {
+   		 console.log("something went wrong adding note.")
+   	 })
+	  }
+  }
 	previewEmail = () => {
 		const email = document.getElementById('bootstrap-input').value
 		return email
@@ -111,14 +147,14 @@ class CustomizedInputs extends React.Component {
 	          <DialogTitle id="alert-dialog-title">{"Preview Email"}</DialogTitle>
 	          <DialogContent>
 	            <DialogContentText id="alert-dialog-description">
-	              <TextField classes={{root:classes.root}} multiline defaultValue={(this.state.open) ? this.previewEmail() : null} rowsMax={40} />
+	              <TextField classes={{root:classes.root}} id="finalEmail" multiline defaultValue={(this.state.open) ? this.previewEmail() : null} rowsMax={40} />
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
 	            <Button onClick={this.handleClose} color="primary">
 	              Cancel
 	            </Button>
-	            <Button onClick={this.handleClose} color="primary" autoFocus>
+	            <Button onClick={this.sendEmail} color="primary" autoFocus>
 	              Send Email
 	            </Button>
 	          </DialogActions>

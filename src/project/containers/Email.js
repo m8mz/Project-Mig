@@ -1,7 +1,5 @@
-import Tasks from '../ui/Tasks'
+import Email from '../ui/Email'
 import { connect } from 'react-redux'
-import { projectTasksAPI } from '../../actions'
-import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => {
 	let username
@@ -23,24 +21,15 @@ const mapStateToProps = state => {
 		username = 'agent'
 	}
 	return {
-		"emailTasks": state.emailTasks,
-		"siteTasks": state.siteTasks,
-		"projectInfo": state.projectInfo,
-		"user": username
+		"cpUser": state.projectInfo.cpanel_user,
+		"user": username,
+		"id": state.projectInfo.proserv_id,
+		"cust_id": state.projectInfo.cust_id,
+		"email": state.projectInfo.email,
+		"cpanel_user": state.projectInfo.cpanel_user
 	}
 }
 
-const mapDispatchToProps = dispatch => {
-
-	return {
-		onComponentWillMount(proservID) {
-			dispatch(
-				projectTasksAPI(proservID)
-			)
-		}
-	}
-}
-
-const Container = withRouter(connect(mapStateToProps, mapDispatchToProps)(Tasks))
+const Container = connect(mapStateToProps)(Email)
 
 export default Container

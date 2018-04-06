@@ -12,6 +12,7 @@ import { withStyles } from 'material-ui/styles'
 import green from 'material-ui/colors/green'
 import Radio from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
+import axios from 'axios'
 
 const styles = theme => ({
 	button: {
@@ -51,17 +52,33 @@ class FormDialog extends React.Component {
 	  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 	  let time = month+'/'+day+'/'+year+' '+hourMinute
 	  var fullNote = {
-		  proserv_id: this.props.id,
-		  visibility: 1,
-		  time: time,
-		  utime: d.getTime(),
-		  action: "Agent Note",
 		  user: this.props.user,
-		  note: note
+		  provider: document.location.host.slice(2).replace(/\.com/, ''),
+		  action: 'add_proserv_note',
+		  lib: 'general',
+		  proserv_id: this.props.id,
+		  visibility: 3,
+		  note_action: "Agent Note",
+		  note: note,
+		  time: time,
+		  utime: d.getTime()
 	  }
-		// TODO API CALL
-	  this.props.onAddNote(fullNote)
-	  this.setState({ open: false })
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`)
+		.then((res) => {
+			console.log(`
+					Exit Code: ${res.data.success}
+					Response: ${res.data.note}
+				`)
+			if (res.data.success === 1) {
+				this.props.onAddNote(fullNote)
+				this.setState({ open: false })
+			} else {
+				console.log(`Error: ${res.data.note}`)
+			}
+		})
+	  .catch((error) => {
+		  console.log("something went wrong adding note.")
+	  })
   }
 
   render() {

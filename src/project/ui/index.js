@@ -8,7 +8,7 @@ import Tasks from '../containers/Tasks'
 import Divider from 'material-ui/Divider'
 import Notes from '../containers/Notes'
 import EmailTemplates from '../containers/EmailTemplates'
-import Email from './Email'
+import Email from '../containers/Email'
 import Grid from 'material-ui/Grid'
 
 const styles = theme => ({
