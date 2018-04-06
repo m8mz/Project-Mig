@@ -9,7 +9,7 @@ import Dialog, {
 import Tooltip from 'material-ui/Tooltip'
 import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
-import green from 'material-ui/colors/green';
+import green from 'material-ui/colors/green'
 import Radio from 'material-ui/Radio'
 import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form'
 
@@ -19,7 +19,10 @@ const styles = theme => ({
 	},
 	group: {
 		display: "block"
-	}
+	},
+	checked: {
+    color: green[500],
+  }
 })
 
 class FormDialog extends React.Component {
@@ -42,12 +45,12 @@ class FormDialog extends React.Component {
   }
   addNote = note => {
 	  let d = new Date()
-	  let month = d.getMonth()
+	  let month = d.getMonth()+1
 	  let day = d.getDate()
 	  let year = d.getFullYear()
 	  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 	  let time = month+'/'+day+'/'+year+' '+hourMinute
-	  let fullNote = {
+	  var fullNote = {
 		  proserv_id: this.props.id,
 		  visibility: 1,
 		  time: time,
@@ -56,11 +59,10 @@ class FormDialog extends React.Component {
 		  user: this.props.user,
 		  note: note
 	  }
+		// TODO API CALL
 	  this.props.onAddNote(fullNote)
 	  this.setState({ open: false })
   }
-
-  //onClick={() => this.addNote({"proserv_id":38324,"visibility":1,"time":"02/13/18 6:20pm","utime":"1518571231","action":"Status Update","user":"shunt","note":"Successfully updated status<br /> to Waiting For Cust"})}
 
   render() {
 	 const { classes } = this.props
@@ -81,8 +83,7 @@ class FormDialog extends React.Component {
 				<FormControl component="fieldset" required style={{display: "inline"}}>
 	          <FormLabel component="legend">Type</FormLabel>
 	            <FormControlLabel value="general" onChange={this.handleChange} control={<Radio checked={(this.state.selectedValue === "general") ? true : false} />} label="General" />
-	            <FormControlLabel value="important" onChange={this.handleChange} control={<Radio checked={(this.state.selectedValue === "important") ? true : false} />} label="Important" />
-	            <FormControlLabel value="essential" onChange={this.handleChange} control={<Radio checked={(this.state.selectedValue === "essential") ? true : false} />} label="Essential" />
+	            <FormControlLabel value="important" onChange={this.handleChange} control={<Radio classes={{checked: classes.checked}} checked={(this.state.selectedValue === "important") ? true : false} />} label="Important" />
 	        </FormControl>
             <TextField
               autoFocus
@@ -99,13 +100,13 @@ class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.addNote("testing")} color="primary">
+            <Button onClick={() => this.addNote(document.getElementById('addNote').value)} color="primary">
               Add
             </Button>
           </DialogActions>
         </Dialog>
       </div>
-    );
+    )
   }
 }
 

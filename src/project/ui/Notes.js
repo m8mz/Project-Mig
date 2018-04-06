@@ -18,7 +18,6 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import AddNote from '../containers/AddNote'
-import Button from 'material-ui/Button'
 
 const actionsStyles = theme => ({
   root: {
@@ -192,15 +191,15 @@ class CustomPaginationActionsTable extends React.Component {
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableBody>
-              {notes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+              {notes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, i) => {
                 return (
-                  <TableRow hover={true} style={{borderBottom: "none"}} key={n.proserv_id}>
+                  <TableRow hover={true} style={{borderBottom: "none"}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
-                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12}}} inputProps={{style:{overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} defaultValue={(n.action === "Agent Note") ?
-											"View Note" : (n.action === "Sent Email") ? "View Email" : convertNote(n.note)} /></TableCell>
+                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12,overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} value={(n.action === "Agent Note") ?
+											convertNote(n.note) : (n.action === "Sent Email") ? convertNote(n.note) : convertNote(n.note)} /></TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
-                );
+                )
               })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 45 * emptyRows }}>

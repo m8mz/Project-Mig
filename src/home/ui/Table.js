@@ -174,8 +174,13 @@ class CustomPaginationActionsTable extends Component {
 							  			<TableCell>{n.status}</TableCell>
 							  			<TableCell>{(changeName(n.assigned_to) !== 'Take') ?
 																		<b>{changeName(n.assigned_to)}</b> :
-																		<Button disabled>{changeName(n.assigned_to)}</Button>}
-																		{/* onClick={}} add the function to assign ticket */}
+																		<Button disabled={(changeName(n.assigned_to) === 'Take') ?
+																			false :
+																			true}
+																			onClick={(changeName(n.assigned_to) === 'Take') ?
+																				() => alert("take pressed") :
+																				null}
+																		>{changeName(n.assigned_to)}</Button>}
 											</TableCell>
 	                  </TableRow>
 	                )

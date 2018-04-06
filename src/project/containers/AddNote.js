@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 	}
 }
 
-const mapDispatchToProps = note => (dispatch, getState) => {
+const mapDispatchToProps = fullNote => (dispatch, getState) => {
 	return {
 		onAddNote(fullNote) {
 			dispatch(

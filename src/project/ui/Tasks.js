@@ -111,7 +111,9 @@ class NestedList extends React.Component {
 					Migration Project for {projectInfo.cpanel_user}
 				</Typography>
 				<Typography align="left" variant="subheading" style={{marginBottom: 15}}>
-					Owner: {changeName(projectInfo.assigned_to)}
+					Owner: {(changeName(projectInfo.assigned_to) !== 'Take') ?
+				 	<Button size="small">Take</Button> :
+					changeName(projectInfo.assigned_to)}
 				</Typography>
         <List
           component="nav"

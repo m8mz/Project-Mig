@@ -6,10 +6,16 @@ import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button'
 import SendIcon from 'material-ui-icons/Send'
 import Tooltip from 'material-ui/Tooltip'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
 
 const styles = theme => ({
   container: {
-	 marginTop: 20
+	 marginTop: 5
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -48,39 +54,78 @@ const styles = theme => ({
   textFieldFormLabel: {
     fontSize: 18,
   },
-});
+	root: {
+		width: 800
+	}
+})
 
-function CustomizedInputs(props) {
-  const { classes } = props
+class CustomizedInputs extends React.Component {
+	state = {
+		open: false
+	}
+	handleClickOpen = () => {
+    this.setState({ open: true })
+  }
 
-  return (
-    <div className={classes.container}>
-      <TextField
-        placeholder="Hello..."
-		  	multiline={true}
-		  	rows={12}
-		  	fullWidth={true}
-        label="Send Email"
-        id="bootstrap-input"
-        InputProps={{
-          disableUnderline: true,
-          classes: {
-            root: classes.textFieldRoot,
-            input: classes.textFieldInput,
-          },
-        }}
-        InputLabelProps={{
-          shrink: true,
-          className: classes.textFieldFormLabel,
-        }}
-      />
-		<Tooltip id="tooltip-right" title="Send Email" placement="right">
-		<Button mini className={classes.button} variant="raised" color="primary" aria-label="Send Email" onClick={() => alert("Send Email Clicked")}>
-		<SendIcon style={{fontSize: 20}}/>
-  	</Button>
-		</Tooltip>
-    </div>
-  )
+  handleClose = () => {
+    this.setState({ open: false })
+  }
+	previewEmail = () => {
+		const email = document.getElementById('bootstrap-input').value
+		return email
+	}
+	render() {
+		const { classes } = this.props
+		return (
+			<div className={classes.container}>
+	      <TextField
+	        placeholder="Hello..."
+			  	multiline={true}
+			  	rows={15}
+			  	fullWidth={true}
+	        label="Send Email"
+	        id="bootstrap-input"
+	        InputProps={{
+	          disableUnderline: true,
+	          classes: {
+	            root: classes.textFieldRoot,
+	            input: classes.textFieldInput,
+	          },
+	        }}
+	        InputLabelProps={{
+	          shrink: true,
+	          className: classes.textFieldFormLabel,
+	        }}
+	      />
+			<Tooltip id="tooltip-right" title="Send Email" placement="right">
+			<Button mini className={classes.button} variant="raised" color="primary" aria-label="Send Email" onClick={this.handleClickOpen}>
+			<SendIcon style={{fontSize: 20}}/>
+	  	</Button>
+			</Tooltip>
+			<Dialog maxWidth="md"
+	          open={this.state.open}
+	          onClose={this.handleClose}
+	          aria-labelledby="alert-dialog-title"
+	          aria-describedby="alert-dialog-description"
+	        >
+	          <DialogTitle id="alert-dialog-title">{"Preview Email"}</DialogTitle>
+	          <DialogContent>
+	            <DialogContentText id="alert-dialog-description">
+	              <TextField classes={{root:classes.root}} multiline defaultValue={(this.state.open) ? this.previewEmail() : null} rowsMax={40} />
+	            </DialogContentText>
+	          </DialogContent>
+	          <DialogActions>
+	            <Button onClick={this.handleClose} color="primary">
+	              Cancel
+	            </Button>
+	            <Button onClick={this.handleClose} color="primary" autoFocus>
+	              Send Email
+	            </Button>
+	          </DialogActions>
+	        </Dialog>
+	    </div>
+		)
+	}
 }
 
 CustomizedInputs.propTypes = {

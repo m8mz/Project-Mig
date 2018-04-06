@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import List, {
   ListItem,
   ListItemText,
-} from 'material-ui/List';
+} from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import StatusStepper from '../containers/StatusStepper'
@@ -24,17 +24,17 @@ const styles = theme => ({
 		display: "inline-block",
 		verticalAlign: "top"
 	}
-});
+})
 
 class NestedList extends React.Component {
-  state = { open: true };
+  state = { open: true }
 
   handleClick = () => {
-    this.setState({ open: !this.state.open });
-  };
+    this.setState({ open: !this.state.open })
+  }
 
   render() {
-    const { classes, sites, emails, user } = this.props;
+    const { classes, sites, emails, user } = this.props
 		const requestInfo = () => {
 		let requestInfo =	`Hello,
 
@@ -60,7 +60,6 @@ Once we have that we'll go ahead and manually move forward with the migration.
 Regards,
 ${user}
 Professional Services`
-		console.log(requestInfo)
 		document.getElementById('bootstrap-input').value = requestInfo
 		}
 		const startMigration = () => {
@@ -69,10 +68,10 @@ Professional Services`
 We were able to start the website transfer. Listed below are the sites and/or emails submitted.
 
 Site(s):
-${sites.map(site => site)}
+${sites.map(site => site.task_name).join('\n')}
 
 Email(s):
-${emails.map(email => email)}
+${emails.map(email => email.task_name).join('\n')}
 
 Once we are done mirroring over the data we will let you know so you can review our work to make sure it is correct. Please don't make any changes to the site as this will only delay the migration process.
 
@@ -81,7 +80,6 @@ Also please leave your DNS with your old host until we have final approval that 
 Sincerely,
 ${user}
 Professional Services`
-		console.log(startMigration)
 		document.getElementById('bootstrap-input').value = startMigration
 		}
 		const reviewMigration = () => {
@@ -93,7 +91,7 @@ We have mirrored over the data and would like you to review our work to make sur
 There may be issues that show up on the direct urls, but will be fine once the site is live. Please let us know if you see anything out of place.
 
 The existing messages for the following email accounts have been copied to our server as well:
-${emails.map(email => email)}
+${emails.map(email => email.task_name).join('\n')}
 
 To check the email, first change the passwords by logging into your hosting account > email > Email Manager > view details. After that you can access webmail here:
 
@@ -106,7 +104,6 @@ Note that this doesn't mean the migration is finished, so please don't change th
 Sincerely,
 ${user}
 Professional Services`
-		console.log(reviewMigration)
 		document.getElementById('bootstrap-input').value = reviewMigration
 		}
 		const completeMigration = () => {
@@ -123,10 +120,10 @@ https://www.howtogeek.com/howto/27350/
 
 Add the entry:
 
-${sites.map(site => '127.0.0.1 '+site.replace(/www\./, '')+' www.'+site.replace(/www\./, ''))}
+${sites.map(site => '127.0.0.1 '+site.task_name.replace(/www\./, '')+' www.'+site.task_name.replace(/www\./, '')).join('\n')}
 
 The existing messages for the following email accounts have been copied to our server as well:
-${emails.map(email => email)}
+${emails.map(email => email.task_name).join('\n')}
 
 To check the email, first change the passwords by logging into your hosting account > email > Email Manager > view details. After that you can access webmail here:
 https://${document.location.host}/webmail
@@ -142,7 +139,6 @@ We must stress that performing these DNS updates should happen immediately after
 Sincerely,
 ${user}
 Professional Services`
-		console.log(completeMigration)
 		document.getElementById('bootstrap-input').value = completeMigration
 		}
 		const refundMigration = () => {
@@ -153,7 +149,6 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${user}
 Professional Services`
-		console.log(refundMigration)
 		document.getElementById('bootstrap-input').value = refundMigration
 		}
 		const badCredentials = () => {
@@ -178,7 +173,6 @@ Once we have that we'll go ahead and manually move forward with the migration.
 Thank you,
 ${user}
 Professional Services`
-		console.log(badCredentials)
 		document.getElementById('bootstrap-input').value = badCredentials
 		}
 
@@ -261,12 +255,12 @@ Professional Services`
 				</List>
 				<StatusStepper />
       </div>
-    );
+    )
   }
 }
 
 NestedList.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(NestedList);
+export default withStyles(styles)(NestedList)
