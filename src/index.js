@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import ReactDOM from 'react-dom'
-import HomeMenu from './home/ui/Menu'
+import HomeMenu from './home/containers/Menu'
 import HomeTable from './home/containers/Table'
 import ProjectPaper from './project/ui/'
 import storeFactory from './store'

@@ -20,35 +20,35 @@ export class UserPop extends React.Component {
   constructor(props, context) {
     super(props, context)
 
-    this.state.value = this.props.value;
+    this.state.value = this.props.value
   }
 
   state = {}
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({ value: nextProps.value });
+      this.setState({ value: nextProps.value })
     }
   }
 
-  radioGroup = null;
+  radioGroup = null
 
   handleEntering = () => {
-    this.radioGroup.focus();
-  };
+    this.radioGroup.focus()
+  }
 
   handleCancel = () => {
-    this.props.onClose(this.props.value);
-  };
+    this.props.onClose(this.props.value)
+  }
 
   handleOk = () => {
-    this.props.onClose(this.state.value);
-	 this.props.onChangeUser(this.state.value)
-  };
+    this.props.onClose(this.state.value)
+	 	this.props.onChangeUser(this.state.value)
+  }
 
   handleChange = (event, value) => {
-    this.setState({ value });
-  };
+    this.setState({ value })
+  }
 
   render() {
     const { value, ...other } = this.props;
@@ -68,8 +68,7 @@ export class UserPop extends React.Component {
             ref={node => {
               this.radioGroup = node;
             }}
-            aria-label="ringtone"
-            name="ringtone"
+            name="agent"
             value={this.state.value}
             onChange={this.handleChange}
           >
@@ -87,11 +86,12 @@ export class UserPop extends React.Component {
           </Button>
         </DialogActions>
       </Dialog>
-    );
+    )
   }
 }
 
 UserPop.propTypes = {
   onClose: PropTypes.func,
   value: PropTypes.string,
-};
+	onChangeUser: PropTypes.func
+}

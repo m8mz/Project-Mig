@@ -170,7 +170,7 @@ class HorizontalNonLinearStepper extends React.Component {
           {steps.map((label, index) => {
             return (
               <Step key={label}>
-								{(statusStep === 1 && index === 1) ? <CircularProgress size={24} className={classes.progress}/> :
+								{(statusStep === 1 && index === 1) ? <CircularProgress size={20} className={classes.progress}/> :
                 <StepButton
                   onClick={(this.state.completed[2] === true) ? '' : this.handleStep(index)}
                   completed={this.state.completed[2]}
@@ -190,17 +190,20 @@ class HorizontalNonLinearStepper extends React.Component {
               <Button onClick={this.handleReset}>Reset</Button>
             </div>
           ) : (
-            <div>
+            <div style={{textAlign: "center"}}>
               <div>
-                <Button
-									variant={(status === "in_progress" && statusStep === 1) ? 'raised' : 'flat'}
-                  disabled={statusStep === 0}
-									onClick={() => this.setStatus("in_progress")}
-									color={(this.state.refunded && statusStep === 2) ? 'secondary' : 'primary'}
-                  className={classes.button}
-                >
-                  {(statusStep === 0) ? '' : (statusStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
-                </Button>
+								{(statusStep === 1) ?
+									<Button
+										variant={(status === "in_progress") ? 'raised' : 'flat'}
+										onClick={() => this.setStatus("in_progress")}
+										color={(this.state.refunded && statusStep === 2) ? 'secondary' : 'primary'}
+										className={classes.button}
+									>
+										{(statusStep === 0) ? '' : (statusStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
+									</Button> :
+									(this.state.refunded) ?
+									'REFUNDED' : null}
+
                 <Button
                   variant={(status === "new" && statusStep === 0) ?
 										'raised' :
@@ -217,7 +220,7 @@ class HorizontalNonLinearStepper extends React.Component {
 										}
                   className={classes.button}
                 >
-                  {(statusStep === 0) ? 'Need Info' : (statusStep === 1) ? 'Waiting' : 'Completed'}
+                  {(statusStep === 0) ? 'New' : (statusStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
                 <Button
 									className={classes.button}
@@ -233,7 +236,7 @@ class HorizontalNonLinearStepper extends React.Component {
 										() => this.handleComplete("cancelled") :
 										(statusStep === 0) ? () => this.setStatus("info_received") :
 										() => this.setStatus("customer_review")}>
-                  {(statusStep === 0) ? 'Rec Info' : (statusStep === 1) ? 'Review' : 'Cancelled'}
+                  {(statusStep === 0) ? 'Info Rec' : (statusStep === 1) ? 'Review' : 'Cancelled'}
                 </Button>
               </div>
             </div>

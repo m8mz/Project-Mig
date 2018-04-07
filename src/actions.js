@@ -154,3 +154,33 @@ export const changeUser = user => (dispatch, getState) => {
 		payload: user
 	})
 }
+
+export const searchProjects = value => (dispatch, getState) => {
+	dispatch({
+		type: C.SEARCH
+	})
+
+	axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_service_list&search_string=${value}`)
+			.then(res => {
+				let list = res.data.service_list
+				dispatch({
+					type: C.PROJECT_LIST,
+					payload: list
+				})
+			})
+			.catch(error => {
+
+				console.log(error)
+
+				dispatch({
+					type: C.SEARCH_OFF
+				})
+
+			})
+}
+
+export const clearSearch = () => (dispatch, getState) => {
+	dispatch({
+		type: C.SEARCH_OFF
+	})
+}

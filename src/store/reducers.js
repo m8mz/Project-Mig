@@ -172,6 +172,17 @@ export const user = (state="", action) => {
 	}
 }
 
+export const searching = (state=false, action) => {
+	switch(action.type) {
+		case C.SEARCH :
+			return true
+		case C.SEARCH_OFF :
+			return false
+		default :
+			return false
+	}
+}
+
 export default combineReducers({
 	projectList,
 	projectAPI,
@@ -189,5 +200,6 @@ export default combineReducers({
 	infoAPI,
 	tasksAPI,
 	notesAPI,
-	user
+	user,
+	searching
 })

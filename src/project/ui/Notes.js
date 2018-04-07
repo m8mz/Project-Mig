@@ -16,8 +16,8 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import LastPageIcon from 'material-ui-icons/LastPage'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
-import TextField from 'material-ui/TextField'
 import AddNote from '../containers/AddNote'
+import NoteButton from './NoteButton'
 
 const actionsStyles = theme => ({
   root: {
@@ -146,9 +146,6 @@ class CustomPaginationActionsTable extends React.Component {
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
   }
-  addNote(note) {
-	  this.props.onAddNote(note)
-  }
 
   render() {
     const { classes, notes=[] } = this.props
@@ -180,10 +177,7 @@ class CustomPaginationActionsTable extends React.Component {
 				 return "Nobody"
 		  }
 		}
-		const convertNote = (text) => {
-			let k = new DOMParser().parseFromString(text, "text/html")
-			return k.childNodes[0].textContent
-		}
+		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
     return (
       <Paper className={classes.root}>
@@ -195,8 +189,12 @@ class CustomPaginationActionsTable extends React.Component {
                 return (
                   <TableRow hover={true} style={{borderBottom: "none"}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
-                    <TableCell padding="none" style={{width: "65%", borderBottom: "none"}}><TextField InputProps={{disableUnderline: true, readOnly: true, style: {fontSize:12,overflowX: "auto"}}} multiline fullWidth rowsMax={2} rows={1} value={(n.action === "Agent Note") ?
-											convertNote(n.note) : (n.action === "Sent Email") ? convertNote(n.note) : convertNote(n.note)} /></TableCell>
+                    <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
+											{((n.action === "Agent Note" || n.action === "Email Sent") && n.note.search("<br />") !== 0) ?
+														<NoteButton note={n.note} action={n.action} /> :
+														<Typography className={classes.typography}>{renderHTML(n.note.replace(/<script>|<\/script>|<*script*>/, ''))}
+														</Typography>}
+										</TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
                 )
@@ -209,7 +207,7 @@ class CustomPaginationActionsTable extends React.Component {
             </TableBody>
             <TableFooter>
               <TableRow>
-					 <AddNote />
+					 		<AddNote />
                 <TablePagination
                   colSpan={3}
                   count={notes.length}
@@ -218,19 +216,19 @@ class CustomPaginationActionsTable extends React.Component {
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   Actions={TablePaginationActionsWrapped}
-						rowsPerPageOptions={[5]}
+									rowsPerPageOptions={[5]}
                 />
               </TableRow>
             </TableFooter>
           </Table>
         </div>
       </Paper>
-    );
+    )
   }
 }
 
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default withStyles(styles)(CustomPaginationActionsTable)

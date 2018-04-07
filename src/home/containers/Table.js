@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 			:
 			null
 		)
-		return tempList
+		return (state.searching) ? projects : tempList
 	}
 
 	return {
