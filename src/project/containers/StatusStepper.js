@@ -23,7 +23,9 @@ const mapStateToProps = state => {
 	return {
 		"status": state.projectInfo.proserv_status_name,
 		"user": username,
-		"id": state.projectInfo.proserv_id
+		"id": state.projectInfo.proserv_id,
+		"refunded": state.notes.map(n => (n.note.indexOf("Refund issued and recorded") >= 0) ? true : false),
+		"completed": (state.projectInfo.proserv_status_name === "complete" || state.projectInfo.proserv_status_name === "cancelled") ? true : false
 	}
 }
 

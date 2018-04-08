@@ -1,10 +1,6 @@
 import C from './constants'
 import axios from 'axios'
 
-function toggleFilter(boolean) {
-	return !boolean
-}
-
 export const changePage = (page=0) => ({
 	type: C.CHANGE_PAGE,
 	payload: page
@@ -15,29 +11,29 @@ export const changeRowsPerPage = (rows=15) => ({
 	payload: rows
 })
 
-export const infoReceived = (toggleState) => ({
+export const infoReceived = boolean => ({
 	type: C.INFO_RECEIVED,
-	payload: toggleFilter(toggleState)
+	payload: !boolean
 })
 
-export const inProgress = (toggleState) => ({
+export const inProgress = boolean => ({
 	type: C.IN_PROGRESS,
-	payload: toggleFilter(toggleState)
+	payload: !boolean
 })
 
-export const waitingForCustomer = (toggleState) => ({
+export const waitingForCustomer = boolean => ({
 	type: C.WAITING_FOR_CUSTOMER,
-	payload: toggleFilter(toggleState)
+	payload: !boolean
 })
 
-export const agentReview = (toggleState) => ({
+export const agentReview = boolean => ({
 	type: C.AGENT_REVIEW,
-	payload: toggleFilter(toggleState)
+	payload: !boolean
 })
 
-export const customerReview = (toggleState) => ({
+export const customerReview = boolean => ({
 	type: C.CUSTOMER_REVIEW,
-	payload: toggleFilter(toggleState)
+	payload: !boolean
 })
 
 export const projectInfoAPI = proservID => (dispatch, getState) => {
@@ -56,7 +52,7 @@ export const projectInfoAPI = proservID => (dispatch, getState) => {
 			})
 			.catch(error => {
 
-				console.log(error)
+				console.log("Issue with dispatching Info API.. please report.")
 
 				dispatch({
 					type: C.API_INFO_OFF
@@ -85,7 +81,7 @@ export const projectTasksAPI = proservID => (dispatch, getState) => {
 			})
 			.catch(error => {
 
-				console.log(error)
+				console.log("Issue with dispatching Task API.. please report.")
 
 				dispatch({
 					type: C.API_TASKS_OFF
@@ -108,7 +104,7 @@ export const projectNotesAPI = proservID => (dispatch, getState) => {
 			})
 			.catch(error => {
 
-				console.log(error)
+				console.log("Issue with dispatching Notes API.. please report.")
 
 				dispatch({
 					type: C.API_NOTES_OFF
@@ -132,7 +128,7 @@ export const projectListAPI = () => (dispatch, getState) => {
 			})
 			.catch(error => {
 
-				console.log(error)
+				console.log("Issue with dispatching Project List API.. please report.")
 
 				dispatch({
 					type: C.API_PROJECTS_OFF

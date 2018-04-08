@@ -9,7 +9,7 @@ import axios from 'axios'
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
   },
   button: {
     marginRight: theme.spacing.unit,
@@ -50,8 +50,7 @@ class HorizontalNonLinearStepper extends React.Component {
   state = {
     statusStep: findStatus(this.props.status),
 		status: this.props.status,
-    completed: {},
-	 	refunded: false
+    completed: this.props.completed
   }
 
   completedSteps() {
@@ -67,7 +66,7 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   allStepsCompleted() {
-    return (this.state.completed[2] === true)
+    return this.state.completed
   }
 
   handleStep = step => () => {
@@ -88,7 +87,7 @@ class HorizontalNonLinearStepper extends React.Component {
 	 }
 	 axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&new_status=${params.new_status}&proserv_id=${params.proserv_id}`)
 	 .then((res) => {
-		 console.log(`${JSON.stringify(res)}
+		 console.log(`
 				 Exit Code: ${res.data.success}
 				 Response: ${res.data.note}
 			 `)
@@ -96,34 +95,30 @@ class HorizontalNonLinearStepper extends React.Component {
 				 this.setState({
 					status: status
 			   })
-				const { completed } = this.state
-				completed[2] = true
 				this.setState({
-		        completed,
+		        completed: true,
 		  			status: status
 		      })
 		   } else {
 			   console.log(`Error: ${res.data.note}`)
 		   }})
 			.catch((error) => {
-		console.log("something went wrong changing status.")
+		console.log("Issue with the status API.. please report.")
    })
   }
 
   handleReset = () => {
     this.setState({
       statusStep: 0,
-      completed: {},
+      completed: false,
     })
   }
 
   componentWillUpdate(nextProps) {
 	  if (nextProps.status !== this.props.status) {
 		 if (nextProps.status === "complete" || nextProps.status === "cancelled") {
-			 const { completed } = this.state
-	 		 completed[2] = true
 			 this.setState({
-  			 	completed
+  			 	completed: true
   		 	 })
 		 }
 		  this.setState({
@@ -144,7 +139,7 @@ class HorizontalNonLinearStepper extends React.Component {
   		 proserv_id: this.props.id
   	 }
   	 axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&new_status=${params.new_status}&proserv_id=${params.proserv_id}`).then((res) => {
-  		 console.log(`${JSON.stringify(res)}
+  		 console.log(`
   				 Exit Code: ${res.data.success}
   				 Response: ${res.data.note}
   			 `)
@@ -156,11 +151,11 @@ class HorizontalNonLinearStepper extends React.Component {
   				console.log(`Error: ${res.data.note}`)
   			}
   	 }).catch((error) => {
-  		console.log("something went wrong changing status.")
+  		console.log("Issue with the status API.. please report.")
      })
   }
   render() {
-    const { classes } = this.props
+    const { classes, refunded } = this.props
     const steps = getSteps()
 	 	const { statusStep, status } = this.state
 
@@ -172,8 +167,8 @@ class HorizontalNonLinearStepper extends React.Component {
               <Step key={label}>
 								{(statusStep === 1 && index === 1) ? <CircularProgress size={20} className={classes.progress}/> :
                 <StepButton
-                  onClick={(this.state.completed[2] === true) ? '' : this.handleStep(index)}
-                  completed={this.state.completed[2]}
+                  onClick={(this.state.completed) ? '' : this.handleStep(index)}
+                  completed={this.state.completed}
                 >
                   {label}
                 </StepButton>}
@@ -187,7 +182,9 @@ class HorizontalNonLinearStepper extends React.Component {
               <Typography className={classes.instructions}>
                 Finished Project - {(status === "complete") ? 'Completed' : 'Cancelled'}
               </Typography>
-              <Button onClick={this.handleReset}>Reset</Button>
+							{(refunded) ?
+							<Button style={{color:'red'}} disabled>REFUNDED</Button> :
+              <Button onClick={this.handleReset}>Reset</Button>}
             </div>
           ) : (
             <div style={{textAlign: "center"}}>
@@ -201,8 +198,7 @@ class HorizontalNonLinearStepper extends React.Component {
 									>
 										{(statusStep === 0) ? '' : (statusStep === 1) ? 'Working' : (this.state.refunded) ? 'Refunded' : ''}
 									</Button> :
-									(this.state.refunded) ?
-									'REFUNDED' : null}
+									null}
 
                 <Button
                   variant={(status === "new" && statusStep === 0) ?

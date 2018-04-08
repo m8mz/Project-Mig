@@ -29,7 +29,7 @@ const styles = theme => ({
 class FormDialog extends React.Component {
   state = {
     open: false,
-	 selectedValue: 'general'
+	 	selectedValue: 'general'
   }
 
   handleClickOpen = () => {
@@ -45,40 +45,47 @@ class FormDialog extends React.Component {
     this.setState({ selectedValue: event.target.value })
   }
   addNote = note => {
-	  let d = new Date()
-	  let month = d.getMonth()+1
-	  let day = d.getDate()
-	  let year = d.getFullYear()
-	  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	  let time = month+'/'+day+'/'+year+' '+hourMinute
-	  var fullNote = {
-		  user: this.props.user,
-		  provider: document.location.host.slice(2).replace(/\.com/, ''),
-		  action: 'add_proserv_note',
-		  lib: 'general',
-		  proserv_id: this.props.id,
-		  visibility: 3,
-		  note_action: "Agent Note",
-		  note: note,
-		  time: time,
-		  utime: d.getTime()
-	  }
-		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`)
-		.then((res) => {
-			console.log(`
-					Exit Code: ${res.data.success}
-					Response: ${res.data.note}
-				`)
-			if (res.data.success === 1) {
-				this.props.onAddNote(fullNote)
-				this.setState({ open: false })
-			} else {
-				console.log(`Error: ${res.data.note}`)
+		if (note.replace(/\s*/, '').length !== 0) {
+			let d = new Date()
+		  let month = d.getMonth()+1
+		  let day = d.getDate()
+		  let year = d.getFullYear()
+		  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+		  let time = month+'/'+day+'/'+year+' '+hourMinute
+		  var fullNote = {
+			  user: this.props.user,
+			  provider: document.location.host.slice(2).replace(/\.com/, ''),
+			  action: 'add_proserv_note',
+			  lib: 'general',
+			  proserv_id: this.props.id,
+			  visibility: 3,
+			  note_action: "Agent Note",
+			  note: note,
+			  time: time,
+			  utime: d.getTime()
+		  }
+			if (this.state.selectedValue === "important") {
+				fullNote.note = "::important:: " + fullNote.note
 			}
-		})
-	  .catch((error) => {
-		  console.log("something went wrong adding note.")
-	  })
+			axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`)
+			.then((res) => {
+				console.log(`
+						Exit Code: ${res.data.success}
+						Response: ${res.data.note}
+					`)
+				if (res.data.success === 1) {
+					this.props.onAddNote(fullNote)
+					this.setState({ open: false })
+				} else {
+					console.log(`Error: ${res.data.note}`)
+				}
+			})
+		  .catch((error) => {
+			  console.log("Issue sending note through the API.. please report.")
+		  })
+		} else {
+			console.log("Error: Can't send an empty note.")
+		}
   }
 
   render() {

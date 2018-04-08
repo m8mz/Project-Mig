@@ -22,8 +22,8 @@ class AnchorPlayground extends React.Component {
     anchorOriginHorizontal: 'center',
     transformOriginVertical: 'top',
     transformOriginHorizontal: 'center',
-    positionTop: 200, // Just so the popover can be spotted more easily
-    positionLeft: 400, // Same as above
+    positionTop: 200,
+    positionLeft: 400,
     anchorReference: 'anchorEl',
   }
 

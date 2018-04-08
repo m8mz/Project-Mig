@@ -4,7 +4,6 @@ import { projectNotesAPI } from '../../actions'
 import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = state => {
-
 	return {
 		"notes": state.notes
 	}

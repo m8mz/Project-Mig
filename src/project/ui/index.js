@@ -32,31 +32,31 @@ function PaperSheet(props) {
   const { classes } = props
   return (
 	  <Paper className={classes.root} elevation={4}>
-	  <Grid container spacing={24}>
-	   <Grid item xs>
-	    <Typography variant="headline" component="h3">
-	      <ButtonMenu />
-			<Divider className={classes.divider} />
-	    </Typography>
-		</Grid>
-	  </Grid>
-		<Grid container spacing={24}>
-		 <Grid item xs={5} sm={12} style={{maxWidth: 540}}>
-	      <Tasks />
-		 </Grid>
-		 <Grid item xs>
-			<Notes />
-		 </Grid>
-		</Grid>
-		<Grid container spacing={24}>
-		 <Grid item xs={4} sm={12} style={{maxWidth: 540}}>
-			<EmailTemplates />
-		 </Grid>
-		 <Grid item xs style={{minWidth: 500}}>
-			<Email />
-		 </Grid>
-		</Grid>
-	  	</Paper>
+		  <Grid container spacing={24}>
+		   	<Grid item xs>
+			    <Typography component="div">
+			      <ButtonMenu />
+						<Divider className={classes.divider} />
+			    </Typography>
+				</Grid>
+		  </Grid>
+			<Grid container spacing={24}>
+			 <Grid item xs={5} sm={12} style={{maxWidth: 540}}>
+		      <Tasks />
+			 </Grid>
+			 <Grid item xs>
+				<Notes />
+			 </Grid>
+			</Grid>
+			<Grid container spacing={24}>
+			 <Grid item xs={4} sm={12} style={{maxWidth: 540}}>
+				<EmailTemplates />
+			 </Grid>
+			 <Grid item xs style={{minWidth: 500}}>
+				<Email />
+			 </Grid>
+			</Grid>
+	  </Paper>
   )
 }
 

@@ -16,7 +16,8 @@ import FirstPageIcon from 'material-ui-icons/FirstPage'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import LastPageIcon from 'material-ui-icons/LastPage'
-import HomeFilter from '../containers/Filter' // Filter that controls which projects will be displayed depending on status
+import HomeFilter from '../containers/Filter'
+import axios from 'axios'
 
 const actionsStyles = theme => ({
   root: {
@@ -111,15 +112,41 @@ const styles = theme => ({
 class CustomPaginationActionsTable extends Component {
 	componentWillMount() {
 		this.props.onComponentWillMount()
-		console.log("Table will mount load projects from API")
+	}
+	takeTicket = id => {
+		const params = {
+  		 user: this.props.user,
+  		 provider: document.location.host.slice(2).replace(/\.com/, ''),
+  		 service_type: 'websitetransfer',
+  		 action: 'assign_transfer',
+  		 lib: 'general',
+  		 proserv_id: id
+  	 	}
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=on`).then((res) => {
+  		 console.log(`${JSON.stringify(res)}
+  				 Exit Code: ${res.data.success}
+  				 Response: ${res.data.note}
+  			 `)
+  			 if (res.data.success === 1) {
+  				 this.setState({
+  					assigned_to: params.user
+  				})
+  			} else {
+  				console.log(`Error: ${res.data.note}`)
+  			}
+		}).catch((error) => {
+  			console.log("Issue with dispatching assigning API.. please report.")
+		})
 	}
 	render() {
 		const { classes, data, page, rowsPerPage, onChangePage=f=>f, onChangeRowsPerPage=f=>f, onSetUser=f=>f } = this.props
 		const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 		const changeName = (name) => {
 			switch(name) {
-			  case "edmuniz":
+			  case "emuniz":
 				 return "Edward Muniz"
+				case "edmuniz":
+					return "Edward Muniz"
 			  case "shunt":
 				 return "Sarah Hunt"
 			  case "mclarkson":
@@ -143,7 +170,7 @@ class CustomPaginationActionsTable extends Component {
 		return (
 			<Paper className={classes.root}>
 
-			  <HomeFilter /> {/* Filter for Status */}
+			  <HomeFilter />
 
 	        <div className={classes.tableWrapper}>
 	          <Table>
@@ -178,7 +205,7 @@ class CustomPaginationActionsTable extends Component {
 																			false :
 																			true}
 																			onClick={(changeName(n.assigned_to) === 'Take') ?
-																				() => alert("take pressed") :
+																				() => this.takeTicket(n.proserv_id) :
 																				null}
 																		>{changeName(n.assigned_to)}</Button>}
 											</TableCell>
@@ -201,7 +228,7 @@ class CustomPaginationActionsTable extends Component {
 	                  onChangePage={(event, page) => onChangePage(page)}
 	                  onChangeRowsPerPage={(event) => onChangeRowsPerPage(event.target.value)}
 	                  Actions={TablePaginationActionsWrapped}
-							rowsPerPageOptions={[5,10,15]}
+										rowsPerPageOptions={[5,10,15]}
 	                />
 	              </TableRow>
 	            </TableFooter>

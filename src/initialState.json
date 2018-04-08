@@ -1,5 +1,36 @@
 {
-	"projectList": [],
+	"projectList": [
+		{
+		  "provider": "bluehost",
+		  "priority": 0,
+		  "updated_sec_ago": 1,
+		  "status": "Customer Review",
+		  "email_total": 1,
+		  "added": "2013-08-06 11:24:21",
+		  "complete_sort": 15.3846153846154,
+		  "complete_value": 0.153846153846154,
+		  "age": 1660,
+		  "email_remaining": 1,
+		  "domain_total": 2,
+		  "remaining": 11,
+		  "domain": "bluehost.com",
+		  "status_name": "customer_review",
+		  "assigned_to": "",
+		  "completed": "2",
+		  "proserv_id": 5,
+		  "other_remaining": 8,
+		  "sort_order": 8,
+		  "domain_remaining": 2,
+		  "refund": 1,
+		  "progress": "2/13",
+		  "age_sec": 1375788261,
+		  "other_total": 10,
+		  "escalation": 1,
+		  "total": "13",
+		  "touched_last": "unassigned",
+		  "start": 0
+		}
+	],
 	"projectAPI": false,
 	"rowsPerPage": 15,
 	"page": 0,
@@ -8,13 +39,79 @@
 	"waitingForCustomer": false,
 	"agentReview": false,
 	"customerReview": false,
-	"projectInfo": {"firstname":"Candy","priority":0,"other_complete":0,"provider":"bluehost","added":"02/05/18 3:11 pm","lastname":"Jones-Guerin","proserv_status_name":"customer_review","email_remaining":6,"state":"MI","email_complete":0,"cpanel_user":"bxcdjlmy","email":"candy@webworldadvantage.com","domain_tasks":2,"email_tasks":6,"cust_id":3534311,"domain":"weloveannarbor.com","assigned_to":"edmuniz","transfer_age":"57.23","proserv_status":"Customer Review","updated":"02/08/18 10:54 am","country":"US","proserv_id":38228,"other_remaining":0,"domain_remaining":2,"refund":0,"progress":0,"cpanel_id":3678588,"domain_complete":0,"escalation":0,"other_tasks":0},
-	"emailTasks": [],
-	"siteTasks": [],
-	"notes": [{"proserv_id":38228,"visibility":1,"time":"02/08/18 10:54 am","utime":"1518112485","action":"Status Update","user":"emuniz","note":"Successfully updated status to Customer Review"},{"proserv_id":38228,"visibility":3,"time":"02/08/18 10:54 am","utime":"1518112450","action":"Agent Note","user":"emuniz","note":"site files appear to be already migrated, I confirmed via the config<br />rsyncing the wp-content into appropriate subdirs<br />config dbs<br />setup tempurls<br /><br />old:<br />http://weloveannarbor.com/<br />new:<br />http://192.163.218.71/~bxcdjlmy/weloveannarbor.com/<br /><br />old:<br />http://welovedexter.com/<br />new:<br />http://192.163.218.71/~bxcdjlmy/welovedexter.com/<br /><br />sites work!"},{"proserv_id":38228,"visibility":3,"time":"02/08/18 7:36 am","utime":"1518100613","action":"Agent Note","user":"emuniz","note":"dj welovemichigan.online 162.241.244.70 <br />dj bxc.djl.mybluehost.me 192.163.218.71 <br /><br />ssync 162.241.244.70:/home/weloven2/etc 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/databases 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/mail 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/public_html 192.163.218.71:/home/bxcdjlmy/migration/"},{"proserv_id":38228,"visibility":3,"time":"02/08/18 7:36 am","utime":"1518100604","action":"Agent Note","user":"emuniz","note":"dj welovemichigan.online 162.241.244.70 <br />dj bxc.djl.mybluehost.me 192.163.218.71 <br /><br />ssync 162.241.244.70:/home/weloven2/etc 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/databases 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/mail 192.163.218.71:/home/bxcdjlmy/migration/<br /><br />ssync 162.241.244.70:/home/weloven2/public_html 192.163.218.71:/home/bxcdjlmy/migration/"},{"proserv_id":38228,"visibility":1,"time":"02/08/18 7:29 am","utime":"1518100186","action":"Status Update","user":"emuniz","note":"Successfully updated status to In Progress"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:56 pm","utime":"1517946972","action":"Status Update","user":"toyler","note":"Successfully updated status to Info Received"},{"proserv_id":38228,"visibility":3,"time":"02/06/18 12:56 pm","utime":"1517946970","action":"Agent Note","user":"toyler","note":"ssh weloven2@162.241.244.70<br />/|$\\Yl&amp;#39;53Vz9i]X1andy"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:53 pm","utime":"1517946811","action":"Site Added","user":"toyler","note":"Email added successfully: mlane@welovedexter.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:53 pm","utime":"1517946797","action":"Site Added","user":"toyler","note":"Email added successfully: info@welovedexter.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:53 pm","utime":"1517946782","action":"Site Added","user":"toyler","note":"Email added successfully: doug@welovedexter.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:52 pm","utime":"1517946770","action":"Site Added","user":"toyler","note":"Email added successfully: mlane@weloveannarbor.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:52 pm","utime":"1517946755","action":"Site Added","user":"toyler","note":"Email added successfully: karleigh@weloveannarbor.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:52 pm","utime":"1517946734","action":"Site Added","user":"toyler","note":"Email added successfully: info@weloveannarbor.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:51 pm","utime":"1517946694","action":"Site Added","user":"toyler","note":"Site added successfully: welovedexter.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:51 pm","utime":"1517946684","action":"Site Added","user":"toyler","note":"Site added successfully: weloveannarbor.com"},{"proserv_id":38228,"visibility":1,"time":"02/06/18 12:51 pm","utime":"1517946672","action":"Host Added","user":"toyler","note":"Host added successfully: Bluehost - weloven2"},{"proserv_id":38228,"visibility":1,"time":"02/05/18 3:34 pm","utime":"1517870059","action":"Status Update","user":"toyler","note":"Successfully updated status to Waiting For Cust"},{"proserv_id":38228,"visibility":1,"time":"02/05/18 3:34 pm","utime":"1517870057","action":"Email Sent","user":"toyler","note":"Email to: candy@webworldadvantage.com<br /> <br />Subject: Website Transfer for bxc.djl.mybluehost.me<br /> <br />Content: Hello, <br /><br />Thank you for choosing Professional Services and purchasing our website transfer service. We received your migration request but need some information to get started: <br /><br />Old host name: <br />Old host login link: <br />Old host user: <br />Old host pass: <br /><br />List of sites to be moved: <br /><br />List of emails to be moved with their passwords and the IMAP mail server address: <br /><br /># IMPORTANT DISCLAIMER<br />An email transfer does not include mailing lists, email forwarders, contacts, address books, auto responders or calendars. <br /><br />Once we have that we&amp;#39;ll go ahead and manually move forward with the migration.<br /><br />Regards,<br />Tyler O.<br />Professional Services"}],
+	"projectInfo": {
+	  "firstname": "Candy",
+	  "priority": 0,
+	  "other_complete": 0,
+	  "provider": "bluehost",
+	  "added": "02/05/18 3:11 pm",
+	  "lastname": "Jones-Guerin",
+	  "proserv_status_name": "customer_review",
+	  "email_remaining": 6,
+	  "state": "MI",
+	  "email_complete": 0,
+	  "cpanel_user": "bxcdjlmy",
+	  "email": "candy@webworldadvantage.com",
+	  "domain_tasks": 2,
+	  "email_tasks": 6,
+	  "cust_id": 3534311,
+	  "domain": "weloveannarbor.com",
+	  "assigned_to": "emuniz",
+	  "transfer_age": "57.23",
+	  "proserv_status": "Customer Review",
+	  "updated": "02/08/18 10:54 am",
+	  "country": "US",
+	  "proserv_id": 38228,
+	  "other_remaining": 0,
+	  "domain_remaining": 2,
+	  "refund": 0,
+	  "progress": 0,
+	  "cpanel_id": 3678588,
+	  "domain_complete": 0,
+	  "escalation": 0,
+	  "other_tasks": 0
+	},
+	"emailTasks": [
+		{
+		  "proserv_id": 38228,
+		  "email_server": "internalmove",
+		  "task_status": "New",
+		  "task_name": "doug@welovedexter.com",
+		  "status_sort": 1,
+		  "is_complete": 0,
+		  "task_id": 105067,
+		  "info_id": 25491,
+		  "domain_id": 61781,
+		  "task_type": "email"
+		}
+	],
+	"siteTasks": [
+		{
+		  "proserv_id": 38228,
+		  "task_status": "New",
+		  "task_type": "domain",
+		  "task_name": "weloveannarbor.com",
+		  "status_sort": 1,
+		  "is_complete": 0,
+		  "task_id": 61780,
+		  "info_id": 25491
+		}
+	],
+	"notes": [
+		{
+		  "proserv_id": 38228,
+		  "visibility": 1,
+		  "time": "02/08/18 10:54 am",
+		  "utime": "1518112485",
+		  "action": "Status Update",
+		  "user": "emuniz",
+		  "note": "Refund issued and recorded"
+		}
+	],
 	"infoAPI": false,
 	"tasksAPI": false,
 	"notesAPI": false,
 	"user": "None",
-	"searching": false
+	"searching": false,
+	"refunded": false
 }

@@ -8,14 +8,26 @@ import List, {
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import StatusStepper from '../containers/StatusStepper'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField'
+import { FormControl } from 'material-ui/Form'
+import { MenuItem } from 'material-ui/Menu'
+import Select from 'material-ui/Select'
+import Input, { InputLabel } from 'material-ui/Input'
+import axios from 'axios'
 
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
-	 display: "inline-block",
-	 verticalAlign: "top"
+	 	display: "inline-block",
+	 	verticalAlign: "top",
+		textAlign: "center"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
@@ -23,14 +35,33 @@ const styles = theme => ({
 	listDisplay: {
 		display: "inline-block",
 		verticalAlign: "top"
-	}
+	},
+	demo: {
+		textAlign: "center",
+		width: 150
+	},
+	formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 220,
+		textAlign: "center"
+  },
 })
 
 class NestedList extends React.Component {
-  state = { open: true }
+  state = {
+		open: false,
+    name: 'None',
+	}
 
   handleClick = () => {
     this.setState({ open: !this.state.open })
+		{(!this.state.open) ? this.setState({
+			name: 'None'
+		}) : null}
+  }
+
+	handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
@@ -149,6 +180,9 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${user}
 Professional Services`
+		axios.get(`https://bluehostproservices.com/websitetransfer/apps/migtool/refunds/submit.php?migid=${proserv_id}&reasonid=${reason}&timestamp=${time}&brandname=${document.location.host.slice(2).replace(/\.com/, '')}&comment=${comment}`)
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=update_flag&lib=general&flag=refund&value=1&proserv_id=${proserv_id}&type=websitetransfer`)
+		this.handleClick()
 		document.getElementById('bootstrap-input').value = refundMigration
 		}
 		const badCredentials = () => {
@@ -178,19 +212,18 @@ Professional Services`
 
     return (
       <div className={classes.root}>
-				<Typography align="left" variant="display1" style={{marginBottom: 15}}>
+				<Typography align="left" variant="display1">
 					Email Templates:
 				</Typography>
         <List
           component="nav"
-          subheader={<span style={{opacity:0.2}}>Canned Replies</span>}
 					className={classes.listDisplay}
         >
 				<div className={classes.demo}>
 						<List dense={true}>
 								<ListItem disableGutters>
 									<ListItemText>
-										<Button onClick={requestInfo} size="small">Request Info</Button>
+										<Button onClick={requestInfo} size="medium">Request Information</Button>
 									</ListItemText>
 								</ListItem>
 						</List>
@@ -199,7 +232,7 @@ Professional Services`
               <List dense={true}>
                   <ListItem disableGutters>
 										<ListItemText>
-											<Button onClick={startMigration} size="small">Start Migration</Button>
+											<Button onClick={startMigration} size="medium">Start Migration</Button>
 										</ListItemText>
                   </ListItem>
               </List>
@@ -207,14 +240,13 @@ Professional Services`
         </List>
 				<List
 					component="nav"
-					subheader="&nbsp;"
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
 						<List dense={true}>
 								<ListItem disableGutters>
 									<ListItemText>
-										<Button onClick={reviewMigration} size="small">Review Migration</Button>
+										<Button onClick={reviewMigration} size="medium">Review Migration</Button>
 									</ListItemText>
 								</ListItem>
 						</List>
@@ -223,7 +255,7 @@ Professional Services`
               <List dense={true}>
                   <ListItem disableGutters>
 										<ListItemText>
-											<Button onClick={completeMigration} size="small">Complete Migration</Button>
+											<Button onClick={completeMigration} size="medium">Complete Migration</Button>
 										</ListItemText>
                   </ListItem>
               </List>
@@ -231,14 +263,70 @@ Professional Services`
 				</List>
 				<List
 					component="nav"
-					subheader={<span style={{opacity:0.0}}>more</span>}
 					className={classes.listDisplay}
 				>
 				<div className={classes.demo}>
 						<List dense={true}>
 								<ListItem disableGutters>
 									<ListItemText>
-										<Button onClick={refundMigration} size="small">Refund Migration</Button>
+										<Button onClick={this.handleClick} size="medium">Refund Migration</Button>
+										<Dialog
+											open={this.state.open}
+											onClose={this.handleClick}
+											aria-labelledby="form-dialog-title"
+										>
+											<DialogTitle id="form-dialog-title">Process Refund</DialogTitle>
+											<DialogContent>
+												<DialogContentText>
+													<Typography>1. No work was completed</Typography>
+													<Typography>2. Customer is requesting a refund</Typography>
+													<Typography>* All exceptions must be confirmed by Manager/Team Lead.</Typography>
+												</DialogContentText>
+												<FormControl className={classes.formControl} error>
+								          <InputLabel htmlFor="name-error">Refund Reason</InputLabel>
+								          <Select
+														native
+								            value={this.state.name}
+								            onChange={this.handleChange}
+								            name="name"
+								            input={<Input id="name-error" />}
+														inputProps={{id: 'age-native-simple'}}
+								          >
+								            <option value="None">
+															<em>⚠️  - None</em>
+								            </option>
+								            <option value="olivier">Incompatible</option>
+								            <option value="kevin">Proprietary</option>
+														<option value="olivier">VPS</option>
+								            <option value="kevin">OHWP</option>
+														<option value="olivier">No Access</option>
+								            <option value="kevin">Customer Completed</option>
+														<option value="olivier">Escalated Refund</option>
+								            <option value="kevin">Disclaimer</option>
+														<option value="olivier">Purchased on Source</option>
+								            <option value="kevin">Vague Request</option>
+														<option value="olivier">Extra Purchases</option>
+								            <option value="kevin">Missold</option>
+								          </Select>
+								        </FormControl>
+												<TextField
+													autoFocus
+													margin="dense"
+													id="name"
+													label="Refund Comment"
+													type="text"
+													fullWidth
+												/>
+											</DialogContent>
+											<DialogActions>
+												<Button onClick={this.handleClick} color="primary">
+													Cancel
+												</Button>
+												<Button onClick={refundMigration} disabled={(this.state.name !== 'None') ? false : true} color="primary">
+													Refund
+												</Button>
+											</DialogActions>
+										</Dialog>
 									</ListItemText>
 								</ListItem>
 						</List>
@@ -247,7 +335,7 @@ Professional Services`
               <List dense={true}>
                   <ListItem disableGutters>
 										<ListItemText>
-											<Button onClick={badCredentials} size="small">Bad Credentials</Button>
+											<Button onClick={badCredentials} size="medium">Bad Credentials</Button>
 										</ListItemText>
                   </ListItem>
               </List>

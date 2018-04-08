@@ -51,16 +51,12 @@ class NestedList extends React.Component {
 	  }
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
-	  console.log(this.props.projectInfo.assigned_to)
-	  console.log("here")
   }
 
-  componentWillReceiveProps(nextProps) {
-	  if (nextProps.projectInfo.assigned_to !== this.state.assigned_to && nextProps.projectInfo.assigned_to !== "") {
-		  this.setState({
-			  assigned_to: nextProps.projectInfo.assigned_to
-		  })
-	  }
+  componentDidUpdate() {
+		if (this.state.assigned_to !== this.props.projectInfo.assigned_to) {
+			this.props.onComponentWillMount(this.props.projectInfo.proserv_id)
+		}
   }
 
 	leftClick = () => {
@@ -84,9 +80,8 @@ class NestedList extends React.Component {
   		 lib: 'general',
   		 proserv_id: this.props.projectInfo.proserv_id
   	 	}
-		console.log(JSON.stringify(params))
 		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=on`).then((res) => {
-  		 console.log(`${JSON.stringify(res)}
+  		 console.log(`
   				 Exit Code: ${res.data.success}
   				 Response: ${res.data.note}
   			 `)
@@ -98,13 +93,15 @@ class NestedList extends React.Component {
   				console.log(`Error: ${res.data.note}`)
   			}
 		}).catch((error) => {
-  			console.log("something went wrong changing owner.")
+  			console.log("Issue with dispatching assigning API.. please report.")
 		})
 	}
 	changeName = (name) => {
 	   switch(name) {
 		  case "emuniz":
 			 return "Edward Muniz"
+			case "edmuniz":
+				return "Edward Muniz"
 		  case "shunt":
 			 return "Sarah Hunt"
 		  case "mclarkson":
@@ -117,6 +114,8 @@ class NestedList extends React.Component {
 			 return "Lucas Bejarano"
 		  case "mhancock-gaillard":
 			 return "Marcus HG"
+			case "mhancockgaillard":
+ 			 return "Marcus HG"
 		  case "rloader":
 			 return "Riley Loader"
 		  case "aldunn":

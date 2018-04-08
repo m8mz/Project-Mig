@@ -155,6 +155,8 @@ class CustomPaginationActionsTable extends React.Component {
 			switch(name) {
 			  case "emuniz":
 				 return "Edward Muniz"
+				case "edmuniz":
+					return "Edward Muniz"
 			  case "shunt":
 				 return "Sarah Hunt"
 			  case "mclarkson":
@@ -187,12 +189,12 @@ class CustomPaginationActionsTable extends React.Component {
             <TableBody>
               {notes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, i) => {
                 return (
-                  <TableRow hover={true} style={{borderBottom: "none"}} key={i}>
+                  <TableRow hover={true} style={(n.note.search(/^::important::\s|\bmigftp\b|\bmigpeek\b|\bmigimap\b|\bmigpop\b|\brsync\b|\bmysqldump\b|\bwget\b|\bssh\b|\bphpMyAdmin\b/) === 0) ? {backgroundColor: "rgba(25, 999, 70, 0.4)"} : {}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
                     <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
 											{((n.action === "Agent Note" || n.action === "Email Sent") && n.note.search("<br />") !== 0) ?
 														<NoteButton note={n.note} action={n.action} /> :
-														<Typography className={classes.typography}>{renderHTML(n.note.replace(/<script>|<\/script>|<*script*>/, ''))}
+														<Typography className={classes.typography}>{renderHTML(n.note.replace(/^::important::\s/, '').replace(/<script>|<\/script>|<*script*>/, ''))}
 														</Typography>}
 										</TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
