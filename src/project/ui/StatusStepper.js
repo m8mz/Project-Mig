@@ -118,8 +118,13 @@ class HorizontalNonLinearStepper extends React.Component {
 	  if (nextProps.status !== this.props.status) {
 		 if (nextProps.status === "complete" || nextProps.status === "cancelled") {
 			 this.setState({
-  			 	completed: true
+  			 	completed: true,
+				refunded: nextProps.refunded
   		 	 })
+		 } else if (this.state.completed) {
+			 this.setState({
+				 completed: false
+			 })
 		 }
 		  this.setState({
 			 status: nextProps.status,

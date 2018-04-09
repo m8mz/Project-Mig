@@ -38,28 +38,25 @@ export const customerReview = boolean => ({
 
 export const projectInfoAPI = proservID => (dispatch, getState) => {
 
-	dispatch({
-		type: C.API_INFO
-	})
-
-	axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_tinfo&proserv_id=${proservID}`)
-			.then(res => {
-				let info = res.data.tinfo
-				dispatch({
-					type: C.PROJECT_INFO,
-					payload: info
-				})
-			})
-			.catch(error => {
-
-				console.log("Issue with dispatching Info API.. please report.")
-
-				dispatch({
-					type: C.API_INFO_OFF
-				})
-
-			})
-
+	if (!getState().infoAPI) {
+		dispatch({
+			type: C.API_INFO
+		})
+			axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_tinfo&proserv_id=${proservID}`)
+					.then(res => {
+						let info = res.data.tinfo
+						dispatch({
+							type: C.PROJECT_INFO,
+							payload: info
+						})
+					})
+					.catch(error => {
+						console.log("Issue with dispatching Info API.. please report.")
+						dispatch({
+							type: C.API_INFO_OFF
+						})
+					})
+	}
 }
 
 export const projectTasksAPI = proservID => (dispatch, getState) => {
@@ -94,7 +91,7 @@ export const projectNotesAPI = proservID => (dispatch, getState) => {
 	dispatch({
 		type: C.API_NOTES
 	})
-	axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=general&action=get_proserv_notes&proserv_id=${proservID}`)
+	axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=general&get_tickets=1&action=get_proserv_notes&proserv_id=${proservID}`)
 			.then(res => {
 				let notes = res.data.history
 				dispatch({

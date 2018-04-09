@@ -16,7 +16,6 @@ import Dialog, {
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import { FormControl } from 'material-ui/Form'
-import { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
@@ -54,10 +53,10 @@ class NestedList extends React.Component {
 	}
 
   handleClick = () => {
-    this.setState({ open: !this.state.open })
-		{(!this.state.open) ? this.setState({
-			name: 'None'
-		}) : null}
+    this.setState({
+		 open: !this.state.open,
+		 name: (!this.state.open) ? 'None' : this.state.name
+	 })
   }
 
 	handleChange = event => {
@@ -65,7 +64,35 @@ class NestedList extends React.Component {
   }
 
   render() {
-    const { classes, sites, emails, user } = this.props
+    const { classes, sites, emails, user, proserv_id } = this.props
+	 const changeName = (name) => {
+		 switch(name) {
+			case "emuniz":
+			  return "Edward Muniz"
+			 case "edmuniz":
+				 return "Edward Muniz"
+			case "shunt":
+			  return "Sarah Hunt"
+			case "mclarkson":
+			  return "Miekkal Clarkson"
+			case "toyler":
+			  return "Tyler Oyler"
+			case "aanselmo":
+			  return "Tony Anselmo"
+			case "lbejarano":
+			  return "Lucas Bejarano"
+			case "mhancock-gaillard":
+			  return "Marcus HG"
+			case "rloader":
+			  return "Riley Loader"
+			case "aldunn":
+			  return "Alan Dunn"
+		  case "customer":
+			  return "Customer"
+			default:
+			  return "Nobody"
+	   }
+	 }
 		const requestInfo = () => {
 		let requestInfo =	`Hello,
 
@@ -89,7 +116,7 @@ An email transfer does not include mailing lists, email forwarders, contacts, ad
 Once we have that we'll go ahead and manually move forward with the migration.
 
 Regards,
-${user}
+${changeName(user)}
 Professional Services`
 		document.getElementById('bootstrap-input').value = requestInfo
 		}
@@ -109,7 +136,7 @@ Once we are done mirroring over the data we will let you know so you can review 
 Also please leave your DNS with your old host until we have final approval that the migration was done correctly. Any custom DNS, such as TXT records, MX records for third party mail providers, etc., will not be migrated.
 
 Sincerely,
-${user}
+${changeName(user)}
 Professional Services`
 		document.getElementById('bootstrap-input').value = startMigration
 		}
@@ -133,7 +160,7 @@ Be aware that you may need to set passwords again later if for any reason we hav
 Note that this doesn't mean the migration is finished, so please don't change the DNS yet. At this point you'll have up to 14 days from today to review what has been migrated. You will need to reply to this message to let us know whether or not there are any issues so that we can address them. Once all issues have been addressed we will provide the final steps of the migration.
 
 Sincerely,
-${user}
+${changeName(user)}
 Professional Services`
 		document.getElementById('bootstrap-input').value = reviewMigration
 		}
@@ -168,22 +195,117 @@ ns2.${document.location.host.slice(2)}
 We must stress that performing these DNS updates should happen immediately after confirming everything looks good. Changes made to your website between when we started your migration and when you update your DNS will not reflect on the migrated version. This means that you are liable to lose updates and will need to recreate them on your end. In these cases, unfortunately, you will not be eligible for re-migration.
 
 Sincerely,
-${user}
+${changeName(user)}
 Professional Services`
 		document.getElementById('bootstrap-input').value = completeMigration
 		}
-		const refundMigration = () => {
-		let refundMigration =	`Hello,
+		const refundMigration = (reasonid, comment) => {
+		const refundMigrationText =	`Hello,
 
 We've refunded the website transfer service fee. All credits are being processed and will be sent by the next business day. It may take up to 5 additional business days for your financial institution to place the credit into your account.
 
 Regards,
-${user}
+${changeName(user)}
 Professional Services`
-		axios.get(`https://bluehostproservices.com/websitetransfer/apps/migtool/refunds/submit.php?migid=${proserv_id}&reasonid=${reason}&timestamp=${time}&brandname=${document.location.host.slice(2).replace(/\.com/, '')}&comment=${comment}`)
-		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=update_flag&lib=general&flag=refund&value=1&proserv_id=${proserv_id}&type=websitetransfer`)
-		this.handleClick()
-		document.getElementById('bootstrap-input').value = refundMigration
+		let d = new Date()
+		const time = d.getTime()
+		const params = {
+			"proserv_id": proserv_id,
+			"reasonid": reasonid,
+			"timestamp": time,
+			"brandname": document.location.host.slice(2).replace(/\.com/, ''),
+			"comment": comment,
+			"user": user,
+			"action": 'update_flag',
+			"lib": 'general',
+			"flag": 'refund',
+			"value": 1,
+			"type": 'websitetransfer'
+		}
+
+		axios.get(`https://tempeproserve.com/marcus/refunds/submit.php?migid=${params.proserv_id}&reasonid=${params.reasonid}&timestamp=${params.timestamp}&brandname=${params.brandname}&comment=${params.comment}`)
+		.then((res) => {
+			console.log(`
+					Exit Code: ${res.data.success}
+					Response: ${res.data.refund_submission_data}
+				`)
+			if (res.data.success === 1) {
+				console.log("Refund recorded.")
+			} else {
+				console.log(`Error: ${res.data.note}`)
+			}
+		})
+	  .catch((error) => {
+		  console.log("Issue recording refund to database.. please report.")
+	  })
+
+	  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.brandname}&action=${params.action}&lib=${params.lib}&flag=${params.flag}&value=${params.value}&proserv_id=${params.proserv_id}&type=${params.type}`)
+	  .then((res) => {
+		  console.log(`
+				  Exit Code: ${res.data.success}
+				  Response: ${res.data.note}
+			  `)
+		  if (res.data.success === 1) {
+			  let d = new Date()
+	  		  let month = d.getMonth()+1
+	  		  let day = d.getDate()
+	  		  let year = d.getFullYear()
+	  		  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+	  		  let time = month+'/'+day+'/'+year+' '+hourMinute
+	  		  let fullNote = {
+	  			  user: params.user,
+	  			  provider: params.brandname,
+	  			  action: 'add_proserv_note',
+	  			  lib: 'general',
+	  			  proserv_id: params.proserv_id,
+	  			  visibility: 3,
+	  			  note_action: "Agent Note",
+	  			  note: 'Refund issued and recorded',
+	  			  time: time,
+	  			  utime: d.getTime()
+	  		  }
+			  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${fullNote.provider}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`).then((res) => {
+					  console.log(`
+							  Exit Code: ${res.data.success}
+							  Response: ${res.data.note}
+						  `)
+					  if (res.data.success === 1) {
+						  this.props.onAddNote(fullNote)
+					  } else {
+						  console.log(`Error: ${res.data.note}`)
+					  }
+				  })
+				 .catch((error) => {
+					 console.log("Issue sending note through the API.. please report.")
+				 })
+		  } else {
+			  console.log(`Error: ${res.data.note}`)
+		  }
+	  })
+	 let status = {
+	   user: params.user,
+	   provider: params.brandname,
+	   service_type: 'websitetransfer',
+	   action: 'update_status',
+	   lib: 'general',
+	   new_status: 'cancelled',
+	   proserv_id: params.proserv_id
+   }
+   axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${status.user}&provider=${status.provider}&service_type=${status.service_type}&action=${status.action}&lib=${status.lib}&new_status=${status.new_status}&proserv_id=${status.proserv_id}`).then((res) => {
+	   console.log(`
+				Exit Code: ${res.data.success}
+				Response: ${res.data.note}
+			`)
+			if (res.data.success === 1) {
+				console.log("Updated status to cancelled.")
+		  } else {
+			  console.log(`Error: ${res.data.note}`)
+		  }
+   }).catch((error) => {
+	  console.log("Issue with the status API.. please report.")
+   })
+	this.handleClick()
+	document.getElementById('bootstrap-input').value = refundMigrationText
 		}
 		const badCredentials = () => {
 		let badCredentials =	`Hello,
@@ -205,7 +327,7 @@ An email transfer does not include mailing lists, email forwarders, contacts, ad
 Once we have that we'll go ahead and manually move forward with the migration.
 
 Thank you,
-${user}
+${changeName(user)}
 Professional Services`
 		document.getElementById('bootstrap-input').value = badCredentials
 		}
@@ -293,20 +415,20 @@ Professional Services`
 														inputProps={{id: 'age-native-simple'}}
 								          >
 								            <option value="None">
-															<em>⚠️  - None</em>
+															<em><span role="img" aria-label="error">⚠️</span>  - None</em>
 								            </option>
-								            <option value="olivier">Incompatible</option>
-								            <option value="kevin">Proprietary</option>
-														<option value="olivier">VPS</option>
-								            <option value="kevin">OHWP</option>
-														<option value="olivier">No Access</option>
-								            <option value="kevin">Customer Completed</option>
-														<option value="olivier">Escalated Refund</option>
-								            <option value="kevin">Disclaimer</option>
-														<option value="olivier">Purchased on Source</option>
-								            <option value="kevin">Vague Request</option>
-														<option value="olivier">Extra Purchases</option>
-								            <option value="kevin">Missold</option>
+								            <option value="2">Incompatible</option>
+								            <option value="3">Proprietary</option>
+														<option value="4">VPS</option>
+								            <option value="5">OHWP</option>
+														<option value="6">No Access</option>
+								            <option value="7">Customer Completed</option>
+														<option value="9">Escalated Refund</option>
+								            <option value="10">Disclaimer</option>
+														<option value="11">Purchased on Source</option>
+								            <option value="12">Vague Request</option>
+														<option value="13">Extra Purchases</option>
+								            <option value="14">Missold</option>
 								          </Select>
 								        </FormControl>
 												<TextField
@@ -322,7 +444,7 @@ Professional Services`
 												<Button onClick={this.handleClick} color="primary">
 													Cancel
 												</Button>
-												<Button onClick={refundMigration} disabled={(this.state.name !== 'None') ? false : true} color="primary">
+												<Button onClick={() => refundMigration(this.state.name, document.getElementById('name').value)} disabled={(this.state.name !== 'None') ? false : true} color="primary">
 													Refund
 												</Button>
 											</DialogActions>

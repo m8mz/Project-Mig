@@ -12,6 +12,7 @@ const styles = theme => ({
   },
   typography: {
     margin: theme.spacing.unit * 2,
+	 width: 500
   },
 })
 
@@ -98,7 +99,7 @@ class AnchorPlayground extends React.Component {
             horizontal: transformOriginHorizontal,
           }}
         >
-          <Typography className={classes.typography}>{renderHTML(note.replace(/<script>|<\/script>|<*script*>/, ''))}</Typography>
+          <Typography className={classes.typography}>{renderHTML(note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/>\s*>?/g,"<br />").replace(/On.*wrote:/, '').replace(/(\[.*\])/g, "$1</a><br />"))}</Typography>
         </Popover>
       </div>
     )

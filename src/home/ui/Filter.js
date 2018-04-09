@@ -12,7 +12,7 @@ const styles = {
 	}
 }
 
-export const SwitchLabels = ({ classes, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false, onInfoReceived=f=>f, onInProgress=f=>f, onWaitingForCustomer=f=>f, onAgentReview=f=>f, onCustomerReview=f=>f, }) => {
+export const SwitchLabels = ({ classes, newProjects=false, infoReceived=true, inProgress=false, waitingForCustomer=false, agentReview=false, customerReview=false, onNew=f=>f, onInfoReceived=f=>f, onInProgress=f=>f, onWaitingForCustomer=f=>f, onAgentReview=f=>f, onCustomerReview=f=>f, }) => {
 
     return (
  			  <FormGroup className={classes.switchPosition} >

@@ -7,7 +7,7 @@ import UserPop from '../containers/UserPop'
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 240,
     backgroundColor: theme.palette.background.paper,
   },
   dialog: {

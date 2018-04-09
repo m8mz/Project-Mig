@@ -1,4 +1,4 @@
-import StatusStepper from '../ui/StatusStepper'
+import MenuDrawer from '../ui/MenuDrawer'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
@@ -21,14 +21,10 @@ const mapStateToProps = state => {
 		username = 'agent'
 	}
 	return {
-		"status": state.projectInfo.proserv_status_name,
-		"user": username,
-		"id": state.projectInfo.proserv_id,
-		"refunded": state.notes.find(n => (n.note === "Refund issued and recorded") ? true : false),
-		"completed": (state.projectInfo.proserv_status_name === "complete" || state.projectInfo.proserv_status_name === "cancelled") ? true : false
+		"user": username
 	}
 }
 
-const Container = connect(mapStateToProps)(StatusStepper)
+const Container = connect(mapStateToProps)(MenuDrawer)
 
 export default Container

@@ -10,6 +10,9 @@ const styles = theme => ({
 })
 
 class FlatButtons extends Component {
+	state = {
+		checkInfo: null
+	}
 	componentWillMount() {
 		const splitPath = (path) => {
 			let k
@@ -18,6 +21,21 @@ class FlatButtons extends Component {
 		}
 		let proservID = splitPath(this.props.location.pathname)
 		this.props.onComponentWillMount(proservID)
+	}
+	componentDidMount() {
+		const splitPath = (path) => {
+			let k
+			k = path.split("/")
+			return (k[k.length-1])
+		}
+		let proservID = splitPath(this.props.location.pathname)
+		let checkInfo = setInterval(() => {
+			this.props.onComponentWillMount(proservID)
+		}, 10000)
+		this.setState({checkInfo})
+	}
+	componentWillUnmount() {
+		this.clearInterval(this.state.checkInfo)
 	}
 	render() {
 		const { classes, projectInfo={} } = this.props

@@ -81,7 +81,7 @@ class CustomizedInputs extends React.Component {
    		  action: 'send_email',
    		  type: 'websitetransfer',
    		  lib: 'general',
-   		  email: 'marcus.hancock-gaillard@endurance.com',
+   		  email: this.props.email,
    		  subject: `Website Transfer for ${this.props.cpanel_user}`,
    		  content: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>")),
    		  content_note: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>").replace(/<br>/g, "!!break!!")),

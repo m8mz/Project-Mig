@@ -126,6 +126,7 @@ class CustomPaginationActionsTable extends React.Component {
     this.state = {
       page: 0,
       rowsPerPage: 5,
+		checkNotes: null
     }
   }
 
@@ -145,6 +146,21 @@ class CustomPaginationActionsTable extends React.Component {
 	  }
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
+  }
+  componentDidMount() {
+	  const splitPath = (path) => {
+		  let k
+		  k = path.split("/")
+		  return (k[k.length-1])
+	  }
+	  let proservID = splitPath(this.props.location.pathname)
+	  let checkNotes = setInterval(() => {
+		  this.props.onComponentWillMount(proservID)
+	  }, 20000)
+	  this.setState({checkNotes})
+  }
+  componentWillUnmount() {
+	  this.clearInterval(this.state.checkNotes)
   }
 
   render() {
@@ -192,9 +208,9 @@ class CustomPaginationActionsTable extends React.Component {
                   <TableRow hover={true} style={(n.note.search(/^::important::\s|\bmigftp\b|\bmigpeek\b|\bmigimap\b|\bmigpop\b|\brsync\b|\bmysqldump\b|\bwget\b|\bssh\b|\bphpMyAdmin\b/) === 0) ? {backgroundColor: "rgba(25, 999, 70, 0.4)"} : {}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
                     <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
-											{((n.action === "Agent Note" || n.action === "Email Sent") && n.note.search("<br />") !== 0) ?
+											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>/gi) !== -1 || n.note.length > 100)) ?
 														<NoteButton note={n.note} action={n.action} /> :
-														<Typography className={classes.typography}>{renderHTML(n.note.replace(/^::important::\s/, '').replace(/<script>|<\/script>|<*script*>/, ''))}
+														<Typography className={classes.typography}>{renderHTML(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/\([\s\S]{0,255}\)/,"<br />").replace(/\r>.*/g,"").replace(/On.*wrote:/, ''))}
 														</Typography>}
 										</TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>

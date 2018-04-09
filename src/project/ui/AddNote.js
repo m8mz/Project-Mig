@@ -45,6 +45,7 @@ class FormDialog extends React.Component {
     this.setState({ selectedValue: event.target.value })
   }
   addNote = note => {
+	  console.log(note)
 		if (note.replace(/\s*/, '').length !== 0) {
 			let d = new Date()
 		  let month = d.getMonth()+1

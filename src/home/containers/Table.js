@@ -5,49 +5,54 @@ import { connect } from 'react-redux'
 const mapStateToProps = state => {
 
 	const filterProjects = (projects) => {
-		let statusFilter = []
-		if (state.infoReceived) {
-			statusFilter.push("info_received")
+		if (state.searching) {
+			return projects
+		} else {
+			let statusFilter = []
+			if (state.infoReceived) {
+				statusFilter.push("info_received")
+			}
+			if (state.inProgress) {
+				statusFilter.push("in_progress")
+			}
+			if (state.waitingForCustomer) {
+				statusFilter.push("waiting_for_cust")
+			}
+			if (state.agentReview) {
+				statusFilter.push("agent_review")
+			}
+			if (state.customerReview) {
+				statusFilter.push("customer_review")
+			}
+			let regexExp
+			statusFilter.map(status =>
+				(!regexExp) ?
+					regexExp = '^' + status + '$'
+				:
+					regexExp += '|^' + status + '$'
+			)
+			var rgxp = new RegExp(regexExp, "g")
+			let tempList = []
+			projects.map(project =>
+				(project.status_name.match(rgxp)) ?
+				tempList.push(project)
+				:
+				null
+			)
+			return tempList
 		}
-		if (state.inProgress) {
-			statusFilter.push("in_progress")
-		}
-		if (state.waitingForCustomer) {
-			statusFilter.push("waiting_for_cust")
-		}
-		if (state.agentReview) {
-			statusFilter.push("agent_review")
-		}
-		if (state.customerReview) {
-			statusFilter.push("customer_review")
-		}
-		let regexExp
-		statusFilter.map(status =>
-			(!regexExp) ?
-				regexExp = '^' + status + '$'
-			:
-				regexExp += '|^' + status + '$'
-		)
-		var rgxp = new RegExp(regexExp, "g")
-		let tempList = []
-		projects.map(project =>
-			(project.status_name.match(rgxp)) ?
-			tempList.push(project)
-			:
-			null
-		)
-		return (state.searching) ? projects : tempList
 	}
 
 	return {
-		"data": filterProjects(state.projectList),
+		"data": state.projectList,
 		"page": state.page,
 		"rowsPerPage": state.rowsPerPage,
 		"infoReceived": state.infoReceived,
 		"inProgress": state.inProgress,
 		"waitingForCustomer": state.waitingForCustomer,
 		"agentReview": state.agentReview,
-		"customerReview": state.customerReview
+		"customerReview": state.customerReview,
+		"searching": state.searching
 	}
 }
 

@@ -28,7 +28,7 @@ const styles = theme => ({
 		verticalAlign: "top"
   },
 	listItemText: {
-		overflow: "auto",
+		overflowX: "auto",
 		fontSize: "11!important"
 	},
 	listMax: {
@@ -52,11 +52,10 @@ class NestedList extends React.Component {
 	  let proservID = splitPath(this.props.location.pathname)
 	  this.props.onComponentWillMount(proservID)
   }
-
-  componentDidUpdate() {
-		if (this.state.assigned_to !== this.props.projectInfo.assigned_to) {
-			this.props.onComponentWillMount(this.props.projectInfo.proserv_id)
-		}
+  componentWillReceiveProps(nextProps) {
+	  this.setState({
+		  assigned_to: nextProps.projectInfo.assigned_to
+	  })
   }
 
 	leftClick = () => {
@@ -162,8 +161,8 @@ class NestedList extends React.Component {
 				<div className={classes.demo}>
 					{(siteTasks.length !== 0) ?
 						siteTasks.map((task, i) =>
-						<List className={classes.listMax} style={{minWidth: 165}} dense={true} key={i}>
-								<ListItem disableGutters dense className={classes.listItemText}>
+						<List className={classes.listMax} dense={true} key={i}>
+								<ListItem disableGutters dense>
 									<ListItemText
 										className={classes.listItemText}
 										secondary={task.task_name.replace("www.", "")}
@@ -190,7 +189,7 @@ class NestedList extends React.Component {
 					{(emailTasks.length !== 0) ?
 						emailTasks.filter(emailColumnsOne).map((task, i) =>
 							<List className={classes.listMax} dense={true} key={i}>
-									<ListItem disableGutters divider dense className={classes.listItemText}>
+									<ListItem disableGutters dense>
 										<ListItemText
 											className={classes.listItemText}
 											secondary={task.task_name.toLowerCase()}
@@ -217,7 +216,7 @@ class NestedList extends React.Component {
 					{(emailTasks.length > 5) ?
 						emailTasks.filter(emailColumnsTwo).map((task, i) =>
 							<List className={classes.listMax} dense key={i}>
-									<ListItem disableGutters divider dense className={classes.listItemText}>
+									<ListItem disableGutters dense>
 										<ListItemText
 											className={classes.listItemText}
 											secondary={task.task_name.toLowerCase()}
