@@ -223,7 +223,7 @@ Professional Services`
 			"type": 'websitetransfer'
 		}
 
-		axios.get(`https://tempeproserve.com/marcus/refunds/submit.php?migid=${params.proserv_id}&reasonid=${params.reasonid}&timestamp=${params.timestamp}&brandname=${params.brandname}&comment=${params.comment}`)
+		axios.get(`https://tempeproserve.com/marcus/refunds/submit.php?migid=${params.proserv_id}&reasonid=${params.reasonid}&timestamp=${params.timestamp}&brandname=${params.brandname}&comment=${encodeURIComponent(params.comment)}`)
 		.then((res) => {
 			console.log(`
 					Exit Code: ${res.data.success}
@@ -264,7 +264,7 @@ Professional Services`
 	  			  time: time,
 	  			  utime: d.getTime()
 	  		  }
-			  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${fullNote.provider}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`).then((res) => {
+			  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${fullNote.provider}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${encodeURIComponent(fullNote.note)}`).then((res) => {
 					  console.log(`
 							  Exit Code: ${res.data.success}
 							  Response: ${res.data.note}

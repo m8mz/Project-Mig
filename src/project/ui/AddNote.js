@@ -68,7 +68,7 @@ class FormDialog extends React.Component {
 			if (this.state.selectedValue === "important") {
 				fullNote.note = "::important:: " + fullNote.note
 			}
-			axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${fullNote.note}`)
+			axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${document.location.host.slice(2).replace(/\.com/, '')}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${encodeURIComponent(fullNote.note)}`)
 			.then((res) => {
 				console.log(`
 						Exit Code: ${res.data.success}

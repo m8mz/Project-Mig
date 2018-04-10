@@ -66,7 +66,6 @@ class AnchorPlayground extends React.Component {
       positionLeft,
       anchorReference,
     } = this.state
-		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
     return (
       <div>
@@ -99,7 +98,7 @@ class AnchorPlayground extends React.Component {
             horizontal: transformOriginHorizontal,
           }}
         >
-          <Typography className={classes.typography}>{renderHTML(note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/>\s*>?/g,"<br />").replace(/On.*wrote:/, '').replace(/(\[.*\])/g, "$1</a><br />"))}</Typography>
+          <Typography className={classes.typography}>{note}</Typography>
         </Popover>
       </div>
     )

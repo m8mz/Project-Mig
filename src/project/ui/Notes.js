@@ -209,8 +209,8 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
                     <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
 											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>/gi) !== -1 || n.note.length > 100)) ?
-														<NoteButton note={n.note} action={n.action} /> :
-														<Typography className={classes.typography}>{renderHTML(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/\([\s\S]{0,255}\)/,"<br />").replace(/\r>.*/g,"").replace(/On.*wrote:/, ''))}
+														<NoteButton note={renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/\r>.*/g,"")))} action={n.action} /> :
+														<Typography className={classes.typography}>{renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace("&#39;", "'").replace(/<script>|<\/script>|<*script*>/, '').replace(/\([\s\S]{0,255}\)/,"<br />")))}
 														</Typography>}
 										</TableCell>
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
