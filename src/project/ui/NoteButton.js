@@ -67,6 +67,8 @@ class AnchorPlayground extends React.Component {
       anchorReference,
     } = this.state
 
+		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } })
+
     return (
       <div>
         <Grid container justify="center" spacing={0}>

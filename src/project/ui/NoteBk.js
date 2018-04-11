@@ -18,7 +18,6 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import AddNote from '../containers/AddNote'
 import NoteButton from './NoteButton'
-const Entities = require('html-entities').XmlEntities
 
 const actionsStyles = theme => ({
   root: {
@@ -196,8 +195,7 @@ class CustomPaginationActionsTable extends React.Component {
 				 return "Nobody"
 		  }
 		}
-		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } })
-		const entities = new Entities()
+		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
     return (
       <Paper className={classes.root}>
@@ -209,13 +207,12 @@ class CustomPaginationActionsTable extends React.Component {
                 return (
                   <TableRow hover={true} style={(n.note.search(/^::important::\s|\bmigftp\b|\bmigpeek\b|\bmigimap\b|\bmigpop\b|\brsync\b|\bmysqldump\b|\bwget\b|\bssh\b|\bphpMyAdmin\b/) === 0) ? {backgroundColor: "rgba(25, 999, 70, 0.4)"} : {}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
-
                     <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
 											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>/gi) !== -1 || n.note.length > 100)) ?
-														<NoteButton note={renderHTML(entities.decode(n.note).replace(/::important::\s*/, '').replace(/\([\s\S]{0,255}\)/,"<br>").replace(/\r/g,"<br>").replace(/\r>.*/g,"").replace(/On.*wrote:/,""))} action={n.action} /> :
-														<NoteButton note={entities.decode(n.note)} action={n.action} />}
+														<NoteButton note={renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/\r>.*/g,"")))} action={n.action} /> :
+														<Typography className={classes.typography}>{renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace("&#39;", "'").replace(/<script>|<\/script>|<*script*>/, '').replace(/\([\s\S]{0,255}\)/,"<br />")))}
+														</Typography>}
 										</TableCell>
-
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
                 )
