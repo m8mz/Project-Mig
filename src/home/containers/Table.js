@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 	}
 
 	return {
-		"data": state.projectList,
+		"data": filterProjects(state.projectList),
 		"page": state.page,
 		"rowsPerPage": state.rowsPerPage,
 		"infoReceived": state.infoReceived,

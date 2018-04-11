@@ -429,6 +429,7 @@ Professional Services`
 								            <option value="12">Vague Request</option>
 														<option value="13">Extra Purchases</option>
 								            <option value="14">Missold</option>
+												<option value="1">Other</option>
 								          </Select>
 								        </FormControl>
 												<TextField

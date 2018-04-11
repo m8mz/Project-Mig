@@ -82,7 +82,7 @@ class AnchorPlayground extends React.Component {
               className={classes.button}
               onClick={this.handleClickButton}
             >
-              {action}
+              {(action === "add_proserv_note") ? 'Agent Note' : action}
             </Button>
         </Grid>
         <Popover

@@ -167,44 +167,6 @@ class CustomPaginationActionsTable extends Component {
 				 return "Take"
 		  }
 		}
-		const filterProjects = (projects) => {
-			if (this.props.searching) {
-				return projects
-			} else {
-				let statusFilter = []
-				if (this.props.infoReceived) {
-					statusFilter.push("info_received")
-				}
-				if (this.props.inProgress) {
-					statusFilter.push("in_progress")
-				}
-				if (this.props.waitingForCustomer) {
-					statusFilter.push("waiting_for_cust")
-				}
-				if (this.props.agentReview) {
-					statusFilter.push("agent_review")
-				}
-				if (this.props.customerReview) {
-					statusFilter.push("customer_review")
-				}
-				let regexExp
-				statusFilter.map(status =>
-					(!regexExp) ?
-						regexExp = '^' + status + '$'
-					:
-						regexExp += '|^' + status + '$'
-				)
-				var rgxp = new RegExp(regexExp, "g")
-				let tempList = []
-				projects.map(project =>
-					(project.status_name.match(rgxp)) ?
-					tempList.push(project)
-					:
-					null
-				)
-				return tempList
-			}
-		}
 		return (
 			<Paper className={classes.root}>
 
@@ -224,7 +186,7 @@ class CustomPaginationActionsTable extends Component {
 			          </TableRow>
 					 </TableHead>
 	            <TableBody>
-	              {filterProjects(data).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, key) => {
+	              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n, key) => {
 	                return (
 	                  <TableRow key={key}>
 							  			<TableCell numeric>{n.proserv_id}</TableCell>
