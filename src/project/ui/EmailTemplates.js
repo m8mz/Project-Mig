@@ -94,7 +94,7 @@ class NestedList extends React.Component {
    		  content: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>")),
    		  content_note: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>").replace(/<br>/g, "!!break!!")),
    		  cust_id: this.props.cust_id,
-   		  proserv_id: this.props.id
+   		  proserv_id: this.props.proserv_id
    	  }
    	  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${mail.user}&provider=${mail.provider}&type=${mail.type}&action=${mail.action}&lib=${mail.lib}&email=${mail.email}&subject=${mail.subject}&content=${mail.content}&content_note=${mail.content_note}&cust_id=${mail.cust_id}&proserv_id=${mail.proserv_id}`)
    	  .then((res) => {
@@ -246,12 +246,11 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${changeName(user)}
 Professional Services`
-		let d = new Date()
-		const time = d.getTime()
+		let timestamp = Math.round(new Date().getTime()/1000.0)
 		const params = {
-			"proserv_id": proserv_id,
+			"proserv_id": this.props.proserv_id,
 			"reasonid": reasonid,
-			"timestamp": time,
+			"timestamp": timestamp,
 			"brandname": document.location.host.slice(2).replace(/\.com/, ''),
 			"comment": comment,
 			"user": user,
@@ -344,7 +343,7 @@ Professional Services`
 	  console.log("Issue with the status API.. please report.")
    })
 	this.handleClick()
-	document.getElementById('bootstrap-input').value = refundMigrationText
+	this.handleClickOpen(refundMigrationText)
 		}
 		const badCredentials = `Hello,
 
@@ -510,7 +509,7 @@ Professional Services`
 			          <DialogTitle id="alert-dialog-title">{"Preview Email"}</DialogTitle>
 			          <DialogContent classes={{root:classes.rootNew}} >
 			            <DialogContentText id="alert-dialog-description">
-			              <TextField fullWidth required multiline defaultValue={this.state.template} />
+			              <TextField fullWidth id={'finalEmail'} required multiline defaultValue={this.state.template} />
 			            </DialogContentText>
 			          </DialogContent>
 			          <DialogActions>

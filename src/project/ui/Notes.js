@@ -214,7 +214,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
 
                     <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 60}}>
-											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>|\n/gi) !== -1 || n.note.length > 300)) ?
+											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.match(/<br\s*\/?>|\n/gi) > 1 || n.note.length > 300)) ?
 														<NoteButton note={renderHTML(entities.decode(n.note).replace(/::important::\s*/, '').replace(/\([\s\S]{0,255}\)/,"<br>").replace(/\n/g,"<br>").replace(/\r>.*/g,"").replace(/On.*wrote:/,""))} action={n.action} /> :
 														<Typography className={classes.typography}>{renderHTML(entities.decode(n.note).replace(/::important::\s*/, '').replace(/\([\s\S]{0,255}\)/,"<br>").replace(/\n/g,"<br>").replace(/\r>.*/g,"").replace(/On.*wrote:/,""))}
 														</Typography>}
@@ -236,7 +236,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <TablePagination
                   colSpan={3}
                   count={notes.length}
-                  rowsPerPage={5}
+                  rowsPerPage={10}
                   page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
