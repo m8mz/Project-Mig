@@ -24,7 +24,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-	 	display: "block",
+	 	display: "inline-block",
 	 	verticalAlign: "top",
 		textAlign: "center"
   },
@@ -41,13 +41,9 @@ const styles = theme => ({
 	},
 	formControl: {
     margin: theme.spacing.unit,
-		textAlign: "center",
-		minHeight: 'auto'
+    minWidth: 220,
+		textAlign: "center"
   },
-	rootNew: {
-		minWidth: 700,
-		maxHeight: 400
-	}
 })
 
 class NestedList extends React.Component {
@@ -55,7 +51,7 @@ class NestedList extends React.Component {
 		open: false,
     name: 'None',
 		openDialog: false,
-		template: 'Nothing'
+		template: ""
 	}
 
   handleClick = () => {
@@ -69,10 +65,10 @@ class NestedList extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-	handleClickOpen = text => {
-		this.setState({
+	handleClickOpen = template => {
+    this.setState({
 			openDialog: true,
-			template: text
+			emailTemplate: template
 		})
   }
 
@@ -501,16 +497,16 @@ Professional Services`
             </div>
 				</List>
 				<StatusStepper />
-					<Dialog maxWidth="lg"
+					<Dialog maxWidth="md"
 			          open={this.state.openDialog}
 			          onClose={this.handleClose}
 			          aria-labelledby="alert-dialog-title"
 			          aria-describedby="alert-dialog-description"
 			        >
 			          <DialogTitle id="alert-dialog-title">{"Preview Email"}</DialogTitle>
-			          <DialogContent classes={{root:classes.rootNew}} >
+			          <DialogContent>
 			            <DialogContentText id="alert-dialog-description">
-			              <TextField fullWidth required multiline defaultValue={this.state.template} />
+			              <TextField classes={{root:classes.root}} id="finalEmail" multiline defaultValue={() => this.state.template} rowsMax={40} />
 			            </DialogContentText>
 			          </DialogContent>
 			          <DialogActions>

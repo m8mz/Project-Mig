@@ -16,7 +16,6 @@ const styles = theme => ({
     width: '100%',
 		overflowX: "auto",
 	 	maxWidth: 525,
-		height: '50%',
     backgroundColor: theme.palette.background.paper,
 	 	verticalAlign: "top",
 	 	overflowY: "hidden",

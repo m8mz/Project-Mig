@@ -18,14 +18,13 @@ import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
 import AddNote from '../containers/AddNote'
 import NoteButton from './NoteButton'
-const Entities = require('html-entities').XmlEntities
 
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing.unit * 2.5,
-  }
+  },
 })
 
 class TablePaginationActions extends React.Component {
@@ -103,7 +102,7 @@ const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 2,
-	 display: "block",
+	 display: "inline-block",
   },
   table: {
     minWidth: 500,
@@ -117,10 +116,7 @@ const styles = theme => ({
   },
 	button: {
 		margin: theme.spacing.unit
-	},
-	input: {
-    margin: theme.spacing.unit
-  }
+	}
 })
 
 class CustomPaginationActionsTable extends React.Component {
@@ -129,7 +125,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 5,
 		checkNotes: null
     }
   }
@@ -199,8 +195,7 @@ class CustomPaginationActionsTable extends React.Component {
 				 return "Nobody"
 		  }
 		}
-		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } })
-		const entities = new Entities()
+		const renderHTML = (rawHTML: string) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
     return (
       <Paper className={classes.root}>
@@ -212,20 +207,18 @@ class CustomPaginationActionsTable extends React.Component {
                 return (
                   <TableRow hover={true} style={(n.note.search(/^::important::\s|\bmigftp\b|\bmigpeek\b|\bmigimap\b|\bmigpop\b|\brsync\b|\bmysqldump\b|\bwget\b|\bssh\b|\bphpMyAdmin\b/) === 0) ? {backgroundColor: "rgba(25, 999, 70, 0.4)"} : {}} key={i}>
                     <TableCell style={{width: "15%", borderBottom: "none"}}>{changeName(n.user)}</TableCell>
-
-                    <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 60}}>
-											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>|\n/gi) !== -1 || n.note.length > 300)) ?
-														<NoteButton note={renderHTML(entities.decode(n.note).replace(/::important::\s*/, '').replace(/\([\s\S]{0,255}\)/,"<br>").replace(/\n/g,"<br>").replace(/\r>.*/g,"").replace(/On.*wrote:/,""))} action={n.action} /> :
-														<Typography className={classes.typography}>{renderHTML(entities.decode(n.note).replace(/::important::\s*/, '').replace(/\([\s\S]{0,255}\)/,"<br>").replace(/\n/g,"<br>").replace(/\r>.*/g,"").replace(/On.*wrote:/,""))}
+                    <TableCell padding="none" style={{width: "65%", borderBottom: "none", height: 48}}>
+											{((n.action === "Agent Note" || n.action === "Email Sent" || n.action === "Form Submit" || n.action === "Customer Note" || n.action === "Ticket") && (n.note.search(/<br\s*\/?>/gi) !== -1 || n.note.length > 100)) ?
+														<NoteButton note={renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace(/<script>|<\/script>|<*script*>/, '').replace(/\r>.*/g,"")))} action={n.action} /> :
+														<Typography className={classes.typography}>{renderHTML(decodeURIComponent(n.note.replace(/::important::\s*/, '').replace(/\u21B5/g, '<br />').replace("&#39;", "'").replace(/<script>|<\/script>|<*script*>/, '').replace(/\([\s\S]{0,255}\)/,"<br />")))}
 														</Typography>}
 										</TableCell>
-
                     <TableCell numeric style={{width: "15%", borderBottom: "none"}}>{n.time.replace(/(\d{1,2}:?){3}\w{2}/, '')}</TableCell>
                   </TableRow>
                 )
               })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 60 * emptyRows }}>
+                <TableRow style={{ height: 45 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -241,7 +234,7 @@ class CustomPaginationActionsTable extends React.Component {
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   Actions={TablePaginationActionsWrapped}
-									rowsPerPageOptions={[10]}
+									rowsPerPageOptions={[5]}
                 />
               </TableRow>
             </TableFooter>

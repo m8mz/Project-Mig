@@ -12,8 +12,7 @@ const styles = theme => ({
   },
   typography: {
     margin: theme.spacing.unit * 2,
-	 width: 'auto',
-	 maxWidth: 900
+	 width: 500
   },
 })
 

@@ -117,7 +117,7 @@ class FormDialog extends React.Component {
               label="Start typing..."
               type="text"
 							multiline
-							rows={5}
+							rows={3}
               fullWidth
             />
           </DialogContent>

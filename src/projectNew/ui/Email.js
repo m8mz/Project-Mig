@@ -102,7 +102,7 @@ class CustomizedInputs extends React.Component {
    		  }
    	  })
    	 .catch((error) => {
-   		 console.log("something went wrong adding note.")
+   		 console.log("Issue with sending email through API.. please report.")
    	 })
 	  }
   }
