@@ -4,25 +4,25 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
 
-	const filterProjects = (projects) => {
-		if (state.searching) {
-			return projects
-		} else {
+	function filterProjects() {
 			let statusFilter = []
-			if (state.infoReceived) {
+			if (state.infoReceived || state.searching) {
 				statusFilter.push("info_received")
 			}
-			if (state.inProgress) {
+			if (state.inProgress || state.searching) {
 				statusFilter.push("in_progress")
 			}
-			if (state.waitingForCustomer) {
+			if (state.waitingForCustomer || state.searching) {
 				statusFilter.push("waiting_for_cust")
 			}
-			if (state.agentReview) {
+			if (state.agentReview || state.searching) {
 				statusFilter.push("agent_review")
 			}
-			if (state.customerReview) {
+			if (state.customerReview || state.searching) {
 				statusFilter.push("customer_review")
+			}
+			if (state.searching) {
+				statusFilter.push("completed", "cancelled", "new")
 			}
 			let regexExp
 			statusFilter.map(status =>
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 			)
 			var rgxp = new RegExp(regexExp, "g")
 			let tempList = []
-			projects.map(project =>
+			state.projectList.map(project =>
 				(project.status_name.match(rgxp)) ?
 				tempList.push(project)
 				:
@@ -41,10 +41,9 @@ const mapStateToProps = state => {
 			)
 			return tempList
 		}
-	}
 
 	return {
-		"data": filterProjects(state.projectList),
+		"data": filterProjects(),
 		"page": state.page,
 		"rowsPerPage": state.rowsPerPage,
 		"infoReceived": state.infoReceived,
@@ -68,7 +67,7 @@ const mapDispatchToProps = dispatch => {
 				changeRowsPerPage(value)
 			)
 		},
-		onComponentWillMount() {
+		listApi() {
 			dispatch(
 				projectListAPI()
 			)

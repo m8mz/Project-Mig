@@ -78,9 +78,10 @@ class NestedList extends React.Component {
   		 service_type: 'websitetransfer',
   		 action: 'assign_transfer',
   		 lib: 'general',
-  		 proserv_id: this.props.projectInfo.proserv_id
+  		 proserv_id: this.props.projectInfo.proserv_id,
+		 toggle: (this.props.projectInfo.assigned_to === this.props.user) ? 'off' : 'on'
   	 	}
-		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=on`).then((res) => {
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=${params.toggle}`).then((res) => {
   		 console.log(`
   				 Exit Code: ${res.data.success}
   				 Response: ${res.data.note}
@@ -89,6 +90,15 @@ class NestedList extends React.Component {
   				 this.setState({
   					assigned_to: params.user
   				})
+				if (params.toggle === 'off') {
+					const splitPath = (path) => {
+						let k
+						k = path.split("/")
+						return (k[k.length-1])
+					}
+					let proservID = splitPath(this.props.location.pathname)
+					this.props.grabInfo(proservID)
+				}
   			} else {
   				console.log(`Error: ${res.data.note}`)
   			}

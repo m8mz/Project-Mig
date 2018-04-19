@@ -1,9 +1,10 @@
 import Filter from '../ui/Filter'
-import { infoReceived, inProgress, waitingForCustomer, agentReview, customerReview, projectListAPI } from '../../actions'
+import { newStatus, infoReceived, inProgress, waitingForCustomer, agentReview, customerReview, projectListAPI } from '../../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
 	return {
+		"newStatus": state.newStatus,
 		"infoReceived": state.infoReceived,
 		"inProgress": state.inProgress,
 		"waitingForCustomer": state.waitingForCustomer,
@@ -15,6 +16,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
 	return {
+		onNewStatus(state) {
+			dispatch(
+				newStatus(state)
+			)
+			dispatch(
+				projectListAPI()
+			)
+		},
 		onInfoReceived(state) {
 			dispatch(
 				infoReceived(state)

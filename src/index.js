@@ -8,22 +8,29 @@ import { Provider } from 'react-redux'
 import initialState from './initialState.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import C from './constants'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 export const Home = () => {
 	return (
-		<div>
+		<MuiThemeProvider theme={theme}>
 		<HomeMenu />
 		<HomeTable />
-		</div>
+		</MuiThemeProvider>
 	)
 }
 
 export const Project = () => {
 	return (
-		<div>
+		<MuiThemeProvider theme={theme}>
 		<HomeMenu />
 		<ProjectPaper />
-		</div>
+		</MuiThemeProvider>
 	)
 }
 
@@ -32,7 +39,11 @@ export class App extends Component {
 		const store = storeFactory(initialState)
 		store.dispatch({
 			type: C.CHANGE_USER,
-			payload: localStorage.getItem('user') || 'None'
+			payload: (document.getElementsByClassName("menuprov")[0]) ? document.getElementsByClassName("menuprov")[0].nextElementSibling.title : 'none'
+		})
+		store.dispatch({
+			type: C.NEW_STATUS,
+			payload: (localStorage.getItem('newStatus') === "On") ? true : false
 		})
 		store.dispatch({
 			type: C.INFO_RECEIVED,

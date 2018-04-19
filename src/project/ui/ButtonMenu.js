@@ -48,38 +48,38 @@ class FlatButtons extends Component {
 		const emailPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fmail%2Fpops.html'
 		const dbPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fsql%2Findex.html'
 		const ftpPage = '/cgi/admin/user/cpanel_login/' + projectInfo.domain + '?goto_uri=%2Ffrontend%2F' + projectInfo.provider + '%2Fftp%2Faccounts.html'
-		const sdPage = '/cgi/admin/user/account_admin/' + projectInfo.domain + '?bounce_step=subdomainedit'
+		const smPage = '/cgi-bin/util/sm?domain=' + projectInfo.domain
 		return (
 			<div>
-			  <Button href={url} target="_blank" variant="raised" color="primary" className={classes.button}>
+			  <Button href={url} target="_blank" variant="raised" color="default" className={classes.button}>
 				  cPM
 			  </Button>
-			  <Button href={migrationPage} target="_blank" variant="raised" color="primary" className={classes.button}>
+			  <Button href={migrationPage} target="_blank" variant="raised" color="default" className={classes.button}>
 				 Migration
 			  </Button>
-			  <Button href={cpanelPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+			  <Button href={cpanelPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 cPanel
 			  </Button>
-				  <Button href={fmPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={fmPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 File Manager
 			  </Button>
-				  <Button href={dmPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={dmPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 Domain Manager
 			  </Button>
-				  <Button href={pmaPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={pmaPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 phpMyAdmin
 			  </Button>
-				  <Button href={emailPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={emailPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 Email
 			  </Button>
-				  <Button href={dbPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={dbPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 MySQL
 			  </Button>
-				  <Button href={ftpPage} target="_blank" variant="flat" color="primary" className={classes.button}>
+				  <Button href={ftpPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 FTP
 			  </Button>
-			  <Button href={sdPage} target="_blank" variant="flat" color="primary" className={classes.button}>
-				 Subdomain
+			  <Button href={smPage} target="_blank" variant="flat" color="default" className={classes.button}>
+				 Service Monkey
 			  </Button>
 				<Button size="small" variant="flat" color="primary" disabled className={classes.button}>
 				 Purchased: {projectInfo.added.replace(/(\d{1,2}:?){3} \w{2}/, '')}

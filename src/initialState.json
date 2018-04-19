@@ -3,6 +3,7 @@
 	"projectAPI": false,
 	"rowsPerPage": 15,
 	"page": 0,
+	"newStatus": false,
 	"infoReceived": true,
 	"inProgress": false,
 	"waitingForCustomer": false,

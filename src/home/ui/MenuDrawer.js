@@ -6,7 +6,6 @@ import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
 import FindReplace from 'material-ui-icons/FindReplace'
-import UserSelect from '../containers/UserSelect'
 import Tooltip from 'material-ui/Tooltip'
 import axios from 'axios'
 
@@ -130,7 +129,7 @@ class TemporaryDrawer extends React.Component {
         <Button href="http://helpdesk.bluehost.com/gui/index.php/tickets/overview/group/3844" target="_blank" className={classes.button}>
         	Cerberus
         </Button>
-		  <Tooltip id="tooltip-fab" title="Scan for Agent Review">
+		  <Tooltip id="tooltip-fab" title="Scan for Agent Review" placement="right">
 		  <Button mini variant="fab" className={classes.button}
 		  onClick={this.scanProjects}><FindReplace /></Button>
 		  </Tooltip>
@@ -149,7 +148,6 @@ class TemporaryDrawer extends React.Component {
 				onKeyDown={this.toggleDrawer('top', false)}
           >
             {sideList}
-				<UserSelect />
           </div>
         </Drawer>
       </div>

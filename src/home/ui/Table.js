@@ -111,8 +111,9 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends Component {
 	componentWillMount() {
-		this.props.onComponentWillMount()
+		this.props.listApi()
 	}
+
 	takeTicket = id => {
 		const params = {
   		 user: this.props.user,
@@ -120,17 +121,16 @@ class CustomPaginationActionsTable extends Component {
   		 service_type: 'websitetransfer',
   		 action: 'assign_transfer',
   		 lib: 'general',
-  		 proserv_id: id
+  		 proserv_id: id,
+		 toggle: (this.props.projectInfo.assigned_to === this.props.user) ? 'off' : 'on'
   	 	}
-		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=on`).then((res) => {
+		axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&proserv_id=${params.proserv_id}&on_off=${params.toggle}`).then((res) => {
   		 console.log(`${JSON.stringify(res)}
   				 Exit Code: ${res.data.success}
   				 Response: ${res.data.note}
   			 `)
   			 if (res.data.success === 1) {
-  				 this.setState({
-  					assigned_to: params.user
-  				})
+  				 this.props.grabList()
   			} else {
   				console.log(`Error: ${res.data.note}`)
   			}
@@ -200,12 +200,12 @@ class CustomPaginationActionsTable extends Component {
 							  			<TableCell>{n.added.replace(/(\d{2}:?){3}/, '')}</TableCell>
 							  			<TableCell>{n.status}</TableCell>
 							  			<TableCell>{(changeName(n.assigned_to) !== 'Take') ?
-																		<b>{changeName(n.assigned_to)}</b> :
+																		changeName(n.assigned_to) :
 																		<Button disabled={(changeName(n.assigned_to) === 'Take') ?
 																			false :
 																			true}
 																			onClick={(changeName(n.assigned_to) === 'Take') ?
-																				() => this.takeTicket(n.proserv_id) :
+																				() => alert("Feature still in progress..") :
 																				null}
 																		>{changeName(n.assigned_to)}</Button>}
 											</TableCell>

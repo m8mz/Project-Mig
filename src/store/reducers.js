@@ -39,6 +39,15 @@ export const page = (state=0, action) => {
 	}
 }
 
+export const newStatus = (state=false, action) => {
+	switch(action.type) {
+		case C.NEW_STATUS :
+			return action.payload
+		default :
+			return state
+	}
+}
+
 export const infoReceived = (state=false, action) => {
 	switch(action.type) {
 		case C.INFO_RECEIVED :
@@ -188,6 +197,7 @@ export default combineReducers({
 	projectAPI,
 	rowsPerPage,
 	page,
+	newStatus,
 	infoReceived,
 	inProgress,
 	waitingForCustomer,

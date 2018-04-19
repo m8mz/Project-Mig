@@ -115,7 +115,7 @@ class NestedList extends React.Component {
   }
 
   render() {
-    const { classes, sites, emails, user, proserv_id } = this.props
+    const { classes, sites, emails, user } = this.props
 	 const changeName = (name) => {
 		 switch(name) {
 			case "emuniz":

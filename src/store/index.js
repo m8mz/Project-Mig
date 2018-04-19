@@ -7,11 +7,15 @@ const consoleMessages = store => next => action => {
 
 	let result
 
-	console.groupCollapsed(`dipatching action => ${action.type}`)
+	// console.groupCollapsed(`dipatching action => ${action.type}`)
 
 	if ( action.type === C.CHANGE_USER ) {
 		if (localStorage.getItem('user') !== action.payload) {
 			localStorage.setItem('user', action.payload)
+		}
+	} else if ( action.type === C.NEW_STATUS ) {
+		if (localStorage.getItem('newStatus') !== action.payload) {
+			localStorage.setItem('newStatus', (action.payload) ? 'On' : 'Off')
 		}
 	} else if ( action.type === C.INFO_RECEIVED ) {
 		if (localStorage.getItem('infoReceived') !== action.payload) {
@@ -37,15 +41,15 @@ const consoleMessages = store => next => action => {
 
 	result = next(action)
 
-	let grabState = store.getState()
-
-	console.log(`
-
-		state: ${JSON.stringify(grabState)}
-
-		`)
-
-	console.groupEnd()
+	// let grabState = store.getState()
+	//
+	// console.log(`
+	//
+	// 	state: ${JSON.stringify(grabState)}
+	//
+	// 	`)
+	//
+	// console.groupEnd()
 
 	return result
 

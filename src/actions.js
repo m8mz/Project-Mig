@@ -11,6 +11,11 @@ export const changeRowsPerPage = (rows=15) => ({
 	payload: rows
 })
 
+export const newStatus = boolean => ({
+	type: C.NEW_STATUS,
+	payload: !boolean
+})
+
 export const infoReceived = boolean => ({
 	type: C.INFO_RECEIVED,
 	payload: !boolean

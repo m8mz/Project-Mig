@@ -17,7 +17,9 @@ const styles = theme => ({
 		width: "90%",
 		margin: "0 auto",
 		marginTop: theme.spacing.unit * 2,
-		height: "auto"
+		marginBottom: theme.spacing.unit * 2,
+		height: "auto",
+		overflowY: 'auto'
   }),
 	divider: {
 		marginBottom: 5
@@ -39,12 +41,12 @@ function PaperSheet(props) {
 			    </Typography>
 				</Grid>
 		  </Grid>
-			<Grid container spacing={24}>
-			 <Grid item xs={5} sm={12} style={{maxWidth: 540}}>
+			<Grid container spacing={24} style={{paddingBottom: 20}}>
+			 <Grid xs={4}>
 		      <Tasks />
-					<EmailTemplates />
+				<EmailTemplates />
 			 </Grid>
-			 <Grid item xs>
+			 <Grid xs={8}>
 				<Notes />
 			 </Grid>
 			</Grid>
