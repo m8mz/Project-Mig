@@ -139,6 +139,28 @@ export const projectListAPI = () => (dispatch, getState) => {
 			})
 }
 
+export const addNew = () => (dispatch, getState) => {
+	axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?lib=websitetransfer&action=get_service_list&&get_new=1`)
+			.then(res => {
+				let list = res.data.service_list
+				list.map(project =>
+					dispatch({
+						type: C.ADD_NEW,
+						payload: project
+					})
+				)
+			})
+			.catch(error => {
+				console.log("Issue grabbing the new projects.. please report.")
+			})
+}
+
+export const removeNew = () => (dispatch, getState) => {
+	dispatch({
+		type: C.REMOVE_NEW
+	})
+}
+
 export const addNote = fullNote => (dispatch, getState) => {
 	dispatch({
 		type: C.ADD_NOTE,

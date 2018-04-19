@@ -1,28 +1,28 @@
 import Table from '../ui/Table'
-import { changePage, changeRowsPerPage, projectListAPI } from '../../actions'
+import { changePage, changeRowsPerPage, projectListAPI, addNew, removeNew } from '../../actions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
 
 	function filterProjects() {
 			let statusFilter = []
-			if (state.infoReceived || state.searching) {
+			if (state.newStatus) {
+				statusFilter.push("new")
+			}
+			if (state.infoReceived) {
 				statusFilter.push("info_received")
 			}
-			if (state.inProgress || state.searching) {
+			if (state.inProgress) {
 				statusFilter.push("in_progress")
 			}
-			if (state.waitingForCustomer || state.searching) {
+			if (state.waitingForCustomer) {
 				statusFilter.push("waiting_for_cust")
 			}
-			if (state.agentReview || state.searching) {
+			if (state.agentReview) {
 				statusFilter.push("agent_review")
 			}
-			if (state.customerReview || state.searching) {
+			if (state.customerReview) {
 				statusFilter.push("customer_review")
-			}
-			if (state.searching) {
-				statusFilter.push("completed", "cancelled", "new")
 			}
 			let regexExp
 			statusFilter.map(status =>
@@ -46,6 +46,7 @@ const mapStateToProps = state => {
 		"data": filterProjects(),
 		"page": state.page,
 		"rowsPerPage": state.rowsPerPage,
+		"newStatus": state.newStatus,
 		"infoReceived": state.infoReceived,
 		"inProgress": state.inProgress,
 		"waitingForCustomer": state.waitingForCustomer,
@@ -70,6 +71,16 @@ const mapDispatchToProps = dispatch => {
 		listApi() {
 			dispatch(
 				projectListAPI()
+			)
+		},
+		onAddNew() {
+			dispatch(
+				addNew()
+			)
+		},
+		onRemoveNew() {
+			dispatch(
+				removeNew()
 			)
 		}
 	}

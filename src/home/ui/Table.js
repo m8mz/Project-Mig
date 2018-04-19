@@ -113,6 +113,17 @@ class CustomPaginationActionsTable extends Component {
 	componentWillMount() {
 		this.props.listApi()
 	}
+	componentDidUpdate(prevProps) {
+		if (prevProps.newStatus !== this.props.newStatus) {
+			if (this.props.newStatus === true) {
+				this.props.onAddNew()
+			} else {
+				if (this.props.data.some(x => x.status_name === "new")) {
+					this.props.onRemoveNew()
+				}
+			}
+		}
+	}
 
 	takeTicket = id => {
 		const params = {
