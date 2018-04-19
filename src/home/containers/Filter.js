@@ -20,9 +20,6 @@ const mapDispatchToProps = dispatch => {
 			dispatch(
 				newStatus(state)
 			)
-			dispatch(
-				projectListAPI()
-			)
 		},
 		onInfoReceived(state) {
 			dispatch(
