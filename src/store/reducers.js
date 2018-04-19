@@ -5,6 +5,13 @@ export const projectList = (state=[], action) => {
 	switch(action.type) {
 		case C.PROJECT_LIST :
 			return action.payload
+		case C.ADD_NEW :
+			return [
+				...state,
+				action.payload
+			]
+		case C.REMOVE_NEW :
+			return state.filter(project => project.status_name !== "new")
 		default :
 			return state
 	}

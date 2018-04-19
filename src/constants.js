@@ -34,7 +34,9 @@ const constants = {
 	PROJECT_LIST: "PROJECT_LIST",
 	CHANGE_USER: "CHANGE_USER",
 	SEARCH: "SEARCH",
-	SEARCH_OFF: "SEARCH_OFF"
+	SEARCH_OFF: "SEARCH_OFF",
+	ADD_NEW: "ADD_NEW",
+	REMOVE_NEW: "REMOVE_NEW"
 }
 
 export default constants
