@@ -157,7 +157,7 @@ class NestedList extends React.Component {
     return (
       <div className={classes.root}>
 				<Typography align="left" variant="display1">
-					Migration Project for {projectInfo.cpanel_user}
+					Migration Project for {projectInfo.domain}
 				</Typography>
 				<Typography align="left" variant="subheading" style={{marginBottom: 15}}>
 					Owner: {(this.changeName(this.state.assigned_to) === 'Take') ?

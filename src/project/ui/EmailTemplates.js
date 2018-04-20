@@ -19,6 +19,7 @@ import { FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
+import acceptedTimeStamp from './TrackerFunctions.js'
 
 const styles = theme => ({
   root: {
@@ -246,7 +247,7 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${changeName(user)}
 Professional Services`
-		let timestamp = Math.round(new Date().getTime()/1000.0)
+    let timestamp = acceptedTimeStamp();
 		const params = {
 			"proserv_id": this.props.proserv_id,
 			"reasonid": reasonid,
@@ -260,8 +261,7 @@ Professional Services`
 			"value": 1,
 			"type": 'websitetransfer'
 		}
-
-		axios.get(`https://tempeproserve.com/marcus/refunds/submit.php?migid=${params.proserv_id}&reasonid=${params.reasonid}&timestamp=${params.timestamp}&brandname=${params.brandname}&comment=${encodeURIComponent(params.comment)}`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.timestamp}&username=${params.user}`)
 		.then((res) => {
 			console.log(`
 					Exit Code: ${res.data.success}
