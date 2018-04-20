@@ -259,9 +259,12 @@ Professional Services`
 			"lib": 'general',
 			"flag": 'refund',
 			"value": 1,
-			"type": 'websitetransfer'
+			"type": 'websitetransfer',
+      "domain": this.props.domain,
+	    "cust_id": this.props.cust_id,
+      "added": this.props.added
 		}
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=2000-01-01+01:01:01&agent=${params.user}&domain=PLACEHOLDERDOMAIN&isFlagged=0`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
 		.then((res) => {
 			console.log(`
 					Exit Code: ${res.data.success}

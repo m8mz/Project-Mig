@@ -10,7 +10,10 @@ const mapStateToProps = state => {
 		"proserv_id": state.projectInfo.proserv_id,
 		"cust_id": state.projectInfo.cust_id,
 		"email": state.projectInfo.email,
-		"cpanel_user": state.projectInfo.cpanel_user
+		"cpanel_user": state.projectInfo.cpanel_user,
+		"domain": state.projectInfo.domain,
+		"cust_id": state.projectInfo.cust_id,
+		"added": state.projectInfo.added
 	}
 }
 
