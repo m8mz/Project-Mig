@@ -20,6 +20,7 @@ import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
 import acceptedTimeStamp from './TrackerFunctions.js'
+import Tooltip from 'material-ui/Tooltip';
 
 const styles = theme => ({
   root: {
@@ -261,7 +262,7 @@ Professional Services`
 			"value": 1,
 			"type": 'websitetransfer'
 		}
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.timestamp}&username=${params.user}`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=2000-01-01+01:01:01&agent=${params.user}&domain=PLACEHOLDERDOMAIN`)
 		.then((res) => {
 			console.log(`
 					Exit Code: ${res.data.success}
@@ -452,19 +453,18 @@ Professional Services`
 								            <option value="None">
 															<em><span role="img" aria-label="error">⚠️</span>  - None</em>
 								            </option>
-								            <option value="2">Incompatible</option>
-								            <option value="3">Proprietary</option>
-														<option value="4">VPS</option>
-								            <option value="5">OHWP</option>
-														<option value="6">No Access</option>
-								            <option value="7">Customer Completed</option>
-														<option value="9">Escalated Refund</option>
-								            <option value="10">Disclaimer</option>
-														<option value="11">Purchased on Source</option>
-								            <option value="12">Vague Request</option>
-														<option value="13">Extra Purchases</option>
-								            <option value="14">Missold</option>
-												<option value="1">Other</option>
+								            <option value="Incompatible">Incompatible</option>
+								            <option value="Proprietary">Proprietary</option>
+														<option value="No Access">No Access</option>
+								            <option value="3rd Party Completion">Third Party Completion</option>
+														<option value="Escalated Refund">Escalated Refund</option>
+								            <option value="WordPress.com">WordPress.com Disclaimer</option>
+														<option value="Purchased on Source">Purchased on Source</option>
+														<option value="Extra Purchases">Extra Purchases</option>
+								            <option value="Missold">Missold</option>
+                            <option value="Agent Review">Agent Review</option>
+                            <option value="Cancelled Account">Cancelled Account</option>
+						                <option value="Other">Other</option>
 								          </Select>
 								        </FormControl>
 												<TextField
