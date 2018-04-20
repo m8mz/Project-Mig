@@ -20,7 +20,6 @@ import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
 import acceptedTimeStamp from './TrackerFunctions.js'
-import Tooltip from 'material-ui/Tooltip';
 
 const styles = theme => ({
   root: {
