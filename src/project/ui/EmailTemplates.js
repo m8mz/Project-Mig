@@ -19,7 +19,7 @@ import { FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
 import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
-import acceptedTimeStamp from './TrackerFunctions.js'
+import formatDate from './TrackerFunctions.js'
 
 const styles = theme => ({
   root: {
@@ -247,7 +247,7 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${changeName(user)}
 Professional Services`
-    let timestamp = acceptedTimeStamp();
+    let timestamp = formatDate(Date());
 		const params = {
 			"proserv_id": this.props.proserv_id,
 			"reasonid": reasonid,
