@@ -43,7 +43,7 @@ export class App extends Component {
 		})
 		store.dispatch({
 			type: C.NEW_STATUS,
-			payload: (localStorage.getItem('newStatus') === "On") ? true : false
+			payload: (localStorage.getItem('newStatus') === "On") ? false : false
 		})
 		store.dispatch({
 			type: C.INFO_RECEIVED,

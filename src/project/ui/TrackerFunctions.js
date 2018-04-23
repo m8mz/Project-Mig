@@ -1,5 +1,3 @@
-import React from 'react'
-
 // this function will print the date in a mm/ff/uu hh:mm am/pm format
 export function formatDate(dateVal) {
     let newDate = new Date(dateVal);
@@ -9,7 +7,7 @@ export function formatDate(dateVal) {
     let sHour = newDate.getHours();
     let sMinute = padValue(newDate.getMinutes());
     let sAMPM = "AM";
-    let iHourCheck = parseInt(sHour);
+    let iHourCheck = parseInt(sHour, 10);
     if (iHourCheck > 12) {
         sAMPM = "PM";
         sHour = iHourCheck - 12;
