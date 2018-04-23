@@ -458,7 +458,7 @@ Professional Services`
 								            <option value="Incompatible">Incompatible</option>
 								            <option value="Proprietary">Proprietary</option>
 														<option value="No Access">No Access</option>
-								            <option value="3rd Party Completion">Third Party Completion</option>
+								            <option value="Customer Completed">Customer Completed</option>
 														<option value="Escalated Refund">Escalated Refund</option>
 								            <option value="WordPress.com">WordPress.com Disclaimer</option>
 														<option value="Purchased on Source">Purchased on Source</option>
