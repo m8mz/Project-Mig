@@ -6,6 +6,14 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 import axios from 'axios'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField'
+
 
 const styles = theme => ({
   root: {
@@ -50,8 +58,18 @@ class HorizontalNonLinearStepper extends React.Component {
   state = {
     statusStep: findStatus(this.props.status),
 		status: this.props.status,
-    completed: this.props.completed
+    completed: this.props.completed,
+    open: false
   }
+
+  // Dialog open/close functions
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   completedSteps() {
     return Object.keys(this.state.completed).length
@@ -163,6 +181,20 @@ class HorizontalNonLinearStepper extends React.Component {
     const { classes, refunded } = this.props
     const steps = getSteps()
 	 	const { statusStep, status } = this.state
+    // completion dialog buttons
+    const actions = [
+      <Button
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <Button
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onClick={this.handleClose}
+      />,
+    ];
 
     return (
       <div className={classes.root}>
@@ -205,6 +237,8 @@ class HorizontalNonLinearStepper extends React.Component {
 									</Button> :
 									null}
 
+
+                  {/* Completion Button **/}
                 <Button
                   variant={(status === "new" && statusStep === 0) ?
 										'raised' :
@@ -220,9 +254,60 @@ class HorizontalNonLinearStepper extends React.Component {
 										() => this.setStatus("waiting_for_cust")
 										}
                   className={classes.button}
+                  onClick={this.handleOpen}
                 >
                   {(statusStep === 0) ? 'New' : (statusStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
+
+                {/* Dialog Box **/}
+                {/*
+                  <Dialog
+                    title="Dialog With Actions"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                  >
+                    The actions in this window were passed in as an array of React objects.
+                  </Dialog>
+                **/}
+
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  aria-labelledby="form-dialog-title"
+                >
+                  <DialogTitle id="form-dialog-title">Submit Completion</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      <Typography>Please confirm the details for your completion submission, otherwise please cancel if this will be untracked.</Typography>
+                    </DialogContentText>
+
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      label="Comment"
+                      type="text"
+                      fullWidth
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleClick} color="primary">
+                      Cancel
+                    </Button>
+                    <Button color="primary">
+                      Refund
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+
+
+
+
+
+                {/* Info rcvd, review, cancelled **/}
                 <Button
 									className={classes.button}
 									variant={(status === "info_received" && statusStep === 0) ?
