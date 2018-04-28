@@ -84,12 +84,11 @@ class HorizontalNonLinearStepper extends React.Component {
     this.setState({open: false});
   };
 
+  // Handle completion submission
   handleSubmit = () => {
     const params = this.params;
     const timestamp = formatDate(Date());
-    // alert(params.domain);
-
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cust_id}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=1&numberOfMailboxes=0`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
