@@ -13,7 +13,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
-
+import submitCompletion from './TrackerFunctions.js'
 
 const styles = theme => ({
   root: {
@@ -62,6 +62,16 @@ class HorizontalNonLinearStepper extends React.Component {
     open: false
   }
 
+  params = {
+    user: this.props.user,
+    provider: document.location.host.slice(2).replace(/\.com/, ''),
+    service_type: 'websitetransfer',
+    action: 'update_status',
+    lib: 'general',
+    new_status: this.status,
+    proserv_id: this.props.id
+  }
+
   // Dialog open/close functions
   handleOpen = () => {
     this.setState({open: true});
@@ -70,6 +80,26 @@ class HorizontalNonLinearStepper extends React.Component {
   handleClose = () => {
     this.setState({open: false});
   };
+
+  handleSubmit = () => {
+    const params = this.params;
+    alert("hello");
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    .then((res) => {
+      console.log(`
+          Exit Code: ${res.data.success}
+          Response: ${res.data.refund_submission_data}
+        `)
+      if (res.data.success === 1) {
+        console.log("Refund recorded.")
+      } else {
+        console.log(`Error: ${res.data.note}`)
+      }
+    })
+    .catch((error) => {
+      console.log("Issue recording refund to database.. please report.")
+    })
+  }
 
   completedSteps() {
     return Object.keys(this.state.completed).length
@@ -94,15 +124,7 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   handleComplete = (status) => {
-	 const params = {
-		 user: this.props.user,
-		 provider: document.location.host.slice(2).replace(/\.com/, ''),
-		 service_type: 'websitetransfer',
-		 action: 'update_status',
-		 lib: 'general',
-		 new_status: status,
-		 proserv_id: this.props.id
-	 }
+    const params = this.params;
 	 axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.provider}&service_type=${params.service_type}&action=${params.action}&lib=${params.lib}&new_status=${params.new_status}&proserv_id=${params.proserv_id}`)
 	 .then((res) => {
 		 console.log(`
@@ -177,6 +199,7 @@ class HorizontalNonLinearStepper extends React.Component {
   		console.log("Issue with the status API.. please report.")
      })
   }
+
   render() {
     const { classes, refunded } = this.props
     const steps = getSteps()
@@ -258,20 +281,7 @@ class HorizontalNonLinearStepper extends React.Component {
                 >
                   {(statusStep === 0) ? 'New' : (statusStep === 1) ? 'Waiting' : 'Completed'}
                 </Button>
-
-                {/* Dialog Box **/}
-                {/*
-                  <Dialog
-                    title="Dialog With Actions"
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}
-                  >
-                    The actions in this window were passed in as an array of React objects.
-                  </Dialog>
-                **/}
-
+                {/* Dialog box **/}
                 <Dialog
                   open={this.state.open}
                   onClose={this.handleClose}
@@ -293,20 +303,14 @@ class HorizontalNonLinearStepper extends React.Component {
                     />
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleClick} color="primary">
+                    <Button onClick={this.handleClose} color="primary">
                       Cancel
                     </Button>
-                    <Button color="primary">
-                      Refund
+                    <Button color="primary" onClick={this.handleSubmit}>
+                      Submit
                     </Button>
                   </DialogActions>
                 </Dialog>
-
-
-
-
-
-
                 {/* Info rcvd, review, cancelled **/}
                 <Button
 									className={classes.button}
