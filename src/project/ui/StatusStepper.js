@@ -72,7 +72,8 @@ class HorizontalNonLinearStepper extends React.Component {
     proserv_id: this.props.id,
     domain: this.props.domain,
     cust_id: this.props.cust_id,
-    added: this.props.added
+    added: this.props.added,
+    cpanel_user: this.props.cpanel_user
   }
 
   // Dialog open/close functions
@@ -88,7 +89,9 @@ class HorizontalNonLinearStepper extends React.Component {
   handleSubmit = () => {
     const params = this.params;
     const timestamp = formatDate(Date());
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cust_id}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=1&numberOfMailboxes=0`)
+    // testing
+    alert(params.cust_id);
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=1&numberOfMailboxes=0&custID=${params.cust_id}`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
