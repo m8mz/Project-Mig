@@ -13,7 +13,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
-import submitCompletion from './TrackerFunctions.js'
+import formatDate from './TrackerFunctions.js'
 
 const styles = theme => ({
   root: {
@@ -69,7 +69,10 @@ class HorizontalNonLinearStepper extends React.Component {
     action: 'update_status',
     lib: 'general',
     new_status: this.status,
-    proserv_id: this.props.id
+    proserv_id: this.props.id,
+    domain: this.props.domain,
+    cust_id: this.props.cust_id,
+    added: this.props.added
   }
 
   // Dialog open/close functions
@@ -83,8 +86,10 @@ class HorizontalNonLinearStepper extends React.Component {
 
   handleSubmit = () => {
     const params = this.params;
-    alert("hello");
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    const timestamp = formatDate(Date());
+    // alert(params.domain);
+
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}

@@ -25,7 +25,11 @@ const mapStateToProps = state => {
 		"user": username,
 		"id": state.projectInfo.proserv_id,
 		"refunded": state.notes.find(n => (n.note === "Refund issued and recorded") ? true : false),
-		"completed": (state.projectInfo.proserv_status_name === "complete" || state.projectInfo.proserv_status_name === "cancelled") ? true : false
+		"completed": (state.projectInfo.proserv_status_name === "complete" || state.projectInfo.proserv_status_name === "cancelled") ? true : false,
+		"email": state.projectInfo.email,
+		"cpanel_user": state.projectInfo.cpanel_user,
+		"domain": state.projectInfo.domain,
+		"added": state.projectInfo.added
 	}
 }
 
