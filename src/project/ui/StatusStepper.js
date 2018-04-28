@@ -73,7 +73,9 @@ class HorizontalNonLinearStepper extends React.Component {
     domain: this.props.domain,
     cust_id: this.props.cust_id,
     added: this.props.added,
-    cpanel_user: this.props.cpanel_user
+    cpanel_user: this.props.cpanel_user,
+    domain_complete: this.props.domain_complete,
+    email_complete: this.props.email_complete
   }
 
   // Dialog open/close functions
@@ -90,7 +92,7 @@ class HorizontalNonLinearStepper extends React.Component {
     const params = this.params;
     const timestamp = formatDate(Date());
     // testing
-    alert(params.cust_id);
+    alert(params.domain_complete);
     axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=1&numberOfMailboxes=0&custID=${params.cust_id}`)
     .then((res) => {
       console.log(`
