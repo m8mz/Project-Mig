@@ -12,7 +12,6 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
 import formatDate from './TrackerFunctions.js'
 
 const styles = theme => ({
@@ -91,6 +90,9 @@ class HorizontalNonLinearStepper extends React.Component {
   handleSubmit = () => {
     const params = this.params;
     const timestamp = formatDate(Date());
+    let handleSubmitInput = {
+      something: "something"
+    }
 
     axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}`)
     .then((res) => {
@@ -304,22 +306,16 @@ class HorizontalNonLinearStepper extends React.Component {
                       <Typography>What kind of account is the destination?</Typography>
                       <input type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
                       <input type="radio" name="destination" value="vpsdedi"/> OHWP/VPS/Dedi
-                      <br/><br/>
-                      <input id="wtmcounts" onClick={this.wtmcounts} type="checkbox"/> Use Website Transfer Manager
-                      <div id="domainEmailConfirm">
-                        <Typography>Confirm the number of sites</Typography>
-                        <input id="numberOfSites" type="number"/>
-                        <Typography>Confirm the number of mailboxes</Typography>
-                        <input id="numberOfMailboxes" type="number"/>
-                      </div>
-                      <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Comment"
-                        type="text"
-                        fullWidth
-                      />
+                      <br/>
+                      <input id="wtmcounts" onClick={this.wtmcounts} type="checkbox"/> Use WTM domains and emails
+                      <Typography>Confirm the number of sites</Typography>
+                      <input id="numberOfSites" type="number"/>
+                      <Typography>Confirm the number of mailboxes</Typography>
+                      <input id="numberOfMailboxes" type="number"/>
+                      <Typography>Confirm the number of units sold</Typography>
+                      <input id="numberOfUnits" type="number"/>
+                      <Typography>Leave an optional comment</Typography>
+                      <textarea placeholder="If this wasn't an average migration briefly explain here"/>
                     </form>
                   </DialogContent>
                   <DialogActions>
