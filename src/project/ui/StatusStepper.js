@@ -109,6 +109,14 @@ class HorizontalNonLinearStepper extends React.Component {
     })
   }
 
+  // website/domain counts for completion submission
+  wtmcounts = () => {
+    if(document.getElementById("wtmcounts").checked===true){
+      document.getElementById("numberOfSites").value=this.props.domain_complete;
+      document.getElementById("numberOfMailboxes").value=this.props.email_complete;
+    }
+  }
+
   completedSteps() {
     return Object.keys(this.state.completed).length
   }
@@ -297,12 +305,13 @@ class HorizontalNonLinearStepper extends React.Component {
                       <input type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
                       <input type="radio" name="destination" value="vpsdedi"/> OHWP/VPS/Dedi
                       <br/><br/>
-                      <input onClick="" type="checkbox"/> Use Website Transfer Manager
-                      <br/><br/>
-                      <Typography>Confirm the number of sites</Typography>
-                      <input id="numberOfSites" type="number" value={this.props.domain_complete}/>
-                      <Typography>Confirm the number of mailboxes</Typography>
-                      <input id="numberOfMailboxes" type="number" value={this.props.email_complete}/>
+                      <input id="wtmcounts" onClick={this.wtmcounts} type="checkbox"/> Use Website Transfer Manager
+                      <div id="domainEmailConfirm">
+                        <Typography>Confirm the number of sites</Typography>
+                        <input id="numberOfSites" type="number"/>
+                        <Typography>Confirm the number of mailboxes</Typography>
+                        <input id="numberOfMailboxes" type="number"/>
+                      </div>
                       <TextField
                         autoFocus
                         margin="dense"
