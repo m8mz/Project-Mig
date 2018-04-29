@@ -58,7 +58,8 @@ class HorizontalNonLinearStepper extends React.Component {
     statusStep: findStatus(this.props.status),
 		status: this.props.status,
     completed: this.props.completed,
-    open: false
+    open: false,
+    completion_submitted: false
   }
 
   params = {
@@ -136,6 +137,7 @@ class HorizontalNonLinearStepper extends React.Component {
     .catch((error) => {
       console.log("Issue recording refund to database.. please report.")
     })
+    this.setState({completion_submitted: true});
   }
 
   // website/domain counts for completion submission
@@ -320,7 +322,9 @@ class HorizontalNonLinearStepper extends React.Component {
                   aria-labelledby="form-dialog-title"
                 >
                   <DialogTitle id="form-dialog-title">Submit Completion</DialogTitle>
-                  <DialogContent>
+                  {/* Check if completion has been submitted**/}
+                  {(this.state.completion_submitted === false) ?
+                  <DialogContent id="completion-form-wrapper">
                   <hr/>
                     <DialogContentText>
                       <Typography>Please confirm the details for your completion submission, otherwise please cancel if this will be untracked.</Typography>
@@ -348,13 +352,17 @@ class HorizontalNonLinearStepper extends React.Component {
                       <textarea id="completionComment" placeholder="If this wasn't an average migration briefly explain here"/>
                     </form>
                   </DialogContent>
+                   : <Typography id="submission-message">Thank you for your submission</Typography>}
                   <DialogActions>
                     <Button onClick={this.handleClose} color="primary">
                       Cancel
                     </Button>
-                    <Button color="primary" onClick={this.handleSubmit}>
-                      Submit
-                    </Button>
+                    {(this.state.completion_submitted === false) ?
+                      <Button color="primary" onClick={this.handleSubmit}>Submit</Button>
+                      :
+                      <Button label="Disabled" disabled={true}>Submitted</Button>
+                    }
+
                   </DialogActions>
                 </Dialog>
                 {/* Info rcvd, review, cancelled **/}
