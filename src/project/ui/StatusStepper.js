@@ -75,8 +75,10 @@ class HorizontalNonLinearStepper extends React.Component {
     cpanel_user: this.props.cpanel_user,
     domain_complete: this.props.domain_complete,
     email_complete: this.props.email_complete,
+    units_complete: 1,
     isVPS: null,
-    isInternal: null
+    isInternal: null,
+    completion_comment: null
   }
 
   // Dialog open/close functions
@@ -110,8 +112,16 @@ class HorizontalNonLinearStepper extends React.Component {
     } else {
       params.isVPS = 1;
     }
-
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=MYCOMMENT&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=${params.isVPS}&isInternal=${params.isInternal}&numberOfUnits=1&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}&agentReview=${params.agentReview}`)
+    //set number of sites
+    params.domain_complete = document.getElementById("numberOfSites").value;
+    //set number of emails
+    params.email_complete = document.getElementById("numberOfMailboxes").value;
+    //set number of units
+    params.units_complete = document.getElementById("numberOfUnits").value;
+    //set the comment
+    params.completion_comment = document.getElementById("completionComment").value
+    //make the axios call to submit the completion to db
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.completion_comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=${params.isVPS}&isInternal=${params.isInternal}&numberOfUnits=${params.units_complete}&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}&agentReview=${params.agentReview}`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
@@ -335,7 +345,7 @@ class HorizontalNonLinearStepper extends React.Component {
                       <Typography>Confirm the number of units sold</Typography>
                       <input id="numberOfUnits" type="number"/>
                       <Typography>Leave an optional comment</Typography>
-                      <textarea placeholder="If this wasn't an average migration briefly explain here"/>
+                      <textarea id="completionComment" placeholder="If this wasn't an average migration briefly explain here"/>
                     </form>
                   </DialogContent>
                   <DialogActions>
