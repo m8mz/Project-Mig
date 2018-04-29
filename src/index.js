@@ -9,6 +9,7 @@ import initialState from './initialState.json'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import C from './constants'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import './style.css'
 
 const theme = createMuiTheme({
   palette: {

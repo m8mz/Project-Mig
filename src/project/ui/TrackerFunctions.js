@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 // this function will print the date in a mm/ff/uu hh:mm am/pm format
 export function formatDate(dateVal) {
     let newDate = new Date(dateVal);

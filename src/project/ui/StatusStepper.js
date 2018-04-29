@@ -91,9 +91,8 @@ class HorizontalNonLinearStepper extends React.Component {
   handleSubmit = () => {
     const params = this.params;
     const timestamp = formatDate(Date());
-    // testing
-    alert(params.domain_complete);
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=1&numberOfMailboxes=0&custID=${params.cust_id}`)
+
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
@@ -213,20 +212,6 @@ class HorizontalNonLinearStepper extends React.Component {
     const { classes, refunded } = this.props
     const steps = getSteps()
 	 	const { statusStep, status } = this.state
-    // completion dialog buttons
-    const actions = [
-      <Button
-        label="Cancel"
-        primary={true}
-        onClick={this.handleClose}
-      />,
-      <Button
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
-      />,
-    ];
 
     return (
       <div className={classes.root}>
@@ -286,6 +271,7 @@ class HorizontalNonLinearStepper extends React.Component {
 										() => this.setStatus("waiting_for_cust")
 										}
                   className={classes.button}
+                  // eslint-disable-next-line
                   onClick={this.handleOpen}
                 >
                   {(statusStep === 0) ? 'New' : (statusStep === 1) ? 'Waiting' : 'Completed'}
@@ -298,18 +284,34 @@ class HorizontalNonLinearStepper extends React.Component {
                 >
                   <DialogTitle id="form-dialog-title">Submit Completion</DialogTitle>
                   <DialogContent>
+                  <hr/>
                     <DialogContentText>
                       <Typography>Please confirm the details for your completion submission, otherwise please cancel if this will be untracked.</Typography>
                     </DialogContentText>
-
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Comment"
-                      type="text"
-                      fullWidth
-                    />
+                    <hr/>
+                    <form id="completion-form">
+                      <Typography>Is the source external or internal?</Typography>
+                      <input type="radio" name="source" value="External" checked/> External
+                      <input type="radio" name="source" value="Internal"/> Internal
+                      <Typography>What kind of account is the destination?</Typography>
+                      <input type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
+                      <input type="radio" name="destination" value="vpsdedi"/> OHWP/VPS/Dedi
+                      <br/><br/>
+                      <input onClick="" type="checkbox"/> Use Website Transfer Manager
+                      <br/><br/>
+                      <Typography>Confirm the number of sites</Typography>
+                      <input id="numberOfSites" type="number" value={this.props.domain_complete}/>
+                      <Typography>Confirm the number of mailboxes</Typography>
+                      <input id="numberOfMailboxes" type="number" value={this.props.email_complete}/>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Comment"
+                        type="text"
+                        fullWidth
+                      />
+                    </form>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={this.handleClose} color="primary">
