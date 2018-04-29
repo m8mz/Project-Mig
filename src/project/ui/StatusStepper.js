@@ -74,7 +74,9 @@ class HorizontalNonLinearStepper extends React.Component {
     added: this.props.added,
     cpanel_user: this.props.cpanel_user,
     domain_complete: this.props.domain_complete,
-    email_complete: this.props.email_complete
+    email_complete: this.props.email_complete,
+    isVPS: null,
+    isInternal: null
   }
 
   // Dialog open/close functions
@@ -90,11 +92,26 @@ class HorizontalNonLinearStepper extends React.Component {
   handleSubmit = () => {
     const params = this.params;
     const timestamp = formatDate(Date());
-    let handleSubmitInput = {
-      something: "something"
+    //check if internal/external
+    if(document.getElementById("externalMigration").checked===true){
+      params.isInternal = 0;
+    } else {
+      params.isInternal = 1;
+    }
+    //check if tracked as agent or forced completion (agent review)
+    if(document.getElementById("agentCompleted").checked===true){
+      params.agentReview = 0;
+    } else {
+      params.agentReview = 1;
+    }
+    //check if shared or vps
+    if(document.getElementById("sharedMigration").checked===true){
+      params.isVPS = 0;
+    } else {
+      params.isVPS = 1;
     }
 
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=0&isInternal=0&numberOfUnits=1&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-completion.php?migid=${params.proserv_id}&completionDate=${timestamp}&brand=${params.provider}&comment=MYCOMMENT&purchaseDate=${params.added}&agentName=${params.user}&domain=${params.domain}&cpanelUsername=${params.cpanel_user}&isVPS=${params.isVPS}&isInternal=${params.isInternal}&numberOfUnits=1&numberOfSites=${params.domain_complete}&numberOfMailboxes=${params.email_complete}&custID=${params.cust_id}&agentReview=${params.agentReview}`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
@@ -300,11 +317,14 @@ class HorizontalNonLinearStepper extends React.Component {
                     </DialogContentText>
                     <hr/>
                     <form id="completion-form">
+                      <Typography>How should this be tracked?</Typography>
+                      <input id="agentCompleted" type="radio" name="tracked" value="complete" checked/> I completed this
+                      <input type="radio" name="tracked" value="agentReview"/> Agent Review/Forced Completion
                       <Typography>Is the source external or internal?</Typography>
-                      <input type="radio" name="source" value="External" checked/> External
+                      <input id="externalMigration" type="radio" name="source" value="External" checked/> External
                       <input type="radio" name="source" value="Internal"/> Internal
                       <Typography>What kind of account is the destination?</Typography>
-                      <input type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
+                      <input id="sharedMigration" type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
                       <input type="radio" name="destination" value="vpsdedi"/> OHWP/VPS/Dedi
                       <br/>
                       <input id="wtmcounts" onClick={this.wtmcounts} type="checkbox"/> Use WTM domains and emails
