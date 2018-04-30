@@ -1,5 +1,10 @@
-#completion-form, #completion-form p{
+#completion-form, #completion-form p, label{
   color:white;
+  font-size:17px;
+}
+
+label:hover{
+  color:#DBDBDB !important;
 }
 
 #completion-form input{

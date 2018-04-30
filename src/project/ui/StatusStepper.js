@@ -59,7 +59,8 @@ class HorizontalNonLinearStepper extends React.Component {
 		status: this.props.status,
     completed: this.props.completed,
     open: false,
-    completion_submitted: false
+    completion_submitted: false,
+    selectedOption: true
   }
 
   params = {
@@ -138,14 +139,6 @@ class HorizontalNonLinearStepper extends React.Component {
       console.log("Issue recording refund to database.. please report.")
     })
     this.setState({completion_submitted: true});
-  }
-
-  // website/domain counts for completion submission
-  wtmcounts = () => {
-    if(document.getElementById("wtmcounts").checked===true){
-      document.getElementById("numberOfSites").value=this.props.domain_complete;
-      document.getElementById("numberOfMailboxes").value=this.props.email_complete;
-    }
   }
 
   completedSteps() {
@@ -332,22 +325,21 @@ class HorizontalNonLinearStepper extends React.Component {
                     <hr/>
                     <form id="completion-form">
                       <Typography>How should this be tracked?</Typography>
-                      <input id="agentCompleted" type="radio" name="tracked" value="complete" checked/> I completed this
-                      <input type="radio" name="tracked" value="agentReview"/> Agent Review/Forced Completion
+                      <input id="agentCompleted" type="radio" name="tracked" value="complete" defaultChecked/><label for="agentCompleted">I completed this</label>
+                      <input id="agentReview" type="radio" name="tracked" value="agentReview"/><label for="agentReview">Agent Review/Forced Completion</label>
                       <Typography>Is the source external or internal?</Typography>
-                      <input id="externalMigration" type="radio" name="source" value="External" checked/> External
-                      <input type="radio" name="source" value="Internal"/> Internal
+                      <input id="externalMigration" type="radio" name="source" value="External" defaultChecked/><label for="externalMigration">External</label>
+                      <input id="Internal" type="radio" name="source" value="Internal"/><label for="Internal">Internal</label>
                       <Typography>What kind of account is the destination?</Typography>
-                      <input id="sharedMigration" type="radio" name="destination" value="shared" checked/> Shared/Cloud/Basic/BlueRock/Other
-                      <input type="radio" name="destination" value="vpsdedi"/> OHWP/VPS/Dedi
+                      <input id="sharedMigration" type="radio" name="destination" value="shared" defaultChecked/><label for="sharedMigration">Shared/Cloud/Basic/BlueRock/Other</label>
+                      <input id="vpsdedi" type="radio" name="destination" value="vpsdedi"/><label for="vpsdedi">OHWP/VPS/Dedi</label>
                       <br/>
-                      <input id="wtmcounts" onClick={this.wtmcounts} type="checkbox"/> Use WTM domains and emails
                       <Typography>Confirm the number of sites</Typography>
-                      <input id="numberOfSites" type="number"/>
+                      <input id="numberOfSites" type="number" defaultValue={this.props.domain_complete}/>
                       <Typography>Confirm the number of mailboxes</Typography>
-                      <input id="numberOfMailboxes" type="number"/>
+                      <input id="numberOfMailboxes" type="number" defaultValue={this.props.email_complete}/>
                       <Typography>Confirm the number of units sold</Typography>
-                      <input id="numberOfUnits" type="number"/>
+                      <input id="numberOfUnits" type="number" defaultValue="1"/>
                       <Typography>Leave an optional comment</Typography>
                       <textarea id="completionComment" placeholder="If this wasn't an average migration briefly explain here"/>
                     </form>
