@@ -52,6 +52,8 @@ function findStatus(statusName) {
 		0
 }
 
+var params = {}
+
 class HorizontalNonLinearStepper extends React.Component {
 
   state = {
@@ -63,9 +65,7 @@ class HorizontalNonLinearStepper extends React.Component {
     selectedOption: true
   }
 
-  var params = {}
-  componentWillReceiveProps(nextProps) {
-	  
+  componentDidUpdate(nextProps) {
 	params = {
 		user: nextProps.user,
 		provider: document.location.host.slice(2).replace(/\.com/, ''),
@@ -98,7 +98,6 @@ class HorizontalNonLinearStepper extends React.Component {
 
   // Handle completion submission
   handleSubmit = () => {
-    const params = this.params;
     const timestamp = formatDate(Date());
     //check if internal/external
     if(document.getElementById("externalMigration").checked===true){
