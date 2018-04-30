@@ -65,27 +65,29 @@ class HorizontalNonLinearStepper extends React.Component {
     selectedOption: true
   }
 
-  componentDidUpdate(nextProps) {
-	params = {
-		user: nextProps.user,
-		provider: document.location.host.slice(2).replace(/\.com/, ''),
-		service_type: 'websitetransfer',
-		action: 'update_status',
-		lib: 'general',
-		new_status: this.status,
-		proserv_id: nextProps.id,
-		domain: nextProps.domain,
-		cust_id: nextProps.cust_id,
-		added: nextProps.added,
-		cpanel_user: nextProps.cpanel_user,
-		domain_complete: nextProps.domain_complete,
-		email_complete: nextProps.email_complete,
-		units_complete: 1,
-		isVPS: null,
-		isInternal: null,
-		completion_comment: null
-	  }
-  }
+  // componentDidUpdate() {
+	// params = {
+	// 	user: nextProps.user,
+	// 	provider: document.location.host.slice(2).replace(/\.com/, ''),
+	// 	service_type: 'websitetransfer',
+	// 	action: 'update_status',
+	// 	lib: 'general',
+	// 	new_status: this.status,
+	// 	proserv_id: nextProps.id,
+	// 	domain: nextProps.domain,
+	// 	cust_id: nextProps.cust_id,
+	// 	added: nextProps.added,
+	// 	cpanel_user: nextProps.cpanel_user,
+	// 	domain_complete: nextProps.domain_complete,
+	// 	email_complete: nextProps.email_complete,
+	// 	units_complete: 1,
+	// 	isVPS: null,
+	// 	isInternal: null,
+	// 	completion_comment: null
+	//   }
+  //   console.log(JSON.strigify(params));
+  // }
+
 
   // Dialog open/close functions
   handleOpen = () => {
@@ -214,6 +216,28 @@ class HorizontalNonLinearStepper extends React.Component {
 			 statusStep: findStatus(nextProps.status)
 		 })
 	  }
+
+    params = {
+    	user: this.props.user,
+    	provider: document.location.host.slice(2).replace(/\.com/, ''),
+    	service_type: 'websitetransfer',
+    	action: 'update_status',
+    	lib: 'general',
+    	new_status: this.status,
+    	proserv_id: this.props.id,
+    	domain: this.props.domain,
+    	cust_id: this.props.cust_id,
+    	added: this.props.added,
+    	cpanel_user: this.props.cpanel_user,
+    	domain_complete: this.props.domain_complete,
+    	email_complete: this.props.email_complete,
+    	units_complete: 1,
+    	isVPS: null,
+    	isInternal: null,
+    	completion_comment: null
+      }
+      console.log(JSON.stringify(params));
+
   }
 
 	setStatus = (status) => {
