@@ -9,6 +9,7 @@ import Divider from 'material-ui/Divider'
 import Notes from '../containers/Notes'
 import EmailTemplates from '../containers/EmailTemplates'
 import Grid from 'material-ui/Grid'
+import TrackerComponent from '../containers/TrackerComponent.js'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -48,6 +49,7 @@ function PaperSheet(props) {
 			 </Grid>
 			 <Grid xs={8}>
 				<Notes />
+        <TrackerComponent/>
 			 </Grid>
 			</Grid>
 	  </Paper>
