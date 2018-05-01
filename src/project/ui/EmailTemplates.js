@@ -92,7 +92,7 @@ class NestedList extends React.Component {
    		  type: 'websitetransfer',
    		  lib: 'general',
    		  email: this.props.email,
-   		  subject: `Website Transfer for ${this.props.cpanel_user}`,
+   		  subject: `Website Transfer for ${this.props.domain}`,
    		  content: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>")),
    		  content_note: encodeURIComponent(document.getElementById('finalEmail').value.replace(/(\r\n|\n|\r)/g,"<br>").replace(/<br>/g, "!!break!!")),
    		  cust_id: this.props.cust_id,
