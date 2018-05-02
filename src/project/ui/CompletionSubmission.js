@@ -29,7 +29,7 @@ function findStatus(statusName) {
 
 var params = {}
 
-class TrackerComponent extends React.Component {
+class CompletionSubmission extends React.Component {
 
   state = {
     statusStep: findStatus(this.props.status),
@@ -38,26 +38,6 @@ class TrackerComponent extends React.Component {
     open: false,
     completion_submitted: false,
     selectedOption: true
-  }
-
-  params = {
-    user: this.props.user,
-    provider: document.location.host.slice(2).replace(/\.com/, ''),
-    service_type: 'websitetransfer',
-    action: 'update_status',
-    lib: 'general',
-    new_status: this.status,
-    proserv_id: this.props.id,
-    domain: this.props.domain,
-    cust_id: this.props.cust_id,
-    added: this.props.added,
-    cpanel_user: this.props.cpanel_user,
-    domain_complete: this.props.domain_complete,
-    email_complete: this.props.email_complete,
-    units_complete: 1,
-    isVPS: null,
-    isInternal: null,
-    completion_comment: null
   }
 
   // Dialog open/close functions
@@ -167,12 +147,6 @@ class TrackerComponent extends React.Component {
         >
           Track Completion
         </Button>
-        <Button
-          id="completionSubmissionButton"
-          variant='raised'
-        >
-          Track Cancellation
-        </Button>
         {/* Dialog box **/}
         <Dialog
           open={this.state.open}
@@ -227,4 +201,4 @@ class TrackerComponent extends React.Component {
   }
 }
 
-export default TrackerComponent;
+export default CompletionSubmission;

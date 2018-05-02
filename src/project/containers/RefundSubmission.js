@@ -1,4 +1,4 @@
-import TrackerComponent from '../ui/TrackerComponent'
+import RefundSubmission from '../ui/RefundSubmission'
 
 import { connect } from 'react-redux'
 
@@ -20,6 +20,6 @@ const mapStateToProps = state => {
 	}
 }
 
-const Container = connect(mapStateToProps)(TrackerComponent)
+const Container = connect(mapStateToProps)(RefundSubmission)
 
 export default Container

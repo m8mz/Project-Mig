@@ -9,7 +9,8 @@ import Divider from 'material-ui/Divider'
 import Notes from '../containers/Notes'
 import EmailTemplates from '../containers/EmailTemplates'
 import Grid from 'material-ui/Grid'
-import TrackerComponent from '../containers/TrackerComponent.js'
+import CompletionSubmission from '../containers/CompletionSubmission.js'
+import RefundSubmission from '../containers/RefundSubmission.js'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -49,7 +50,10 @@ function PaperSheet(props) {
 			 </Grid>
 			 <Grid xs={8}>
 				<Notes />
-        <TrackerComponent/>
+        <Grid container style={{marginTop: 20}}>
+          <Grid xs={2}><CompletionSubmission/></Grid>
+          <Grid xs={2}><RefundSubmission/></Grid>
+        </Grid>
 			 </Grid>
 			</Grid>
 	  </Paper>
