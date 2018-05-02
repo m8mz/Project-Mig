@@ -35,6 +35,34 @@ class RefundSubmission extends React.Component {
     this.setState({open: false});
   };
 
+  // Handle completion submission
+  handleSubmit = () => {
+    //set the timestamp
+    const timestamp = formatDate(Date());
+    //set the comment
+    params.comment = document.getElementById("refundComment").value;
+    //set the reason
+    params.reasonid = document.getElementById("refundReason").value;
+
+    //make the axios call to submit the completion to db
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    .then((res) => {
+      console.log(`
+          Exit Code: ${res.data.success}
+          Response: ${res.data.refund_submission_data}
+        `)
+      if (res.data.success === 1) {
+        console.log("Refund recorded.")
+      } else {
+        console.log(`Error: ${res.data.note}`)
+      }
+    })
+    .catch((error) => {
+      console.log("Issue recording refund to database.. please report.")
+    })
+    this.setState({completion_submitted: true});
+  }
+
 
 
   componentWillUpdate(nextProps) {
@@ -50,20 +78,9 @@ class RefundSubmission extends React.Component {
       cust_id: this.props.cust_id,
       added: this.props.added,
       cpanel_user: this.props.cpanel_user,
-      domain_complete: this.props.domain_complete,
-      email_complete: this.props.email_complete,
-      units_complete: 1,
-      isVPS: null,
-      isInternal: null,
-      completion_comment: null
       }
       console.log(JSON.stringify(params));
   }
-
-
-
-
-
 
 
   render() {
@@ -76,7 +93,7 @@ class RefundSubmission extends React.Component {
           // eslint-disable-next-line
           onClick={this.handleOpen}
         >
-          Track Cancellation
+          Track Refund
         </Button>
         {/**Dialog Box**/}
         <Dialog
@@ -95,11 +112,8 @@ class RefundSubmission extends React.Component {
               <InputLabel htmlFor="name-error">Refund Reason</InputLabel>
               <Select
                 native
-                value={this.state.name}
-                onChange={this.handleChange}
                 name="name"
-                input={<Input id="name-error" />}
-                inputProps={{id: 'age-native-simple'}}
+                id="refundReason"
               >
                 <option value="None">
                   <em><span role="img" aria-label="error">⚠️</span>  - None</em>
@@ -121,7 +135,7 @@ class RefundSubmission extends React.Component {
             <TextField
               autoFocus
               margin="dense"
-              id="name"
+              id="refundComment"
               label="Refund Comment"
               type="text"
               fullWidth
@@ -131,7 +145,7 @@ class RefundSubmission extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary">
+            <Button onClick={this.handleSubmit} color="primary">
               Refund
             </Button>
           </DialogActions>

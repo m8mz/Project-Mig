@@ -51,8 +51,8 @@ function PaperSheet(props) {
 			 <Grid xs={8}>
 				<Notes />
         <Grid container style={{marginTop: 20}}>
-          <Grid xs={2}><CompletionSubmission/></Grid>
-          <Grid xs={2}><RefundSubmission/></Grid>
+          <Grid xs={3}><CompletionSubmission/></Grid>
+          <Grid xs={3}><RefundSubmission/></Grid>
         </Grid>
 			 </Grid>
 			</Grid>
