@@ -15,11 +15,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
-import { FormControl } from 'material-ui/Form'
-import Select from 'material-ui/Select'
-import Input, { InputLabel } from 'material-ui/Input'
 import axios from 'axios'
-import formatDate from './TrackerFunctions.js'
 
 
 const styles = theme => ({
@@ -240,7 +236,7 @@ We must stress that performing these DNS updates should happen immediately after
 Sincerely,
 ${changeName(user)}
 Professional Services`
-		const refundMigration = (reasonid, comment) => {
+
 		const refundMigrationText =	`Hello,
 
 We've refunded the website transfer service fee. All credits are being processed and will be sent by the next business day. It may take up to 5 additional business days for your financial institution to place the credit into your account.
@@ -248,107 +244,7 @@ We've refunded the website transfer service fee. All credits are being processed
 Regards,
 ${changeName(user)}
 Professional Services`
-    let timestamp = formatDate(Date());
-		const params = {
-			"proserv_id": this.props.proserv_id,
-			"reasonid": reasonid,
-			"timestamp": timestamp,
-			"brandname": document.location.host.slice(2).replace(/\.com/, ''),
-			"comment": comment,
-			"user": user,
-			"action": 'update_flag',
-			"lib": 'general',
-			"flag": 'refund',
-			"value": 1,
-			"type": 'websitetransfer',
-      "domain": this.props.domain,
-	    "cust_id": this.props.cust_id,
-      "added": this.props.added
-		}
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
-		.then((res) => {
-			console.log(`
-					Exit Code: ${res.data.success}
-					Response: ${res.data.refund_submission_data}
-				`)
-			if (res.data.success === 1) {
-				console.log("Refund recorded.")
-			} else {
-				console.log(`Error: ${res.data.note}`)
-			}
-		})
-	  .catch((error) => {
-		  console.log("Issue recording refund to database.. please report.")
-	  })
 
-	  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${params.user}&provider=${params.brandname}&action=${params.action}&lib=${params.lib}&flag=${params.flag}&value=${params.value}&proserv_id=${params.proserv_id}&type=${params.type}`)
-	  .then((res) => {
-		  console.log(`
-				  Exit Code: ${res.data.success}
-				  Response: ${res.data.note}
-			  `)
-		  if (res.data.success === 1) {
-			  let d = new Date()
-	  		  let month = d.getMonth()+1
-	  		  let day = d.getDate()
-	  		  let year = d.getFullYear()
-	  		  let hourMinute = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-	  		  let time = month+'/'+day+'/'+year+' '+hourMinute
-	  		  let fullNote = {
-	  			  user: params.user,
-	  			  provider: params.brandname,
-	  			  action: 'add_proserv_note',
-	  			  lib: 'general',
-	  			  proserv_id: params.proserv_id,
-	  			  visibility: 3,
-	  			  note_action: "Agent Note",
-	  			  note: 'Refund issued and recorded',
-	  			  time: time,
-	  			  utime: d.getTime()
-	  		  }
-			  axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${fullNote.user}&provider=${fullNote.provider}&action=${fullNote.action}&lib=${fullNote.lib}&proserv_id=${fullNote.proserv_id}&visibility=${fullNote.visibility}&note_action=${fullNote.note_action}&note=${encodeURIComponent(fullNote.note)}`).then((res) => {
-					  console.log(`
-							  Exit Code: ${res.data.success}
-							  Response: ${res.data.note}
-						  `)
-					  if (res.data.success === 1) {
-						  this.props.onAddNote(fullNote)
-					  } else {
-						  console.log(`Error: ${res.data.note}`)
-					  }
-				  })
-				 .catch((error) => {
-					 console.log("Issue sending note through the API.. please report.")
-				 })
-		  } else {
-			  console.log(`Error: ${res.data.note}`)
-		  }
-	  })
-	 let status = {
-	   user: params.user,
-	   provider: params.brandname,
-	   service_type: 'websitetransfer',
-	   action: 'update_status',
-	   lib: 'general',
-	   new_status: 'cancelled',
-	   proserv_id: params.proserv_id
-   }
-   axios.get(`https://${document.location.host}/cgi/admin/proservice/ajax?user=${status.user}&provider=${status.provider}&service_type=${status.service_type}&action=${status.action}&lib=${status.lib}&new_status=${status.new_status}&proserv_id=${status.proserv_id}`).then((res) => {
-	   console.log(`
-				Exit Code: ${res.data.success}
-				Response: ${res.data.note}
-			`)
-			if (res.data.success === 1) {
-				console.log("Updated status to cancelled.")
-		  } else {
-			  console.log(`Error: ${res.data.note}`)
-		  }
-   }).catch((error) => {
-	  console.log("Issue with the status API.. please report.")
-   })
-	this.handleClick()
-	this.handleClickOpen(refundMigrationText)
-		}
 		const badCredentials = `Hello,
 
 We attempted to access your old hosting control panel but were unable to do so using the credentials provided. Please double check your credentials and provide the following:
@@ -430,64 +326,7 @@ Professional Services`
 						<List dense={true}>
 								<ListItem disableGutters>
 									<ListItemText>
-										<Button onClick={this.handleClick} size="medium">Refund Migration</Button>
-										<Dialog
-											open={this.state.open}
-											onClose={this.handleClick}
-											aria-labelledby="form-dialog-title"
-										>
-											<DialogTitle id="form-dialog-title">Process Refund</DialogTitle>
-											<DialogContent>
-												<DialogContentText>
-													<Typography>1. No work was completed</Typography>
-													<Typography>2. Customer is requesting a refund</Typography>
-													<Typography>* All exceptions must be confirmed by Manager/Team Lead.</Typography>
-												</DialogContentText>
-												<FormControl className={classes.formControl} error>
-								          <InputLabel htmlFor="name-error">Refund Reason</InputLabel>
-								          <Select
-														native
-								            value={this.state.name}
-								            onChange={this.handleChange}
-								            name="name"
-								            input={<Input id="name-error" />}
-														inputProps={{id: 'age-native-simple'}}
-								          >
-								            <option value="None">
-															<em><span role="img" aria-label="error">⚠️</span>  - None</em>
-								            </option>
-								            <option value="Incompatible">Incompatible</option>
-								            <option value="Proprietary">Proprietary</option>
-														<option value="No Access">No Access</option>
-								            <option value="Customer Completed">Customer Completed</option>
-														<option value="Escalated Refund">Escalated Refund</option>
-								            <option value="WordPress.com">WordPress.com Disclaimer</option>
-														<option value="Purchased on Source">Purchased on Source</option>
-														<option value="Extra Purchases">Extra Purchases</option>
-								            <option value="Missold">Missold</option>
-                            <option value="Agent Review">Agent Review</option>
-                            <option value="Cancelled Account">Cancelled Account</option>
-						                <option value="Other">Other</option>
-								          </Select>
-								        </FormControl>
-												<TextField
-													autoFocus
-													margin="dense"
-													id="name"
-													label="Refund Comment"
-													type="text"
-													fullWidth
-												/>
-											</DialogContent>
-											<DialogActions>
-												<Button onClick={this.handleClick} color="primary">
-													Cancel
-												</Button>
-												<Button onClick={() => refundMigration(this.state.name, document.getElementById('name').value)} disabled={(this.state.name !== 'None') ? false : true} color="primary">
-													Refund
-												</Button>
-											</DialogActions>
-										</Dialog>
+										<Button onClick={() => this.handleClickOpen(refundMigrationText)} size="medium">Refund Migration</Button>
 									</ListItemText>
 								</ListItem>
 						</List>

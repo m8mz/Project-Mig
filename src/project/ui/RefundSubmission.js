@@ -12,7 +12,7 @@ import formatDate from './TrackerFunctions.js'
 import TextField from 'material-ui/TextField'
 import { FormControl } from 'material-ui/Form'
 import Select from 'material-ui/Select'
-import Input, { InputLabel } from 'material-ui/Input'
+import { InputLabel } from 'material-ui/Input'
 
 
 var params = {}
