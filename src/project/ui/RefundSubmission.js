@@ -45,7 +45,7 @@ class RefundSubmission extends React.Component {
     params.reasonid = document.getElementById("refundReason").value;
 
     //make the axios call to submit the completion to db
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.brandname}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
@@ -102,6 +102,7 @@ class RefundSubmission extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Process Refund</DialogTitle>
+          {(this.state.completion_submitted === false) ?
           <DialogContent>
             <DialogContentText>
               <Typography>1. No work was completed</Typography>
@@ -141,13 +142,16 @@ class RefundSubmission extends React.Component {
               fullWidth
             />
           </DialogContent>
+          : <Typography id="submission-message">Thank you for your submission</Typography>}
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Refund
-            </Button>
+            {(this.state.completion_submitted === false) ?
+              <Button color="primary" onClick={this.handleSubmit}>Submit</Button>
+              :
+              <Button label="Disabled" disabled={true}>Submitted</Button>
+            }
           </DialogActions>
         </Dialog>
 
