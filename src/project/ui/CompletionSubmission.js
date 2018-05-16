@@ -85,13 +85,16 @@ class CompletionSubmission extends React.Component {
           Response: ${res.data.refund_submission_data}
         `)
       if (res.data.success === 1) {
-        console.log("Refund recorded.")
+        this.setState({submissionMessage: "Refund recorded successfully."});
+        console.log("Refund recorded.");
       } else {
-        console.log(`Error: ${res.data.note}`)
+        this.setState({submissionMessage: "Error: " + res.data.note});
+        console.log(`Error: ${res.data.note}`);
       }
     })
     .catch((error) => {
-      console.log("Issue recording refund to database.. please report.")
+      this.setState({submissionMessage: "Issue recording refund to database.. please report."});
+      console.log("Issue recording refund to database.. please report.");
     })
     this.setState({completion_submitted: true});
   }
@@ -183,7 +186,7 @@ class CompletionSubmission extends React.Component {
               <textarea id="completionComment" placeholder="If this wasn't an average migration briefly explain here"/>
             </form>
           </DialogContent>
-           : <Typography id="submission-message">Thank you for your submission</Typography>}
+           : <Typography id="submission-message">{this.state.submissionMessage}</Typography>}
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel

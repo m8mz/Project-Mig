@@ -52,12 +52,15 @@ class RefundSubmission extends React.Component {
           Response: ${res.data.refund_submission_data}
         `)
       if (res.data.success === 1) {
-        console.log("Refund recorded.")
+        this.setState({submissionMessage: "Refund recorded successfully."});
+        console.log("Refund recorded successfully.")
       } else {
+        this.setState({submissionMessage: "Error: " + res.data.note});
         console.log(`Error: ${res.data.note}`)
       }
     })
     .catch((error) => {
+      this.setState({submissionMessage: "Issue recording refund to database.. please report."});
       console.log("Issue recording refund to database.. please report.")
     })
     this.setState({completion_submitted: true});
@@ -100,6 +103,7 @@ class RefundSubmission extends React.Component {
           open={this.state.open}
           onClose={this.handleClick}
           aria-labelledby="form-dialog-title"
+          modal={false}
         >
           <DialogTitle id="form-dialog-title">Process Refund</DialogTitle>
           {(this.state.completion_submitted === false) ?
@@ -142,7 +146,7 @@ class RefundSubmission extends React.Component {
               fullWidth
             />
           </DialogContent>
-          : <Typography id="submission-message">Thank you for your submission</Typography>}
+          : <Typography id="submission-message">{this.state.submissionMessage}</Typography>}
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
