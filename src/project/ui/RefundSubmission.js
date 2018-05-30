@@ -24,7 +24,9 @@ class RefundSubmission extends React.Component {
     completed: this.props.completed,
     open: false,
     completion_submitted: false,
-    selectedOption: true
+    selectedOption: true,
+    timestamp: formatDate(Date()),
+    refinedTimestamp: "20"+formatDate(Date()).slice(6,8)+"-"+formatDate(Date()).slice(0,2)+"-"+formatDate(Date()).slice(3,5)
   }
 
   // Dialog open/close functions
@@ -43,9 +45,11 @@ class RefundSubmission extends React.Component {
     params.comment = document.getElementById("refundComment").value;
     //set the reason
     params.reasonid = document.getElementById("refundReason").value;
+    //set the refund date
+    params.refundDate = formatDate(new Date(document.getElementById("refundDate").value));
 
     //make the axios call to submit the completion to db
-    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${timestamp}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
+    axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.refundDate}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
@@ -137,6 +141,17 @@ class RefundSubmission extends React.Component {
                 <option value="Other">Other</option>
               </Select>
             </FormControl>
+            <br/><br/>
+            <TextField
+              id="refundDate"
+              label="Refund Date"
+              type="date"
+              defaultValue={this.state.refinedTimestamp}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <br/><br/>
             <TextField
               autoFocus
               margin="dense"
