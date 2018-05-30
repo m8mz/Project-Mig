@@ -82,10 +82,9 @@ class CompletionSubmission extends React.Component {
     .then((res) => {
       console.log(`
           Exit Code: ${res.data.success}
-          Response: ${res.data.refund_submission_data}
         `)
       if (res.data.success === 1) {
-        this.setState({submissionMessage: "Refund recorded successfully."});
+        this.setState({submissionMessage: "Completion recorded successfully."});
         console.log("Refund recorded.");
       } else {
         this.setState({submissionMessage: "Error: " + res.data.note});
@@ -93,8 +92,8 @@ class CompletionSubmission extends React.Component {
       }
     })
     .catch((error) => {
-      this.setState({submissionMessage: "Issue recording refund to database.. please report."});
-      console.log("Issue recording refund to database.. please report.");
+      this.setState({submissionMessage: "Issue recording completion to database.. please report."});
+      console.log("Issue recording completion to database.. please report.");
     })
     this.setState({completion_submitted: true});
   }
@@ -104,7 +103,7 @@ class CompletionSubmission extends React.Component {
      if (nextProps.status === "complete" || nextProps.status === "cancelled") {
        this.setState({
           completed: true,
-        refunded: nextProps.refunded
+          refunded: nextProps.refunded
          })
      } else if (this.state.completed) {
        this.setState({

@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+src/initialState.json
 
 # production
 /build
