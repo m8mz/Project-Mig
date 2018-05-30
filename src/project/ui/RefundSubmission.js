@@ -107,7 +107,7 @@ class RefundSubmission extends React.Component {
           open={this.state.open}
           onClose={this.handleClick}
           aria-labelledby="form-dialog-title"
-          modal={false}
+          modal={true}
         >
           <DialogTitle id="form-dialog-title">Process Refund</DialogTitle>
           {(this.state.completion_submitted === false) ?
@@ -135,7 +135,7 @@ class RefundSubmission extends React.Component {
                 <option value="WordPress.com">WordPress.com Disclaimer</option>
                 <option value="Purchased on Source">Purchased on Source</option>
                 <option value="Extra Purchases">Extra Purchases</option>
-                <option value="Missold">Missold</option>
+                <option value="Missold">Missold/Mispurchased</option>
                 <option value="Agent Review">Agent Review</option>
                 <option value="Cancelled Account">Cancelled Account</option>
                 <option value="Other">Other</option>
