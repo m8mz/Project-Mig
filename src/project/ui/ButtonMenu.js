@@ -81,6 +81,7 @@ class FlatButtons extends Component {
 			  <Button href={smPage} target="_blank" variant="flat" color="default" className={classes.button}>
 				 Service Monkey
 			  </Button>
+        <br/>
 				<Button size="small" variant="flat" color="primary" disabled className={classes.button}>
 				 Purchased: {projectInfo.added.replace(/(\d{1,2}:?){3} \w{2}/, '')}
 				</Button>
