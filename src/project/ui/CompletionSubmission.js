@@ -188,7 +188,11 @@ class CompletionSubmission extends React.Component {
            : <Typography id="submission-message">{this.state.submissionMessage}</Typography>}
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              {(this.state.completion_submitted === false) ?
+                "Cancel"
+                :
+                "OK"
+              }
             </Button>
             {(this.state.completion_submitted === false) ?
               <Button color="primary" onClick={this.handleSubmit}>Submit</Button>

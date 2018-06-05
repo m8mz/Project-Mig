@@ -117,25 +117,25 @@ class NestedList extends React.Component {
 	 const changeName = (name) => {
 		 switch(name) {
 			case "emuniz":
-			  return "Edward Muniz"
+			  return "Edward M."
 			 case "edmuniz":
-				 return "Edward Muniz"
+				 return "Edward M."
 			case "shunt":
-			  return "Sarah Hunt"
+			  return "Sarah H."
 			case "mclarkson":
-			  return "Miekkal Clarkson"
+			  return "Miekkal C."
 			case "toyler":
-			  return "Tyler Oyler"
+			  return "Tyler O."
 			case "aanselmo":
-			  return "Tony Anselmo"
+			  return "Tony A."
 			case "lbejarano":
-			  return "Lucas Bejarano"
+			  return "Lucas B."
 			case "mhancock-gaillard":
 			  return "Marcus HG"
 			case "rloader":
-			  return "Riley Loader"
+			  return "Riley L."
 			case "aldunn":
-			  return "Alan Dunn"
+			  return "Alan D."
 		  case "customer":
 			  return "Customer"
 			default:
@@ -164,7 +164,7 @@ An email transfer does not include mailing lists, email forwarders, contacts, ad
 Once we have that we'll go ahead and manually move forward with the migration.
 
 Regards,
-${changeName(user)}
+
 Professional Services`
 		const startMigration = `Hello,
 
@@ -242,7 +242,7 @@ Professional Services`
 We've refunded the website transfer service fee. All credits are being processed and will be sent by the next business day. It may take up to 5 additional business days for your financial institution to place the credit into your account.
 
 Regards,
-${changeName(user)}
+
 Professional Services`
 
 		const badCredentials = `Hello,
@@ -264,7 +264,7 @@ An email transfer does not include mailing lists, email forwarders, contacts, ad
 Once we have that we'll go ahead and manually move forward with the migration.
 
 Thank you,
-${changeName(user)}
+
 Professional Services`
 
     return (
