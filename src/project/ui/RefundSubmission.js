@@ -46,7 +46,8 @@ class RefundSubmission extends React.Component {
     //set the reason
     params.reasonid = document.getElementById("refundReason").value;
     //set the refund date
-    params.refundDate = formatDate(new Date(document.getElementById("refundDate").value));
+    params.rawRefundDate = document.getElementById("refundDate").value;
+    params.refundDate = params.rawRefundDate.slice(5,7)+"/"+params.rawRefundDate.slice(8,10)+"/"+params.rawRefundDate.slice(2,4);
 
     //make the axios call to submit the completion to db
     axios.get(`https://tempeproserve.com/tracker/submit/submit-cancellation.php?migid=${params.proserv_id}&reason=${params.reasonid}&refundDate=${params.refundDate}&brand=${params.provider}&comment=${params.comment}&purchaseDate=${params.added}&agent=${params.user}&domain=${params.domain}&custID=${params.cust_id}&isFlagged=0`)
@@ -57,7 +58,7 @@ class RefundSubmission extends React.Component {
         `)
       if (res.data.success === 1) {
         this.setState({submissionMessage: "Refund recorded successfully."});
-        console.log("Refund recorded successfully.")
+        console.log("Refund recorded successfully.");
       } else {
         this.setState({submissionMessage: "Error: " + res.data.note});
         console.log(`Error: ${res.data.note}`)
