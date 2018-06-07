@@ -10,6 +10,7 @@ import MenuDrawer from '../containers/MenuDrawer'
 import Input, { InputLabel } from 'material-ui/Input'
 import yellow from 'material-ui/colors/yellow'
 import { FormControl } from 'material-ui/Form'
+import Tooltip from 'material-ui/Tooltip'
 
 const styles = theme => ({
   root: {
@@ -55,8 +56,13 @@ class ButtonAppBar extends React.Component {
 	      <AppBar position="static">
 	        <Toolbar>
 	          <MenuDrawer />
-						<Button className={classes.homeButton} mini={true} size="small" href="/cgi/admin/proservice" color="inherit"><Icon>home</Icon></Button>
-	          <Typography variant="title" color="inherit" className={classes.flex}>
+            <Tooltip id="tooltip-bottom" title="Home" placement="bottom">
+              <Button className={classes.homeButton} mini={true} size="small" href="/cgi/admin/proservice" color="inherit"><Icon>home</Icon></Button>
+            </Tooltip>
+            <Tooltip id="tooltip-bottom" title="ProServe Stats" placement="bottom">
+              <Button className={classes.homeButton} mini={true} size="small" href="https://i.bluehost.com/cgi/admin/proserve-stats" color="inherit"><Icon>insert_chart</Icon></Button>
+            </Tooltip>
+	          <Typography variant="title" color="inherit"            className={classes.flex}>
 	            Professional Services
 	          </Typography>
 						<FormControl className={classes.formControl}>
