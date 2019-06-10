@@ -4,4 +4,5 @@ This project was for the Professional Services department as a project manager. 
 
 Also, has a scraping function to search for all tickets that haven't a response within 14 days to move those projects to the "Agent Review" queue so the agent can review the project to see if they need to send out another email to the customer or close the project.
 
-Images coming soon!
+![HomePage](https://user-images.githubusercontent.com/26033540/59225798-8123db00-8b86-11e9-8202-bb15afe054c9.png)
+![ProjectPage](https://user-images.githubusercontent.com/26033540/59225802-82550800-8b86-11e9-9155-54b229b14705.png)
